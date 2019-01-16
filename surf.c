@@ -137,6 +137,11 @@ typedef struct {
 } Button;
 
 typedef struct {
+	char *token;
+	char *uri;
+} SearchEngine;
+
+typedef struct {
 	const char *uri;
 	Parameter config[ParameterLast];
 	regex_t re;
@@ -204,6 +209,7 @@ static void progresschanged(WebKitWebView *v, GParamSpec *ps, Client *c);
 static void titlechanged(WebKitWebView *view, GParamSpec *ps, Client *c);
 static void mousetargetchanged(WebKitWebView *v, WebKitHitTestResult *h,
                                guint modifiers, Client *c);
+static gchar *parseuri(const gchar *uri);
 static gboolean permissionrequested(WebKitWebView *v,
                                     WebKitPermissionRequest *r, Client *c);
 static gboolean decidepolicy(WebKitWebView *v, WebKitPolicyDecision *d,
@@ -225,6 +231,7 @@ static void destroywin(GtkWidget* w, Client *c);
 
 /* Hotkeys */
 static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
+static void openinmpv(GtkClipboard *clipboard, const char *text, gpointer d);
 static void reload(Client *c, const Arg *a);
 static void print(Client *c, const Arg *a);
 static void showcert(Client *c, const Arg *a);
@@ -570,23 +577,13 @@ loaduri(Client *c, const Arg *a)
 			url = g_strdup_printf("file://%s", path);
 			free(path);
 		} else {
-			// search engine
-			if (g_str_has_prefix(uri, "y "))
-			{
-				url = g_strdup_printf("https://www.youtube.com/results?search_query=%s", uri);
-			}else
-			{
-				url = g_strdup_printf("https://duckduckgo.com/?q=%s", uri);
-			}
-				 /* url = g_strdup_printf("http://%s", uri); */
-			
+			//start searchengines	
+			url = parseuri(uri);
 		}
 		if (apath != uri)
 			free(apath);
 	}
-
 	setatom(c, AtomUri, url);
-
 	if (strcmp(url, geturi(c)) == 0) {
 		reload(c, a);
 	} else {
@@ -595,6 +592,21 @@ loaduri(Client *c, const Arg *a)
 	}
 
 	g_free(url);
+}
+
+gchar *
+parseuri(const gchar *uri) {
+	guint i;
+
+	for (i = 0; i < LENGTH(searchengines); i++) {
+		if (searchengines[i].token == NULL || searchengines[i].uri == NULL ||
+		    *(uri + strlen(searchengines[i].token)) != ' ')
+			continue;
+		if (g_str_has_prefix(uri, searchengines[i].token))
+			return g_strdup_printf(searchengines[i].uri,
+					       uri + strlen(searchengines[i].token) + 1);
+	}
+	return g_strdup_printf("https://duckduckgo.com/?q=%s", uri);
 }
 
 const char *
@@ -1508,9 +1520,7 @@ loadfailedtls(WebKitWebView *v, gchar *uri, GTlsCertificate *cert,
 
 	return TRUE;
 }
-/* void */
-/* openinmpv( */
-/* const char *uri = geturi(c); */
+
 void
 loadchanged(WebKitWebView *v, WebKitLoadEvent e, Client *c)
 {
@@ -1794,6 +1804,25 @@ pasteuri(GtkClipboard *clipboard, const char *text, gpointer d)
 }
 
 void
+openinmpv(GtkClipboard *clipboard, const char *text, gpointer d)
+{
+	char *command;
+	if (g_str_has_prefix(text, "https://www.you"))
+	{
+		
+
+		command = g_strdup_printf(" mpv -quiet --ytdl-format=18 %s >/dev/null 2>&1 &", text);
+		system("notify-send -i \"~/surf/surf.jpeg\" \"opening in mpv\"");
+		system(command);
+	}else{
+		command = g_strdup_printf("linkhandler %s &", text);
+		printf("%s\n", command);
+		system(command);
+		system("notify-send \"not a youtube video\"");
+	}
+}
+
+void
 reload(Client *c, const Arg *a)
 {
 	if (a->i)
@@ -1836,14 +1865,27 @@ showcert(Client *c, const Arg *a)
 void
 clipboard(Client *c, const Arg *a)
 {
-	if (a->i) { /* load clipboard uri */
-		gtk_clipboard_request_text(gtk_clipboard_get(
-		                           GDK_SELECTION_PRIMARY),
-		                           pasteuri, c);
-	} else { /* copy uri */
-		gtk_clipboard_set_text(gtk_clipboard_get(
-		                       GDK_SELECTION_PRIMARY), c->targeturi
-		                       ? c->targeturi : geturi(c), -1);
+	switch (a->i) {
+		case 0:
+			gtk_clipboard_set_text(gtk_clipboard_get(
+								   GDK_SELECTION_PRIMARY), c->targeturi
+								   ? c->targeturi : geturi(c), -1);
+			break;
+		case 1:
+			gtk_clipboard_request_text(gtk_clipboard_get(
+									   GDK_SELECTION_PRIMARY),
+									   pasteuri, c);
+			break;
+		case 2:
+			/* try to eventually get this to work without using the clipboard */
+			gtk_clipboard_set_text(gtk_clipboard_get(
+								   GDK_SELECTION_PRIMARY), c->targeturi
+								   ? c->targeturi : geturi(c), -1);
+			gtk_clipboard_request_text(gtk_clipboard_get(
+				                           GDK_SELECTION_PRIMARY),
+				                           openinmpv, c);
+			printf("open mpv\n");
+			break;
 	}
 }
 
@@ -1861,16 +1903,24 @@ zoom(Client *c, const Arg *a)
 
 	curconfig[ZoomLevel].val.f = webkit_web_view_get_zoom_level(c->view);
 }
-
+/* need to find a better way to scroll to the top and bottom */
 static void
 msgext(Client *c, char type, const Arg *a)
 {
 	char msg[MSGBUFSZ] = { c->pageid, type, a->i, '\0' };
-
+	printf("%d\n",a->i);
 	if (pipeout[1]) {
-		if (write(pipeout[1], msg, sizeof(msg)) < 0)
-			fprintf(stderr, "surf: error sending: %s\n", msg);
+	if ((a->i == -150) || (a->i == 150)){
+			for (int i = 0; i < 155; ++i) {
+					if (write(pipeout[1], msg, sizeof(msg)) < 0)
+						fprintf(stderr, "surf: error sending: %s\n", msg);
+			}
+		}else{
+				if (write(pipeout[1], msg, sizeof(msg)) < 0)
+					fprintf(stderr, "surf: error sending: %s\n", msg);
+		}
 	}
+
 }
 
 void
@@ -1964,19 +2014,9 @@ find(Client *c, const Arg *a)
 void
 launchVim(Client *c, const Arg *a)
 {
-	system("st -e n");
+	system("st -e ~/Documents/notes.md");
 }
 
-/* void  */
-/* normalMode(Client *c, const Arg *a); */
-/* { */
-/* 	 */
-/* } */
-/* void  */
-/* insertmode(Client *c, const Arg *a); */
-/* { */
-/*  */
-/* } */
 void
 clicknavigate(Client *c, const Arg *a, WebKitHitTestResult *h)
 {

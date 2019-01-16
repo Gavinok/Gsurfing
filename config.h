@@ -46,15 +46,27 @@ static Parameter defconfig[ParameterLast] = {
 	[SpellLanguages]      =       { { .v = ((char *[]){ "en_US", NULL }) }, },
 	[StrictTLS]           =       { { .i = 1 },     },
 	[Style]               =       { { .i = 1 },     },
-	[WebGL]               =       { { .i = 0 },     },
+	[WebGL]               =       { { .i = 1 },     },
 	[ZoomLevel]           =       { { .f = 1.0 },   },
 };
 
 static UriParameters uriparams[] = {
 	{ "(://|\\.)suckless\\.org(/|$)", {
 	  [JavaScript] = { { .i = 0 }, 1 },
-	  [Plugins]    = { { .i = 0 }, 1 },
+	  [Plugins]    = { { .i = 1 }, 1 },
 	}, },
+};
+
+static SearchEngine searchengines[] = {
+	{ "g",   "http://www.google.de/search?q=%s"   },
+	{ "leo", "http://dict.leo.org/ende?search=%s" },
+	{ "d",	 "https://duckduckgo.com/?q=%s" },
+	{ "y",	 "https://www.youtube.com/results?search_query=%s" },
+	{ "aw",	 "https://wiki.archlinux.org/index.php?search=%s" },
+	{ "gh",	 "https://duckduckgo.com/?q=!gh %s" },
+	{ "am",	 "https://duckduckgo.com/?q=!a %s" },
+	{ "eb",	 "https://duckduckgo.com/?q=!e %s" },
+	{ "math",	 "https://duckduckgo.com/?q=!wa %s" },
 };
 
 /* default window size: width, height */
@@ -63,7 +75,6 @@ static int winsize[] = { 800, 600 };
 static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
                                     WEBKIT_FIND_OPTIONS_WRAP_AROUND;
 
-
 #define PROMPT_GO   "Open:"
 #define PROMPT_FIND "Find:"
 
@@ -71,18 +82,40 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 #define SETPROP(r, s, p) { \
         .v = (const char *[]){ "/bin/sh", "-c", \
              "prop=\"$(printf '%b' \"$(xprop -id $1 $2 " \
-             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\")\" " \
-             "| dmenu -p \"$4\" -w $1)\" && xprop -id $1 -f $3 8s -set $3 \"$prop\"", \
+             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\" && cat ~/.surf/bookmarks)\" " \
+             "| dmenu -l 10 -p \"$4\" -w $1)\" && " \
+             "xprop -id $1 -f $3 8s -set $3 \"$prop\"", \
              "surf-setprop", winid, r, s, p, NULL \
         } \
 }
 
+/* SETSEARCHPROP(readprop, setprop, prompt)*/
+#define SETSEARCHPROP(r, s, p) { \
+        .v = (const char *[]){ "/bin/sh", "-c", \
+             "prop=\"$(printf '%b' \"$(xprop -id $1 $2 " \
+             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\")\" " \
+             "| dmenu -p \"$4\" -w $1)\" && xprop -id $1 -f $3 8s -set $3 \"$prop\"", \
+             "surf-setsearchprop", winid, r, s, p, NULL \
+        } \
+}
+								
 /* DOWNLOAD(URI, referer) */
 #define DOWNLOAD(u, r) { \
         .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
              "curl -g -L -J -O -A \"$1\" -b \"$2\" -c \"$2\"" \
              " -e \"$3\" \"$4\"; read", \
              "surf-download", useragent, cookiefile, r, u, NULL \
+        } \
+}
+
+/* BM_ADD(readprop) */
+#define BM_ADD(r) {\
+        .v = (const char *[]){ "/bin/sh", "-c", \
+             "(echo $(xprop -id $0 $1) | cut -d '\"' -f2 " \
+             "| sed '' && cat ~/.surf/bookmarks) " \
+             "| awk '!seen[$0]++' > ~/.surf/bookmarks.tmp && " \
+             "mv ~/.surf/bookmarks.tmp ~/.surf/bookmarks", \
+             winid, r, NULL \
         } \
 }
 
@@ -102,6 +135,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
              "mpv --really-quiet \"$0\"", u, NULL \
         } \
 }
+
 
 /* styles */
 /*
@@ -132,8 +166,10 @@ static SiteSpecific certs[] = {
 static Key keys[] = {
 	/* modifier              keyval          function    arg */
 	{ MODKEY,                GDK_KEY_o,      spawn,      SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
-	{ MODKEY,                GDK_KEY_f,      spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
-	{ MODKEY,                GDK_KEY_slash,  spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
+	/* { MODKEY,                GDK_KEY_f,      spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) }, */
+	/* { MODKEY,                GDK_KEY_slash,  spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) }, */
+	{ MODKEY,                GDK_KEY_slash,  spawn,      SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
+	{ MODKEY,                GDK_KEY_m,      spawn,      BM_ADD("_SURF_URI") },
 
 	{ 0,                     GDK_KEY_Escape, stop,       { 0 } },
 	{ MODKEY,                GDK_KEY_c,      stop,       { 0 } },
@@ -147,8 +183,11 @@ static Key keys[] = {
 	/* vertical and horizontal scrolling, in viewport percentage */
 	{ MODKEY,                GDK_KEY_j,      scrollv,    { .i = +10 } },
 	{ MODKEY,                GDK_KEY_k,      scrollv,    { .i = -10 } },
-	/* { MODKEY,                GDK_KEY_b,      scrollv,    { .i = +50 } }, */
-	{ MODKEY,                GDK_KEY_space,  scrollv,    { .i = -50 } },
+	/* { 0,					 GDK_KEY_space,  scrollv,    { .i = +50 } }, */
+	{ MODKEY,				 GDK_KEY_u,		 scrollv,    { .i = -50 } },
+	{ MODKEY,				 GDK_KEY_d,		 scrollv,    { .i = +50 } },
+	{ MODKEY,                GDK_KEY_g,		 scrollv,    { .i = +150 } },
+	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,		 scrollv,    { .i = -150 } },
 	{ MODKEY,                GDK_KEY_b,      scrollh,    { .i = +10 } },
 	{ MODKEY,                GDK_KEY_e,      scrollh,    { .i = -10 } },
 
@@ -161,6 +200,8 @@ static Key keys[] = {
 
 	{ MODKEY,                GDK_KEY_p,      clipboard,  { .i = 1 } },
 	{ MODKEY,                GDK_KEY_y,      clipboard,  { .i = 0 } },
+	//opens in mpv
+	{ MODKEY|GDK_SHIFT_MASK,                GDK_KEY_m,      clipboard,  { .i = 2 } },
 
 	{ MODKEY,                GDK_KEY_n,      find,       { .i = +1 } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_n,      find,       { .i = -1 } },
@@ -173,72 +214,17 @@ static Key keys[] = {
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,      toggleinspector, { 0 } },
 
 	{ MODKEY,				 GDK_KEY_v,      toggle,     { .i = CaretBrowsing } },
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } },
+	/* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } }, */
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,      toggle,     { .i = Geolocation } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_s,      toggle,     { .i = JavaScript } },
 	/* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,      toggle,     { .i = LoadImages } }, */
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_a,      toggle,     { .i = Plugins } },
 	/* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_b,      toggle,     { .i = ScrollBars } }, */
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_t,      toggle,     { .i = StrictTLS } },
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_m,      toggle,     { .i = Style } },
+	// { MODKEY|GDK_SHIFT_MASK, GDK_KEY_m,      toggle,     { .i = Style } },
 	{ MODKEY,				GDK_KEY_w,      launchVim,     { .i = StrictTLS } },
 };
 
-// static Key keys[] = {
-// 	/* modifier              keyval          function    arg	 mode*/
-// 	{ 0,                GDK_KEY_o,      spawn,      SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO), 1 },
-// 	{ 0,                GDK_KEY_f,      spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) , 1},
-// 	{ 0,                GDK_KEY_slash,  spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) , 1},
-//
-// 	{ 0,                     GDK_KEY_Escape, normalMode,       { 0 } , 1},
-// 	{ 0,                GDK_KEY_c,      stop,       { 0 } , 1},
-//
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_r,      reload,     { .i = 1 } , 1},
-// 	{ 0,                GDK_KEY_r,      reload,     { .i = 0 } , 1},
-//
-// 	{ 0,				GDK_KEY_l,      navigate,   { .i = +1 }, 1 },
-// 	{ 0,				GDK_KEY_h,      navigate,   { .i = -1 }, 1 },
-//
-// 	/* vertical and horizontal scrolling, in viewport percentage */
-// 	{ 0,                GDK_KEY_j,      scrollv,    { .i = +10 }, 1 },
-// 	{ 0,                GDK_KEY_k,      scrollv,    { .i = -10 }, 1 },
-// 	/* { 0,                GDK_KEY_b,      scrollv,    { .i = +50 }, 1 }, */
-// 	{ 0,                GDK_KEY_space,  scrollv,    { .i = -50 }, 1 },
-// 	{ 0,                GDK_KEY_b,      scrollh,    { .i = +10 }, 1 },
-// 	{ 0,                GDK_KEY_e,      scrollh,    { .i = -10 }, 1 },
-//
-//
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_j,      zoom,       { .i = -1 }, 1 },
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_k,      zoom,       { .i = +1 }, 1 },
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_q,      zoom,       { .i = 0  }, 1 },
-// 	{ 0,                GDK_KEY_minus,  zoom,       { .i = -1 }, 1 },
-// 	{ 0,                GDK_KEY_plus,   zoom,       { .i = +1 }, 1 },
-//
-// 	{ 0,                GDK_KEY_p,      clipboard,  { .i = 1 }, 1 },
-// 	{ 0,                GDK_KEY_y,      clipboard,  { .i = 0 }, 1 },
-//
-// 	{ 0,                GDK_KEY_n,      find,       { .i = +1 }, 1 },
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_n,      find,       { .i = -1 }, 1 },
-//
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_p,      print,      { 0 }, 1 },
-// 	{ 0,                GDK_KEY_t,      showcert,   { 0 }, 1 },
-//
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_a,      togglecookiepolicy, { 0 }, 1 },
-// 	{ 0,                     GDK_KEY_F11,    togglefullscreen, { 0 }, 1 },
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_i,      toggleinspector, { 0 }, 1 },
-// 	{ 0,				GDK_KEY_i,      insertmode , { 0 }, 1 },
-//
-// 	{ 0,				 GDK_KEY_v,      toggle,     { .i = CaretBrowsing }, 1 },
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening }, 1 },
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_g,      toggle,     { .i = Geolocation }, 1 },
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_s,      toggle,     { .i = JavaScript }, 1 },
-// 	/* { 0|GDK_SHIFT_MASK, GDK_KEY_i,      toggle,     { .i = LoadImages }, 1 }, */
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_a,      toggle,     { .i = Plugins }, 1 },
-// 	/* { 0|GDK_SHIFT_MASK, GDK_KEY_b,      toggle,     { .i = ScrollBars }, 1 }, */
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_t,      toggle,     { .i = StrictTLS }, 1 },
-// 	{ 0|GDK_SHIFT_MASK, GDK_KEY_m,      toggle,     { .i = Style }, 1 },
-// 	{ 0,				GDK_KEY_w,      launchVim,     { .i = StrictTLS }, 1 },
-// };
 /* button definitions */
 /* target can be OnDoc, OnLink, OnImg, OnMedia, OnEdit, OnBar, OnSel, OnAny */
 static Button buttons[] = {
