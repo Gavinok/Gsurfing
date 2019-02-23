@@ -231,7 +231,7 @@ static void destroywin(GtkWidget* w, Client *c);
 
 /* Hotkeys */
 static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
-static void openinmpv(GtkClipboard *clipboard, const char *text, gpointer d);
+/* static void openinmpv(GtkClipboard *clipboard, const char *text, gpointer d); */
 static void reload(Client *c, const Arg *a);
 static void print(Client *c, const Arg *a);
 static void showcert(Client *c, const Arg *a);
@@ -1803,24 +1803,24 @@ pasteuri(GtkClipboard *clipboard, const char *text, gpointer d)
 		loaduri((Client *) d, &a);
 }
 
-void
-openinmpv(GtkClipboard *clipboard, const char *text, gpointer d)
-{
-	char *command;
-	if (g_str_has_prefix(text, "https://www.you"))
-	{
-		
-
-		command = g_strdup_printf(" mpv -quiet --ytdl-format=18 %s >/dev/null 2>&1 &", text);
-		system("notify-send -i \"~/surf/surf.jpeg\" \"opening in mpv\"");
-		system(command);
-	}else{
-		command = g_strdup_printf("linkhandler %s &", text);
-		printf("%s\n", command);
-		system(command);
-		system("notify-send \"not a youtube video\"");
-	}
-}
+/* void */
+/* openinmpv(GtkClipboard *clipboard, const char *text, gpointer d) */
+/* { */
+/* 	char *command; */
+/* 	if (g_str_has_prefix(text, "https://www.you")) */
+/* 	{ */
+/* 		 */
+/*  */
+/* 		command = g_strdup_printf(" mpv -quiet --ytdl-format=18 %s >/dev/null 2>&1 &", text); */
+/* 		system("notify-send -i \"~/surf/surf.jpeg\" \"opening in mpv\""); */
+/* 		system(command); */
+/* 	}else{ */
+/* 		command = g_strdup_printf("linkhandler %s &", text); */
+/* 		printf("%s\n", command); */
+/* 		system(command); */
+/* 		system("notify-send \"not a youtube video\""); */
+/* 	} */
+/* } */
 
 void
 reload(Client *c, const Arg *a)
@@ -1886,8 +1886,35 @@ clipboard(Client *c, const Arg *a)
 				                           openinmpv, c);
 			printf("open mpv\n");
 			break;
+		case 3:
+			/* try to eventually get this to work without using the clipboard */
+			gtk_clipboard_set_text(gtk_clipboard_get(
+								   GDK_SELECTION_PRIMARY), c->targeturi
+								   ? c->targeturi : geturi(c), -1);
+			gtk_clipboard_request_text(gtk_clipboard_get(
+				                           GDK_SELECTION_PRIMARY),
+				                           castthis, c);
+			printf("open mpv\n");
+			break;
 	}
 }
+
+
+/* void */
+/* castthis(GtkClipboard *clipboard, const char *text, gpointer d) */
+/* { */
+/* 	char *command; */
+/* 	if (g_str_has_prefix(text, "https://www.you")) */
+/* 	{ */
+/* 		 */
+/*  */
+/* 		command = g_strdup_printf("youtube-dl -o - \"%s\" | castnow --quiet - &", text); */
+/* 		system("notify-send -i \"~/surf/surf.jpeg\" \"Casting\""); */
+/* 		system(command); */
+/* 	}else{ */
+/* 		system("notify-send \"Cannot Cast\""); */
+/* 	} */
+/* } */
 
 void
 zoom(Client *c, const Arg *a)
