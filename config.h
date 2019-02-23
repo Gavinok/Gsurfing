@@ -7,8 +7,6 @@ static char *certdir        = "~/.surf/certificates/";
 static char *cachedir       = "~/.surf/cache/";
 static char *cookiefile     = "~/.surf/cookies.txt";
 
-#include "castthis.c"
-#include "openinmpv.c"
 /* Webkit default features */
 /* Highest priority value will be used.
  * Default parameters are priority 0
@@ -121,6 +119,13 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
+/* BM_ADD(readprop) */
+#define OPEN_IN_MPV(r) {\
+        .v = (const char *[]){ "/bin/sh", "-c", \
+             "echo $(xprop -id $0 $1) | cut -d '\"' -f2 ",\
+             winid, r, NULL \
+        } \
+}
 /* PLUMB(URI) */
 /* This called when some URI which does not begin with "about:",
  * "http://" or "https://" should be opened.
@@ -170,6 +175,8 @@ static Key keys[] = {
 	{ MODKEY,                GDK_KEY_o,      spawn,      SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
 	{ MODKEY,                GDK_KEY_slash,  spawn,      SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
 	{ MODKEY,                GDK_KEY_m,      spawn,      BM_ADD("_SURF_URI") },
+	{ MODKEY,                GDK_KEY_i,      openinmpv,  { .i = 0 } },
+	{ MODKEY,                GDK_KEY_c,      castthis,   { .i = 0 } },
 
 	{ 0,                     GDK_KEY_Escape, stop,       { 0 } },
 	// { MODKEY,                GDK_KEY_c,      stop,       { 0 } },
@@ -190,6 +197,8 @@ static Key keys[] = {
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,		 scrollv,    { .i = -150 } },
 	{ MODKEY,                GDK_KEY_b,      scrollh,    { .i = +10 } },
 	{ MODKEY,                GDK_KEY_e,      scrollh,    { .i = -10 } },
+	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_h,      scrollh,    { .i = -10 } },
+	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_l,      scrollh,    { .i = +10 } },
 
 
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_j,      zoom,       { .i = -1 } },
@@ -201,9 +210,9 @@ static Key keys[] = {
 	{ MODKEY,                GDK_KEY_p,      clipboard,  { .i = 1 } },
 	{ MODKEY,                GDK_KEY_y,      clipboard,  { .i = 0 } },
 	//opens in mpv
-	{ MODKEY, 				 GDK_KEY_i,      clipboard,  { .i = 2 } },
+	// { MODKEY, 				 GDK_KEY_i,      clipboard,  { .i = 2 } },
 
-	{ MODKEY,                GDK_KEY_c,      clipboard,  { .i = 3 } },
+	// { MODKEY,                GDK_KEY_c,      clipboard,  { .i = 3 } },
 
 	{ MODKEY,                GDK_KEY_n,      find,       { .i = +1 } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_n,      find,       { .i = -1 } },
@@ -218,13 +227,12 @@ static Key keys[] = {
 	{ MODKEY,				 GDK_KEY_v,      toggle,     { .i = CaretBrowsing } },
 	/* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } }, */
 	// { MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,      toggle,     { .i = Geolocation } },
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_s,      toggle,     { .i = JavaScript } },
+	// { MODKEY|GDK_SHIFT_MASK, GDK_KEY_s,      toggle,     { .i = JavaScript } },
 	/* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,      toggle,     { .i = LoadImages } }, */
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_a,      toggle,     { .i = Plugins } },
+	// { MODKEY|GDK_SHIFT_MASK, GDK_KEY_a,      toggle,     { .i = Plugins } },
 	/* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_b,      toggle,     { .i = ScrollBars } }, */
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_t,      toggle,     { .i = StrictTLS } },
+	// { MODKEY|GDK_SHIFT_MASK, GDK_KEY_t,      toggle,     { .i = StrictTLS } },
 	// { MODKEY|GDK_SHIFT_MASK, GDK_KEY_m,      toggle,     { .i = Style } },
-	{ MODKEY,				GDK_KEY_w,      launchVim,     { .i = StrictTLS } },
 };
 
 /* button definitions */

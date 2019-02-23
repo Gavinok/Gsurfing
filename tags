@@ -69,6 +69,7 @@ MSGBUFSZ	common.h	/^#define MSGBUFSZ /;"	d
 MediaManualPlay	surf.c	/^	MediaManualPlay,$/;"	e	enum:__anon1ca5b3760303	file:
 NAME	surf.1	/^.SH NAME$/;"	s	title:SURF
 OBJ	Makefile	/^OBJ = $(SRC:.c=.o)$/;"	m
+OPEN_IN_MPV	config.h	/^#define OPEN_IN_MPV(/;"	d
 OPTIONS	surf.1	/^.SH OPTIONS$/;"	s	title:SURF
 OnAny	surf.c	/^	OnAny   = OnDoc | OnLink | OnImg | OnMedia | OnEdit | OnBar | OnSel,$/;"	e	enum:__anon1ca5b3760203	file:
 OnBar	surf.c	/^	OnBar   = WEBKIT_HIT_TEST_RESULT_CONTEXT_SCROLLBAR,$/;"	e	enum:__anon1ca5b3760203	file:
@@ -152,7 +153,7 @@ buttons	config.def.h	/^static Button buttons[] = {$/;"	v	typeref:typename:Button
 buttons	config.h	/^static Button buttons[] = {$/;"	v	typeref:typename:Button[]
 cachedir	config.def.h	/^static char *cachedir       = "~\/.surf\/cache\/";$/;"	v	typeref:typename:char *
 cachedir	config.h	/^static char *cachedir       = "~\/.surf\/cache\/";$/;"	v	typeref:typename:char *
-castthis	castthis.c	/^castthis(GtkClipboard *clipboard, const char *text, gpointer d)$/;"	f	typeref:typename:void
+castthis	surf.c	/^castthis(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 cert	surf.c	/^	GTlsCertificate *cert, *failedcert;$/;"	m	struct:Client	typeref:typename:GTlsCertificate *	file:
 certdir	config.def.h	/^static char *certdir        = "~\/.surf\/certificates\/";$/;"	v	typeref:typename:char *
 certdir	config.h	/^static char *certdir        = "~\/.surf\/certificates\/";$/;"	v	typeref:typename:char *
@@ -226,7 +227,6 @@ install	Makefile	/^install: all$/;"	t
 keys	config.def.h	/^static Key keys[] = {$/;"	v	typeref:typename:Key[]
 keys	config.h	/^static Key keys[] = {$/;"	v	typeref:typename:Key[]
 keyval	surf.c	/^	guint keyval;$/;"	m	struct:__anon1ca5b3760608	typeref:typename:guint	file:
-launchVim	surf.c	/^launchVim(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 libsurf-webext.so	Makefile	/^libsurf-webext.so: $(WEBEXTOBJ)$/;"	t
 loadchanged	surf.c	/^loadchanged(WebKitWebView *v, WebKitLoadEvent e, Client *c)$/;"	f	typeref:typename:void
 loadcommitted	surf.c	/^static ParamName loadcommitted[] = {$/;"	v	typeref:typename:ParamName[]	file:
@@ -250,6 +250,7 @@ newview	surf.c	/^newview(Client *c, WebKitWebView *rv)$/;"	f	typeref:typename:We
 newwindow	surf.c	/^newwindow(Client *c, const Arg *a, int noembed)$/;"	f	typeref:typename:void
 next	libsurf-webext.c	/^	struct Page *next;$/;"	m	struct:Page	typeref:struct:Page *	file:
 next	surf.c	/^	struct Client *next;$/;"	m	struct:Client	typeref:struct:Client *	file:
+openinmpv	surf.c	/^openinmpv(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 options	Makefile	/^options:$/;"	t
 overtitle	surf.c	/^	const char *title, *overtitle, *targeturi;$/;"	m	struct:Client	typeref:typename:const char **	file:
 pageid	surf.c	/^	unsigned long pageid;$/;"	m	struct:Client	typeref:typename:unsigned long	file:
