@@ -233,6 +233,7 @@ static void destroywin(GtkWidget* w, Client *c);
 static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
 static void openinmpv(Client *c, const Arg *a);
 static void castthis(Client *c, const Arg *a);
+static void creatqr(Client *c, const Arg *a);
 static void reload(Client *c, const Arg *a);
 static void print(Client *c, const Arg *a);
 static void showcert(Client *c, const Arg *a);
@@ -1891,6 +1892,15 @@ castthis(Client *c, const Arg *a)
 	}else{
 		system("notify-send \"Cannot Cast\"");
 	}
+}
+
+void
+creatqr(Client *c, const Arg *a)
+{
+	char *command;
+	const char *url = (c->targeturi ? c->targeturi : geturi(c));
+		command = g_strdup_printf("qrencode -s 10 -o /tmp/surfQR.png \"%s\"; xdg-open /tmp/surfQR.png", url);
+		system(command);
 }
 
 void
