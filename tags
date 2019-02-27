@@ -223,6 +223,8 @@ id	libsurf-webext.c	/^	guint64 id;$/;"	m	struct:Page	typeref:typename:guint64	fi
 initwebextensions	surf.c	/^initwebextensions(WebKitWebContext *wc, Client *c)$/;"	f	typeref:typename:void
 insecure	surf.c	/^	int progress, fullscreen, https, insecure, errorpage;$/;"	m	struct:Client	typeref:typename:int	file:
 insecurecontent	surf.c	/^insecurecontent(WebKitWebView *v, WebKitInsecureContentEvent e, Client *c)$/;"	f	typeref:typename:void
+insert	surf.c	/^insert(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+insertmode	surf.c	/^static int insertmode = 0;$/;"	v	typeref:typename:int	file:
 inspector	surf.c	/^	WebKitWebInspector *inspector;$/;"	m	struct:Client	typeref:typename:WebKitWebInspector *	file:
 install	Makefile	/^install: all$/;"	t
 keys	config.def.h	/^static Key keys[] = {$/;"	v	typeref:typename:Key[]
