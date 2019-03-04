@@ -46,7 +46,6 @@ Frequently Asked Questions	FAQ.md	/^# Frequently Asked Questions$/;"	c
 GTKINC	config.mk	/^GTKINC = `pkg-config --cflags gtk+-3.0 gcr-3 webkit2gtk-4.0`$/;"	m
 GTKLIB	config.mk	/^GTKLIB = `pkg-config --libs gtk+-3.0 gcr-3 webkit2gtk-4.0`$/;"	m
 Geolocation	surf.c	/^	Geolocation,$/;"	e	enum:__anon1ca5b3760303	file:
-Gsurfing	README.md	/^# Gsurfing$/;"	c
 HideBackground	surf.c	/^	HideBackground,$/;"	e	enum:__anon1ca5b3760303	file:
 INCS	config.mk	/^INCS = $(X11INC) $(GTKINC)$/;"	m
 INDICATORS	surf.1	/^.SH INDICATORS OF OPERATION$/;"	s	title:SURF
