@@ -38,22 +38,22 @@ static Parameter defconfig[ParameterLast] = {
 	[Plugins]             =       { { .i = 1 },     },
 	[PreferredLanguages]  =       { { .v = (char *[]){ NULL } }, },
 	[RunInFullscreen]     =       { { .i = 0 },     },
-	[ScrollBars]          =       { { .i = 2 },     },
+	[ScrollBars]          =       { { .i = 1 },     },
 	[ShowIndicators]      =       { { .i = 1 },     },
 	[SiteQuirks]          =       { { .i = 1 },     },
 	[SmoothScrolling]     =       { { .i = 0 },     },
-	[SpellChecking]       =       { { .i = 1 },     },
+	[SpellChecking]       =       { { .i = 0 },     },
 	[SpellLanguages]      =       { { .v = ((char *[]){ "en_US", NULL }) }, },
 	[StrictTLS]           =       { { .i = 1 },     },
 	[Style]               =       { { .i = 1 },     },
-	[WebGL]               =       { { .i = 1 },     },
+	[WebGL]               =       { { .i = 0 },     },
 	[ZoomLevel]           =       { { .f = 1.0 },   },
 };
 
 static UriParameters uriparams[] = {
 	{ "(://|\\.)suckless\\.org(/|$)", {
 	  [JavaScript] = { { .i = 0 }, 1 },
-	  [Plugins]    = { { .i = 1 }, 1 },
+	  [Plugins]    = { { .i = 0 }, 1 },
 	}, },
 };
 
@@ -102,7 +102,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 /* DOWNLOAD(URI, referer) */
 #define DOWNLOAD(u, r) { \
         .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
-             "curl -g -L -J -O -A \"$1\" -b \"$2\" -c \"$2\"" \
+             "cd ~/Downloads; curl -g -L -J -O -A \"$1\" -b \"$2\" -c \"$2\"" \
              " -e \"$3\" \"$4\"; read", \
              "surf-download", useragent, cookiefile, r, u, NULL \
         } \
@@ -143,7 +143,6 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
-
 /* styles */
 /*
  * The iteration will stop at the first match, beginning at the beginning of
@@ -175,12 +174,11 @@ static Key keys[] = {
 	{ MODKEY,                	 GDK_KEY_o,      spawn,      SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
 	{ MODKEY,                	 GDK_KEY_slash,  spawn,      SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
 	// { MODKEY,                     GDK_KEY_i,      insert,     { .i = 1 } },
-	{ MODKEY,                     GDK_KEY_Escape, insert,     { .i = 0 } },
+	{ MODKEY,                    GDK_KEY_Escape, insert,     { .i = 0 } },
 	{ MODKEY,                	 GDK_KEY_m,      spawn,      BM_ADD("_SURF_URI") },
-	{ MODKEY,                GDK_KEY_i,      openinmpv,  { .i = 0 } },
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,      castthis,   { .i = 0 } },
-	{ MODKEY, 				 GDK_KEY_q,      creatqr,    { .i = 0 } },
-	{ MODKEY|MODKEY, 	 GDK_KEY_r,      reload,     { .i = 1 } },
+	{ MODKEY,                	 GDK_KEY_i,      openinmpv,  { .i = 0 } },
+	{ MODKEY|GDK_SHIFT_MASK, 	 GDK_KEY_i,      dhandler,   { .i = 0 } },
+	{ MODKEY|MODKEY, 			 GDK_KEY_r,      reload,     { .i = 1 } },
 	{ MODKEY,                	 GDK_KEY_r,      reload,     { .i = 0 } },
 
 	{ MODKEY,					 GDK_KEY_l,      navigate,   { .i = +1 } },
@@ -193,17 +191,17 @@ static Key keys[] = {
 	{ MODKEY,				 	 GDK_KEY_d,		 scrollv,    { .i = +50 } },
 	{ MODKEY,					 GDK_KEY_g,		 scrollv,    { .i = +150 } },
 	{ MODKEY|GDK_SHIFT_MASK,	 GDK_KEY_g,		 scrollv,    { .i = -150 } },
-	{ MODKEY,					 GDK_KEY_b,      scrollh,    { .i = +10 } },
-	{ MODKEY,					 GDK_KEY_e,      scrollh,    { .i = -10 } },
-	{ MODKEY,		 			 GDK_KEY_h,      scrollh,    { .i = -10 } },
-	{ MODKEY,		 			 GDK_KEY_l,      scrollh,    { .i = +10 } },
+	{ MODKEY,					 GDK_KEY_b,      scrollh,    { .i = -10 } },
+	{ MODKEY,					 GDK_KEY_e,      scrollh,    { .i = +10 } },
+	{ MODKEY|GDK_SHIFT_MASK,	 GDK_KEY_h,      scrollh,    { .i = -10 } },
+	{ MODKEY|GDK_SHIFT_MASK,	 GDK_KEY_l,      scrollh,    { .i = +10 } },
 
 
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_j,      zoom,       { .i = -1 } },
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_k,      zoom,       { .i = +1 } },
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_q,      zoom,       { .i = 0  } },
-	{ MODKEY,                GDK_KEY_minus,  zoom,       { .i = -1 } },
-	{ MODKEY,                GDK_KEY_plus,   zoom,       { .i = +1 } },
+	{ MODKEY|GDK_SHIFT_MASK,	 GDK_KEY_j,      zoom,       { .i = -1 } },
+	{ MODKEY|GDK_SHIFT_MASK,	 GDK_KEY_k,      zoom,       { .i = +1 } },
+	{ MODKEY|GDK_SHIFT_MASK,	 GDK_KEY_q,      zoom,       { .i = 0  } },
+	{ MODKEY,					 GDK_KEY_minus,  zoom,       { .i = -1 } },
+	{ MODKEY,					 GDK_KEY_plus,   zoom,       { .i = +1 } },
 
 	{ MODKEY,                	 GDK_KEY_p,      clipboard,  { .i = 1 } },
 	{ MODKEY,                	 GDK_KEY_y,      clipboard,  { .i = 0 } },
@@ -215,15 +213,15 @@ static Key keys[] = {
 	{ MODKEY,                	 GDK_KEY_n,      find,       { .i = +1 } },
 	{ MODKEY|GDK_SHIFT_MASK, 	 GDK_KEY_n,      find,       { .i = -1 } },
 
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_p,      print,      { 0 } },
+	{ MODKEY|GDK_SHIFT_MASK, 	 GDK_KEY_p,      print,      { 0 } },
 	{ MODKEY,                	 GDK_KEY_t,      newwindow,   { 0 } },
 	// { MODKEY,                GDK_KEY_t,      showcert,   { 0 } },
 
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_a,      togglecookiepolicy, { 0 } },
-	{ 0,                     GDK_KEY_F11,    togglefullscreen, { 0 } },
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,      toggleinspector, { 0 } },
+	{ MODKEY|GDK_SHIFT_MASK,	 GDK_KEY_a,      togglecookiepolicy, { 0 } },
+	{ 0,						 GDK_KEY_F11,    togglefullscreen, { 0 } },
+	{ MODKEY|GDK_SHIFT_MASK,	 GDK_KEY_i,      toggleinspector, { 0 } },
 
-	{ MODKEY,				 GDK_KEY_v,      toggle,     { .i = CaretBrowsing } },
+	{ MODKEY,				 	 GDK_KEY_v,      toggle,     { .i = CaretBrowsing } },
 	/* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } }, */
 	// { MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,      toggle,     { .i = Geolocation } },
 	// { MODKEY|GDK_SHIFT_MASK, GDK_KEY_s,      toggle,     { .i = JavaScript } },

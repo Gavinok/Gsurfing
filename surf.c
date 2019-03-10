@@ -119,14 +119,6 @@ typedef struct {
 	const Arg arg;
 } Key;
 
-/* typedef struct { */
-/* 	guint mod; */
-/* 	guint keyval; */
-/* 	void (*func)(Client *c, const Arg *a); */
-/* 	const Arg arg; */
-/* 	int mode; */
-/* } Key; */
-
 typedef struct {
 	unsigned int target;
 	unsigned int mask;
@@ -234,7 +226,7 @@ static void destroywin(GtkWidget* w, Client *c);
 static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
 static void openinmpv(Client *c, const Arg *a);
 static void castthis(Client *c, const Arg *a);
-static void creatqr(Client *c, const Arg *a);
+static void dhandler(Client *c, const Arg *a);
 static void reload(Client *c, const Arg *a);
 static void print(Client *c, const Arg *a);
 static void showcert(Client *c, const Arg *a);
@@ -584,7 +576,9 @@ loaduri(Client *c, const Arg *a)
 		if (apath != uri)
 			free(apath);
 	}
+
 	setatom(c, AtomUri, url);
+
 	if (strcmp(url, geturi(c)) == 0) {
 		reload(c, a);
 	} else {
@@ -1242,20 +1236,22 @@ newview(Client *c, WebKitWebView *rv)
 static gboolean
 readpipe(GIOChannel *s, GIOCondition ioc, gpointer unused)
 {
-	char msg[MSGBUFSZ];
-	gsize msgsz;
+	static char msg[MSGBUFSZ], msgsz;
 	GError *gerr = NULL;
 
-	if (g_io_channel_read_chars(s, msg, sizeof(msg), &msgsz, &gerr) !=
+	if (g_io_channel_read_chars(s, msg, sizeof(msg), NULL, &gerr) !=
 	    G_IO_STATUS_NORMAL) {
 		fprintf(stderr, "surf: error reading pipe: %s\n",
 		        gerr->message);
 		g_error_free(gerr);
 		return TRUE;
 	}
-	msg[msgsz] = '\0';
+	if ((msgsz = msg[0]) < 3) {
+		fprintf(stderr, "surf: message too short: %d\n", msgsz);
+		return TRUE;
+	}
 
-	switch (msg[1]) {
+	switch (msg[2]) {
 	case 'i':
 		close(pipein[1]);
 		close(pipeout[0]);
@@ -1808,25 +1804,6 @@ pasteuri(GtkClipboard *clipboard, const char *text, gpointer d)
 		loaduri((Client *) d, &a);
 }
 
-/* void */
-/* openinmpv(GtkClipboard *clipboard, const char *text, gpointer d) */
-/* { */
-/* 	char *command; */
-/* 	if (g_str_has_prefix(text, "https://www.you")) */
-/* 	{ */
-/* 		 */
-/*  */
-/* 		command = g_strdup_printf(" mpv -quiet --ytdl-format=18 %s >/dev/null 2>&1 &", text); */
-/* 		system("notify-send -i \"~/surf/surf.jpeg\" \"opening in mpv\""); */
-/* 		system(command); */
-/* 	}else{ */
-/* 		command = g_strdup_printf("linkhandler %s &", text); */
-/* 		printf("%s\n", command); */
-/* 		system(command); */
-/* 		system("notify-send \"not a youtube video\""); */
-/* 	} */
-/* } */
-
 void
 reload(Client *c, const Arg *a)
 {
@@ -1901,32 +1878,27 @@ castthis(Client *c, const Arg *a)
 }
 
 void
-creatqr(Client *c, const Arg *a)
+dhandler(Client *c, const Arg *a)
 {
 	char *command;
 	const char *url = (c->targeturi ? c->targeturi : geturi(c));
-		command = g_strdup_printf("qrencode -s 10 -o /tmp/surfQR.png \"%s\"; xdg-open /tmp/surfQR.png", url);
+		command = g_strdup_printf("dmenuhandler \"%s\"", url);
 		system(command);
 }
 
 void
 clipboard(Client *c, const Arg *a)
 {
-	switch (a->i) {
-		case 0:
-			gtk_clipboard_set_text(gtk_clipboard_get(
-								   GDK_SELECTION_PRIMARY), c->targeturi
-								   ? c->targeturi : geturi(c), -1);
-			break;
-		case 1:
-			gtk_clipboard_request_text(gtk_clipboard_get(
-									   GDK_SELECTION_PRIMARY),
-									   pasteuri, c);
-			break;
+	if (a->i) { /* load clipboard uri */
+		gtk_clipboard_request_text(gtk_clipboard_get(
+		                           GDK_SELECTION_PRIMARY),
+		                           pasteuri, c);
+	} else { /* copy uri */
+		gtk_clipboard_set_text(gtk_clipboard_get(
+		                       GDK_SELECTION_PRIMARY), c->targeturi
+		                       ? c->targeturi : geturi(c), -1);
 	}
 }
-
-
 
 void
 zoom(Client *c, const Arg *a)
@@ -1946,20 +1918,18 @@ zoom(Client *c, const Arg *a)
 static void
 msgext(Client *c, char type, const Arg *a)
 {
-	char msg[MSGBUFSZ] = { c->pageid, type, a->i, '\0' };
-	printf("%d\n",a->i);
-	if (pipeout[1]) {
-	if ((a->i == -150) || (a->i == 150)){
-			for (int i = 0; i < 155; ++i) {
-					if (write(pipeout[1], msg, sizeof(msg)) < 0)
-						fprintf(stderr, "surf: error sending: %s\n", msg);
-			}
-		}else{
-				if (write(pipeout[1], msg, sizeof(msg)) < 0)
-					fprintf(stderr, "surf: error sending: %s\n", msg);
-		}
+	static char msg[MSGBUFSZ];
+	int ret;
+
+	if ((ret = snprintf(msg, sizeof(msg), "%c%c%c%c",
+	                    4, c->pageid, type, a->i))
+	    >= sizeof(msg)) {
+		fprintf(stderr, "surf: message too long: %d\n", ret);
+		return;
 	}
 
+	if (pipeout[1] && write(pipeout[1], msg, sizeof(msg)) < 0)
+		fprintf(stderr, "surf: error sending: %.*s\n", ret-2, msg+2);
 }
 
 void
