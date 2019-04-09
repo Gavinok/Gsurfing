@@ -225,7 +225,6 @@ static void destroywin(GtkWidget* w, Client *c);
 /* Hotkeys */
 static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
 static void openinmpv(Client *c, const Arg *a);
-static void castthis(Client *c, const Arg *a);
 static void dhandler(Client *c, const Arg *a);
 static void reload(Client *c, const Arg *a);
 static void print(Client *c, const Arg *a);
@@ -244,6 +243,7 @@ static void find(Client *c, const Arg *a);
 static void insert(Client *c, const Arg *a);
 
 /* Buttons */
+static void clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h);
 static void clicknavigate(Client *c, const Arg *a, WebKitHitTestResult *h);
 static void clicknewwindow(Client *c, const Arg *a, WebKitHitTestResult *h);
 static void clickexternplayer(Client *c, const Arg *a, WebKitHitTestResult *h);
@@ -1849,31 +1849,14 @@ openinmpv(Client *c, const Arg *a)
 {
 	char *command;
 	const char *url = (c->targeturi ? c->targeturi : geturi(c));
-	if (g_str_has_prefix(url, "https://www.you"))
-	{
-		command = g_strdup_printf(" mpv -quiet --ytdl-format=18 %s >/dev/null 2>&1 &", url);
-		system("notify-send -i \"~/surf/surf.jpeg\" \"opening in mpv\"");
+	if (g_str_has_prefix(url, "https://www.you")){
+		command = g_strdup_printf("setsid mpv -quiet --ytdl-format=18 \"%s\" >/dev/null 2>&1 &", url);
+		system("setsid dunstify -t 1000 \"opening in mpv\" &");
 		system(command);
 	}else{
-		command = g_strdup_printf("linkhandler %s &", url);
-		printf("%s\n", command);
+		command = g_strdup_printf("setsid linkhandler \"%s\" &", url);
 		system(command);
-		system("notify-send \"not a youtube video\"");
-	}
-}
-
-void
-castthis(Client *c, const Arg *a)
-{
-	char *command;
-	const char *url = (c->targeturi ? c->targeturi : geturi(c));
-	if (g_str_has_prefix(url, "https://www.you"))
-	{
-		command = g_strdup_printf("youtube-dl -o - \"%s\" | castnow --quiet - &", url);
-		system("notify-send -i \"~/surf/surf.jpeg\" \"Casting\"");
-		system(command);
-	}else{
-		system("notify-send \"Cannot Cast\"");
+		system("setsid dunstify -t 1000 \"not a youtube video\" &");
 	}
 }
 
@@ -1882,8 +1865,23 @@ dhandler(Client *c, const Arg *a)
 {
 	char *command;
 	const char *url = (c->targeturi ? c->targeturi : geturi(c));
-		command = g_strdup_printf("dmenuhandler \"%s\"", url);
+		command = g_strdup_printf("setsid dmenuhandler \"%s\" &", url);
 		system(command);
+}
+
+void
+clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h)
+{
+	Arg arg;
+	arg.v = webkit_hit_test_result_get_link_uri(h);
+	if (g_str_has_prefix(arg.v, "https://www.you")){
+		char *command;
+		command = g_strdup_printf("setsid mpv -quiet --ytdl-format=18 \"%s\">/dev/null 2>&1 &", arg.v); 
+		system("setsid dunstify -t 1000 \"opening in mpv\" &");
+		system(command);
+	}else{
+		newwindow(c, &arg, a->i);
+	}
 }
 
 void
