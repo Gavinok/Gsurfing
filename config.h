@@ -98,7 +98,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
              "surf-setsearchprop", winid, r, s, p, NULL \
         } \
 }
-								
+                                
 /* DOWNLOAD(URI, referer) */
 #define DOWNLOAD(u, r) { \
         .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
@@ -122,7 +122,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 /* OPEN_IN_MPV(readprop) */
 #define OPEN_IN_MPV(r) {\
         .v = (const char *[]){ "/bin/sh", "-c", \
-             "echo $(xprop -id $0 $1) | cut -d '\"' -f2 ",\
+             "(echo $(xprop -id $0 $1) | cut -d '\"' -f2 | sed '' | mpv)", \
              winid, r, NULL \
         } \
 }
@@ -149,8 +149,8 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
  * the list.
  */
 static SiteSpecific styles[] = {
-	/* regexp               file in $styledir */
-	{ ".*",                 "default.css" },
+    /* regexp               file in $styledir */
+    { ".*",                 "default.css" },
 };
 
 /* certificates */
@@ -158,8 +158,8 @@ static SiteSpecific styles[] = {
  * Provide custom certificate for urls
  */
 static SiteSpecific certs[] = {
-	/* regexp               file in $certdir */
-	{ "://suckless\\.org/", "suckless.org.crt" },
+    /* regexp               file in $certdir */
+    { "://suckless\\.org/", "suckless.org.crt" },
 };
 
 #define MODKEY GDK_CONTROL_MASK
