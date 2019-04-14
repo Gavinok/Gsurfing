@@ -103,8 +103,16 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 #define DOWNLOAD(u, r) { \
         .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
              "cd ~/Downloads; curl -g -L -J -O -A \"$1\" -b \"$2\" -c \"$2\"" \
-             " -e \"$3\" \"$4\"; read", \
+             " -e \"$3\" \"$4\"", \
              "surf-download", useragent, cookiefile, r, u, NULL \
+        } \
+}
+
+//for quickly opening downloaded files
+#define VIEWFILE() { \
+        .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
+             "rifle ~/Downloads/`ls -t ~/Downloads | fzf`;", \
+             NULL \
         } \
 }
 
