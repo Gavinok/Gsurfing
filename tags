@@ -72,7 +72,6 @@ MSGBUFSZ	common.h	/^#define MSGBUFSZ /;"	d
 MediaManualPlay	surf.c	/^	MediaManualPlay,$/;"	e	enum:__anon1ca5b3760303	file:
 NAME	surf.1	/^.SH NAME$/;"	s	title:SURF
 OBJ	Makefile	/^OBJ = $(SRC:.c=.o)$/;"	m
-OPEN_IN_MPV	config.h	/^#define OPEN_IN_MPV(/;"	d
 OPTIONS	surf.1	/^.SH OPTIONS$/;"	s	title:SURF
 OnAny	surf.c	/^	OnAny   = OnDoc | OnLink | OnImg | OnMedia | OnEdit | OnBar | OnSel,$/;"	e	enum:__anon1ca5b3760203	file:
 OnBar	surf.c	/^	OnBar   = WEBKIT_HIT_TEST_RESULT_CONTEXT_SCROLLBAR,$/;"	e	enum:__anon1ca5b3760203	file:
@@ -124,7 +123,6 @@ UriParameters	surf.c	/^} UriParameters;$/;"	t	typeref:struct:__anon1ca5b3760908	
 VERSION	config.mk	/^VERSION = 2.0$/;"	m
 VIDEOPLAY	config.def.h	/^#define VIDEOPLAY(/;"	d
 VIDEOPLAY	config.h	/^#define VIDEOPLAY(/;"	d
-VIEWFILE	config.h	/^#define VIEWFILE(/;"	d
 WEBEXTCFLAGS	config.mk	/^WEBEXTCFLAGS = -fPIC $(WEBEXTINC)$/;"	m
 WEBEXTINC	config.mk	/^WEBEXTINC = `pkg-config --cflags webkit2gtk-4.0 webkit2gtk-web-extension-4.0`$/;"	m
 WEBEXTLIBS	config.mk	/^WEBEXTLIBS = `pkg-config --libs webkit2gtk-4.0 webkit2gtk-web-extension-4.0`$/;"	m
@@ -193,6 +191,7 @@ dhandler	surf.c	/^dhandler(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 die	common.c	/^die(const char *errstr, ...)$/;"	f	typeref:typename:void
 dist	Makefile	/^dist: distclean$/;"	t
 distclean	Makefile	/^distclean: clean$/;"	t
+dmenuhandlerpath	config.h	/^static char *dmenuhandlerpath = "\/home\/gavinok\/.scripts\/dmenu\/dmenuhandler";$/;"	v	typeref:typename:char *
 download	surf.c	/^download(Client *c, WebKitURIResponse *r)$/;"	f	typeref:typename:void
 downloadstarted	surf.c	/^downloadstarted(WebKitWebContext *wc, WebKitDownload *d, Client *c)$/;"	f	typeref:typename:void
 dpy	surf.c	/^static Display *dpy;$/;"	v	typeref:typename:Display *	file:

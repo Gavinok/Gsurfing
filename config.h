@@ -108,14 +108,6 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
-//for quickly opening downloaded files
-#define VIEWFILE() { \
-        .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
-             "rifle ~/Downloads/`ls -t ~/Downloads | fzf`;", \
-             NULL \
-        } \
-}
-
 /* BM_ADD(readprop) */
 #define BM_ADD(r) {\
         .v = (const char *[]){ "/bin/sh", "-c", \
@@ -123,14 +115,6 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
              "| sed '' && cat ~/.surf/bookmarks) " \
              "| awk '!seen[$0]++' > ~/.surf/bookmarks.tmp && " \
              "mv ~/.surf/bookmarks.tmp ~/.surf/bookmarks", \
-             winid, r, NULL \
-        } \
-}
-
-/* OPEN_IN_MPV(readprop) */
-#define OPEN_IN_MPV(r) {\
-        .v = (const char *[]){ "/bin/sh", "-c", \
-             "(echo $(xprop -id $0 $1) | cut -d '\"' -f2 | sed '' | mpv)", \
              winid, r, NULL \
         } \
 }
@@ -181,7 +165,6 @@ static Key keys[] = {
     /* modifier              keyval          function    arg */
     { MODKEY,                GDK_KEY_o,     spawn,              SETPROP("_SURF_URI",        "_SURF_GO",   PROMPT_GO) },
     { MODKEY,                GDK_KEY_slash, spawn,              SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
-    { MODKEY,                GDK_KEY_v,		spawn,              VIEWFILE() },
     // { MODKEY,                     GDK_KEY_i,      insert,     { .i = 1 } },
     // { MODKEY,                    GDK_KEY_Escape, insert,     { .i = 0 } },
     { MODKEY,                GDK_KEY_m,     spawn,              BM_ADD("_SURF_URI") },
@@ -202,7 +185,7 @@ static Key keys[] = {
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,     scrollv,            { .i = -150 } },
     { MODKEY,                GDK_KEY_b,     scrollv,            { .i = -100 } },
     { MODKEY,                GDK_KEY_f,     scrollv,            { .i = +100 } },
-    { MODKEY,                GDK_KEY_e,     scrollh,            { .i = +10 } },
+    // { MODKEY,                GDK_KEY_e,     scrollh,            { .i = +10 } },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_h,     scrollh,            { .i = -10 } },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_l,     scrollh,            { .i = +10 } },
 
@@ -224,7 +207,7 @@ static Key keys[] = {
     { 0,                     GDK_KEY_F11,   togglefullscreen,   { 0 } },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,     toggleinspector,    { 0 } },
 
-    // { MODKEY,                GDK_KEY_v,     toggle,             { .i = CaretBrowsing } },
+    { MODKEY,                GDK_KEY_v,     toggle,             { .i = CaretBrowsing } },
     /* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } }, */
     // { MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,      toggle,     { .i = Geolocation } },
     // { MODKEY|GDK_SHIFT_MASK, GDK_KEY_s,      toggle,     { .i = JavaScript } },
