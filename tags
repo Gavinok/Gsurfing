@@ -124,6 +124,7 @@ UriParameters	surf.c	/^} UriParameters;$/;"	t	typeref:struct:__anon1ca5b3760908	
 VERSION	config.mk	/^VERSION = 2.0$/;"	m
 VIDEOPLAY	config.def.h	/^#define VIDEOPLAY(/;"	d
 VIDEOPLAY	config.h	/^#define VIDEOPLAY(/;"	d
+VIEWFILE	config.h	/^#define VIEWFILE(/;"	d
 WEBEXTCFLAGS	config.mk	/^WEBEXTCFLAGS = -fPIC $(WEBEXTINC)$/;"	m
 WEBEXTINC	config.mk	/^WEBEXTINC = `pkg-config --cflags webkit2gtk-4.0 webkit2gtk-web-extension-4.0`$/;"	m
 WEBEXTLIBS	config.mk	/^WEBEXTLIBS = `pkg-config --libs webkit2gtk-4.0 webkit2gtk-web-extension-4.0`$/;"	m
