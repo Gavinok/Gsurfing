@@ -1847,26 +1847,28 @@ showcert(Client *c, const Arg *a)
 void
 openinmpv(Client *c, const Arg *a)
 {
-	char *command;
+	Arg arg;
 	const char *url = (c->targeturi ? c->targeturi : geturi(c));
 	if (g_str_has_prefix(url, "https://www.you")){
-		command = g_strdup_printf("setsid mpv -quiet --ytdl-format=18 \"%s\" >/dev/null 2>&1 &", url);
-		system("setsid dunstify -t 1000 \"opening in mpv\" &");
-		system(command);
+		arg.v = (const char *[]){ "mpv", "-quiet", "--ytdl-format=18", url,  NULL};
+		spawn(c, &arg);
+		arg.v = (const char *[]){ "notify-send", "playing video", NULL};
+		spawn(c, &arg);
 	}else{
-		command = g_strdup_printf("setsid linkhandler \"%s\" &", url);
-		system(command);
-		system("setsid dunstify -t 1000 \"not a youtube video\" &");
+		arg.v = (const char *[]){ "linkhandler", url, NULL};
+		spawn(c, &arg);
+		arg.v = (const char *[]){ "notify-send", "not a video", NULL};
+		spawn(c, &arg);
 	}
 }
 
 void
 dhandler(Client *c, const Arg *a)
 {
-	char *command;
 	const char *url = (c->targeturi ? c->targeturi : geturi(c));
-		command = g_strdup_printf("setsid dmenuhandler \"%s\" &", url);
-		system(command);
+	Arg arg;
+	arg.v = (const char *[]){ dmenuhandlerpath, url,  NULL};
+	spawn(c, &arg);
 }
 
 void
@@ -1875,10 +1877,10 @@ clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h)
 	Arg arg;
 	arg.v = webkit_hit_test_result_get_link_uri(h);
 	if (g_str_has_prefix(arg.v, "https://www.you")){
-		char *command;
-		command = g_strdup_printf("setsid mpv -quiet --ytdl-format=18 \"%s\">/dev/null 2>&1 &", arg.v); 
-		system("setsid dunstify -t 1000 \"opening in mpv\" &");
-		system(command);
+		arg.v = (const char *[]){ "mpv", "-quiet", "--ytdl-format=18", arg.v,  NULL};
+		spawn(c, &arg);
+		arg.v = (const char *[]){ "notify-send", "playing video", NULL};
+		spawn(c, &arg);
 	}else{
 		newwindow(c, &arg, a->i);
 	}
