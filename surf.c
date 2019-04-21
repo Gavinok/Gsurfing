@@ -1,3 +1,5 @@
+/*! TODO: implement new Window as a real keybinding
+ */
 /* See LICENSE file for copyright and license details.
  *
  * To understand surf, start reading main().
@@ -177,6 +179,7 @@ static void updatewinid(Client *c);
 static void handleplumb(Client *c, const char *uri);
 static void newwindow(Client *c, const Arg *a, int noembed);
 static void spawn(Client *c, const Arg *a);
+static void spawnnewclient(Client *c, const Arg *a);
 static void msgext(Client *c, char type, const Arg *a);
 static void destroyclient(Client *c);
 static void cleanup(void);
@@ -244,6 +247,7 @@ static void insert(Client *c, const Arg *a);
 
 /* Buttons */
 static void clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h);
+static void dclicker(Client *c, const Arg *a, WebKitHitTestResult *h);
 static void clicknavigate(Client *c, const Arg *a, WebKitHitTestResult *h);
 static void clicknewwindow(Client *c, const Arg *a, WebKitHitTestResult *h);
 static void clickexternplayer(Client *c, const Arg *a, WebKitHitTestResult *h);
@@ -1850,10 +1854,14 @@ openinmpv(Client *c, const Arg *a)
 	Arg arg;
 	const char *url = (c->targeturi ? c->targeturi : geturi(c));
 	if (g_str_has_prefix(url, "https://www.you")){
+	    if (a->i == 0) { //for normal playback
 		arg.v = (const char *[]){ "mpv", "-quiet", "--ytdl-format=18", url,  NULL};
-		spawn(c, &arg);
-		arg.v = (const char *[]){ "notify-send", "playing video", NULL};
-		spawn(c, &arg);
+	    }else{ //uses task spooler so videos are played one at a time
+		arg.v = (const char *[]){ "tsp", "mpv", "-quiet", "--ytdl-format=18", url,  NULL};
+	    }
+	    spawn(c, &arg);
+	    arg.v = (const char *[]){ "notify-send", "playing video", NULL};
+	    spawn(c, &arg);
 	}else{
 		arg.v = (const char *[]){ "linkhandler", url, NULL};
 		spawn(c, &arg);
@@ -1872,18 +1880,38 @@ dhandler(Client *c, const Arg *a)
 }
 
 void
+spawnnewclient(Client *c, const Arg *a)
+{
+    newclient(c);
+}
+void
+dclicker(Client *c, const Arg *a, WebKitHitTestResult *h)
+{
+	Arg arg;
+	arg.v = webkit_hit_test_result_get_link_uri(h);
+	arg.v = (const char *[]){ dmenuhandlerpath, arg.v,  NULL};
+	spawn(c, &arg);
+}
+
+void
 clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h)
 {
 	Arg arg;
 	arg.v = webkit_hit_test_result_get_link_uri(h);
-	if (g_str_has_prefix(arg.v, "https://www.you")){
-		arg.v = (const char *[]){ "mpv", "-quiet", "--ytdl-format=18", arg.v,  NULL};
+	// if you want native access to playing youtube videos in mpv 
+	//uncomment this if/else 
+	
+	/* if (g_str_has_prefix(arg.v, "https://www.you")){ */
+	/* 	arg.v = (const char *[]){ "mpv", "-quiet", "--ytdl-format=18", arg.v,  NULL}; */
+	/* 	spawn(c, &arg); */
+	/* 	arg.v = (const char *[]){ "notify-send", "playing video", NULL}; */
+	/* 	spawn(c, &arg); */
+	/* }else{ */
+		arg.v = (const char *[]){ "/home/gavinok/.scripts/linkhandler", arg.v,  NULL};
 		spawn(c, &arg);
-		arg.v = (const char *[]){ "notify-send", "playing video", NULL};
-		spawn(c, &arg);
-	}else{
-		newwindow(c, &arg, a->i);
-	}
+		/* arg.v = (const char *[]){ "notify-send", "opening link", NULL}; */
+		/* spawn(c, &arg); */
+	/* } */
 }
 
 void
