@@ -179,6 +179,7 @@ cookiepolicy_set	surf.c	/^cookiepolicy_set(const WebKitCookieAcceptPolicy p)$/;"
 createview	surf.c	/^createview(WebKitWebView *v, WebKitNavigationAction *a, Client *c)$/;"	f	typeref:typename:GtkWidget *
 createwindow	surf.c	/^createwindow(Client *c)$/;"	f	typeref:typename:GtkWidget *
 curconfig	surf.c	/^static Parameter *curconfig;$/;"	v	typeref:typename:Parameter *	file:
+dclicker	surf.c	/^dclicker(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
 decidenavigation	surf.c	/^decidenavigation(WebKitPolicyDecision *d, Client *c)$/;"	f	typeref:typename:void
 decidenewwindow	surf.c	/^decidenewwindow(WebKitPolicyDecision *d, Client *c)$/;"	f	typeref:typename:void
 decidepolicy	surf.c	/^decidepolicy(WebKitWebView *v, WebKitPolicyDecision *d,$/;"	f	typeref:typename:gboolean
