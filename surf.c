@@ -1,4 +1,4 @@
-/*! TODO: implement new Window as a real keybinding
+/*! TODO: add debugging option for using the title bar
  */
 /* See LICENSE file for copyright and license details.
  *

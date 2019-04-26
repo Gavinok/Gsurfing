@@ -168,7 +168,7 @@ static Key keys[] = {
     { MODKEY,                GDK_KEY_m,     spawn,              BM_ADD("_SURF_URI") },
     { MODKEY,                GDK_KEY_i,     openinmpv,          { .i = 1 } },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,     openinmpv,          { .i = 0 } },
-    { MODKEY,		     GDK_KEY_p,     dhandler,           { .i = 0 } },
+    { MODKEY,		     GDK_KEY_Return,dhandler,           { .i = 0 } },
     { MODKEY|MODKEY,         GDK_KEY_r,     reload,             { .i = 1 } },
     { MODKEY,                GDK_KEY_r,     reload,             { .i = 0 } },
 
