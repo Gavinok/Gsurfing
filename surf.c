@@ -234,6 +234,8 @@ static void print(Client *c, const Arg *a);
 static void showcert(Client *c, const Arg *a);
 static void clipboard(Client *c, const Arg *a);
 static void zoom(Client *c, const Arg *a);
+static void scrolltop(Client *c, const Arg *a);
+static void scrollbottom(Client *c, const Arg *a);
 static void scrollv(Client *c, const Arg *a);
 static void scrollh(Client *c, const Arg *a);
 static void navigate(Client *c, const Arg *a);
@@ -1968,6 +1970,16 @@ msgext(Client *c, char type, const Arg *a)
 		fprintf(stderr, "surf: error sending: %.*s\n", ret-2, msg+2);
 }
 
+void
+scrolltop(Client *c, const Arg *a)
+{
+	msgext(c, 'g', a);
+}
+void
+scrollbottom(Client *c, const Arg *a)
+{
+	msgext(c, 'G', a);
+}
 void
 scrollv(Client *c, const Arg *a)
 {

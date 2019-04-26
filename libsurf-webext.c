@@ -86,6 +86,19 @@ readpipe(GIOChannel *s, GIOCondition c, gpointer unused)
 		return TRUE;
 
 	switch (msg[2]) {
+	case 'g':
+		if (msgsz != 4)
+			return TRUE;
+		webkit_dom_dom_window_scroll_to(view,
+		                                0, 0);
+		break;
+	case 'G':
+		if (msgsz != 4)
+			return TRUE;
+		wh = webkit_dom_dom_window_get_inner_height(view);
+		webkit_dom_dom_window_scroll_to(view,
+		                                0, wh);
+		break;
 	case 'h':
 		if (msgsz != 4)
 			return TRUE;

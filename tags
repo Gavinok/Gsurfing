@@ -286,7 +286,9 @@ runscript	surf.c	/^runscript(Client *c)$/;"	f	typeref:typename:void
 runtabbed	surf-open.sh	/^runtabbed() {$/;"	f
 scriptfile	config.def.h	/^static char *scriptfile     = "~\/.surf\/script.js";$/;"	v	typeref:typename:char *
 scriptfile	config.h	/^static char *scriptfile     = "~\/.surf\/script.js";$/;"	v	typeref:typename:char *
+scrollbottom	surf.c	/^scrollbottom(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 scrollh	surf.c	/^scrollh(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+scrolltop	surf.c	/^scrolltop(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 scrollv	surf.c	/^scrollv(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 searchengines	config.h	/^static SearchEngine searchengines[] = {$/;"	v	typeref:typename:SearchEngine[]
 setatom	surf.c	/^setatom(Client *c, int a, const char *v)$/;"	f	typeref:typename:void
