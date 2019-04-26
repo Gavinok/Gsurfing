@@ -34,6 +34,9 @@
 #include "arg.h"
 #include "common.h"
 
+//adds toggle and page state to the title
+/* #define ENABLEDEBUG */
+
 #define LENGTH(x)               (sizeof(x) / sizeof(x[0]))
 #define CLEANMASK(mask)         (mask & (MODKEY|GDK_SHIFT_MASK))
 
@@ -661,20 +664,22 @@ updatetitle(Client *c)
 		gettogglestats(c);
 		getpagestats(c);
 
-		// removed garbage from title
-		/* if (c->progress != 100) */
-		/* 	title = g_strdup_printf("[%i%%] %s:%s | %s", */
-		/* 	        c->progress, togglestats, pagestats, name); */
-		/* else */
-		/* 	title = g_strdup_printf("%s:%s | %s", */
-		/* 	        togglestats, pagestats, name); */
-
+#if ENABLEDEBUG
 		if (c->progress != 100)
-			title = g_strdup_printf("[%i%%] | %s",
+			title = g_strdup_printf("[%i%%] %s:%s | %s",
+			        c->progress, togglestats, pagestats, name);
+		else
+			title = g_strdup_printf("%s:%s | %s",
+			        togglestats, pagestats, name);
+#else
+		// removed garbage from title
+		if (c->progress != 100)
+			title = g_strdup_printf("[%i%%] %s",
 			        c->progress, name);
 		else
 			title = g_strdup_printf("%s",
 			        name);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW(c->win), title);
 		g_free(title);
