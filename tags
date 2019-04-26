@@ -301,6 +301,7 @@ showxid	surf.c	/^static int showxid;$/;"	v	typeref:typename:int	file:
 sigchld	surf.c	/^sigchld(int unused)$/;"	f	typeref:typename:void
 sighup	surf.c	/^sighup(int unused)$/;"	f	typeref:typename:void
 spawn	surf.c	/^spawn(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+spawnnewclient	surf.c	/^spawnnewclient(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 stop	surf.c	/^stop(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 stopevent	surf.c	/^	unsigned int stopevent;$/;"	m	struct:__anon1ca5b3760708	typeref:typename:unsigned int	file:
 styledir	config.def.h	/^static char *styledir       = "~\/.surf\/styles\/";$/;"	v	typeref:typename:char *

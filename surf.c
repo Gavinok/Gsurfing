@@ -659,12 +659,20 @@ updatetitle(Client *c)
 		gettogglestats(c);
 		getpagestats(c);
 
+		// removed garbage from title
+		/* if (c->progress != 100) */
+		/* 	title = g_strdup_printf("[%i%%] %s:%s | %s", */
+		/* 	        c->progress, togglestats, pagestats, name); */
+		/* else */
+		/* 	title = g_strdup_printf("%s:%s | %s", */
+		/* 	        togglestats, pagestats, name); */
+
 		if (c->progress != 100)
-			title = g_strdup_printf("[%i%%] %s:%s | %s",
-			        c->progress, togglestats, pagestats, name);
+			title = g_strdup_printf("[%i%%] | %s",
+			        c->progress, name);
 		else
-			title = g_strdup_printf("%s:%s | %s",
-			        togglestats, pagestats, name);
+			title = g_strdup_printf("%s",
+			        name);
 
 		gtk_window_set_title(GTK_WINDOW(c->win), title);
 		g_free(title);
