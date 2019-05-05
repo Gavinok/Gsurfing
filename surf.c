@@ -134,11 +134,6 @@ typedef struct {
 } Button;
 
 typedef struct {
-	char *token;
-	char *uri;
-} SearchEngine;
-
-typedef struct {
 	const char *uri;
 	Parameter config[ParameterLast];
 	regex_t re;
@@ -208,7 +203,6 @@ static void progresschanged(WebKitWebView *v, GParamSpec *ps, Client *c);
 static void titlechanged(WebKitWebView *view, GParamSpec *ps, Client *c);
 static void mousetargetchanged(WebKitWebView *v, WebKitHitTestResult *h,
                                guint modifiers, Client *c);
-static gchar *parseuri(const gchar *uri);
 static gboolean permissionrequested(WebKitWebView *v,
                                     WebKitPermissionRequest *r, Client *c);
 static gboolean decidepolicy(WebKitWebView *v, WebKitPolicyDecision *d,
@@ -579,8 +573,7 @@ loaduri(Client *c, const Arg *a)
 			url = g_strdup_printf("file://%s", path);
 			free(path);
 		} else {
-			//start searchengines	
-			url = parseuri(uri);
+			url = g_strdup_printf("https://duckduckgo.com/?q=%s", uri);
 		}
 		if (apath != uri)
 			free(apath);
@@ -596,21 +589,6 @@ loaduri(Client *c, const Arg *a)
 	}
 
 	g_free(url);
-}
-
-gchar *
-parseuri(const gchar *uri) {
-	guint i;
-
-	for (i = 0; i < LENGTH(searchengines); i++) {
-		if (searchengines[i].token == NULL || searchengines[i].uri == NULL ||
-		    *(uri + strlen(searchengines[i].token)) != ' ')
-			continue;
-		if (g_str_has_prefix(uri, searchengines[i].token))
-			return g_strdup_printf(searchengines[i].uri,
-					       uri + strlen(searchengines[i].token) + 1);
-	}
-	return g_strdup_printf("https://duckduckgo.com/?q=%s", uri);
 }
 
 const char *
@@ -1870,9 +1848,9 @@ openinmpv(Client *c, const Arg *a)
 	const char *url = (c->targeturi ? c->targeturi : geturi(c));
 	if (g_str_has_prefix(url, "https://www.you")){
 	    if (a->i == 0) { //for normal playback
-		arg.v = (const char *[]){ "mpv", "-quiet", "--ytdl-format=18", url,  NULL};
+		arg.v = (const char *[]){ "mpv", "-quiet", "--ytdl-format=22", url,  NULL};
 	    }else{ //uses task spooler so videos are played one at a time
-		arg.v = (const char *[]){ "tsp", "mpv", "-quiet", "--ytdl-format=18", url,  NULL};
+		arg.v = (const char *[]){ "tsp", "mpv", "-quiet", "--ytdl-format=22", url,  NULL};
 	    }
 	    spawn(c, &arg);
 	    arg.v = (const char *[]){ "notify-send", "playing video", NULL};
@@ -1884,6 +1862,7 @@ openinmpv(Client *c, const Arg *a)
 		spawn(c, &arg);
 	}
 }
+
 
 void
 dhandler(Client *c, const Arg *a)
@@ -1928,7 +1907,6 @@ clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h)
 		/* spawn(c, &arg); */
 	/* } */
 }
-
 void
 clipboard(Client *c, const Arg *a)
 {
@@ -1980,11 +1958,12 @@ scrolltop(Client *c, const Arg *a)
 {
 	msgext(c, 'g', a);
 }
-void
-scrollbottom(Client *c, const Arg *a)
-{
-	msgext(c, 'G', a);
-}
+// not currently working properly
+/* void */
+/* scrollbottom(Client *c, const Arg *a) */
+/* { */
+/* 	msgext(c, 'G', a); */
+/* } */
 void
 scrollv(Client *c, const Arg *a)
 {

@@ -57,18 +57,6 @@ static UriParameters uriparams[] = {
     }, },
 };
 
-static SearchEngine searchengines[] = {
-    { "g",   "http://www.google.de/search?q=%s"   },
-    { "leo", "http://dict.leo.org/ende?search=%s" },
-    { "d",	 "https://duckduckgo.com/?q=%s" },
-    { "y",	 "https://www.youtube.com/results?search_query=%s" },
-    { "aw",	 "https://wiki.archlinux.org/index.php?search=%s" },
-    { "gh",	 "https://duckduckgo.com/?q=!gh %s" },
-    { "am",	 "https://duckduckgo.com/?q=!a %s" },
-    { "eb",	 "https://duckduckgo.com/?q=!e %s" },
-    { "math",	 "https://duckduckgo.com/?q=!wa %s" },
-};
-
 /* default window size: width, height */
 static int winsize[] = { 800, 600 };
 
@@ -89,6 +77,13 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
+#define PASS(p) { \
+        .v = (const char *[]){ "/bin/sh", "-c", \
+             "passmenu --type -b -l 10 -p \"$1\" -w \"$0\"", \
+              winid, p, NULL \
+        } \
+}
+
 /* SETSEARCHPROP(readprop, setprop, prompt)*/
 #define SETSEARCHPROP(r, s, p) { \
         .v = (const char *[]){ "/bin/sh", "-c", \
@@ -103,7 +98,8 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 #define DOWNLOAD(u, r) { \
         .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
              "cd ~/Downloads; curl -g -L -J -O -A \"$1\" -b \"$2\" -c \"$2\"" \
-             " -e \"$3\" \"$4\"", \
+             " -e \"$3\" \"$4\" && notify-send \"Download Completed\" && exit" \
+             "notify-send \"Download Failed\"", \
              "surf-download", useragent, cookiefile, r, u, NULL \
         } \
 }
@@ -164,6 +160,7 @@ static SiteSpecific certs[] = {
 static Key keys[] = {
     /* modifier              keyval          function    arg */
     { MODKEY,                GDK_KEY_o,     spawn,              SETPROP("_SURF_URI",        "_SURF_GO",   PROMPT_GO) },
+    { MODKEY,                GDK_KEY_e,     spawn,              PASS("Select_Password") },
     { MODKEY,                GDK_KEY_slash, spawn,              SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
     { MODKEY,                GDK_KEY_m,     spawn,              BM_ADD("_SURF_URI") },
     { MODKEY,                GDK_KEY_i,     openinmpv,          { .i = 1 } },
@@ -181,10 +178,9 @@ static Key keys[] = {
     { MODKEY,                GDK_KEY_u,     scrollv,            { .i = -50 } },
     { MODKEY,                GDK_KEY_d,     scrollv,            { .i = +50 } },
     { MODKEY,                GDK_KEY_g,     scrolltop,          { .i = +1 } },
-    { MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,     scrollbottom,       { .i = -1 } },
+    /* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,     scrollbottom,       { .i = -1 } }, */
     { MODKEY,                GDK_KEY_b,     scrollv,            { .i = -100 } },
     { MODKEY,                GDK_KEY_f,     scrollv,            { .i = +100 } },
-    // { MODKEY,                GDK_KEY_e,     scrollh,            { .i = +10 } },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_h,     scrollh,            { .i = -10 } },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_l,     scrollh,            { .i = +10 } },
 
@@ -201,12 +197,13 @@ static Key keys[] = {
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_n,     find,               { .i = -1 } },
 
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_p,     print,              { 0 } },
-    { MODKEY,                GDK_KEY_t,     spawnnewclient,          { 0 } },
+    { MODKEY,                GDK_KEY_t,     spawnnewclient,     { 0 } },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_a,     togglecookiepolicy, { 0 } },
     { 0,                     GDK_KEY_F11,   togglefullscreen,   { 0 } },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,     toggleinspector,    { 0 } },
 
     { MODKEY,                GDK_KEY_v,     toggle,             { .i = CaretBrowsing } },
+    { 0,		     GDK_KEY_grave, navigate,		{ .i = -1 } },
     /* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } }, */
     // { MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,      toggle,     { .i = Geolocation } },
     // { MODKEY|GDK_SHIFT_MASK, GDK_KEY_s,      toggle,     { .i = JavaScript } },
