@@ -155,13 +155,16 @@ Scrolls page downwards.
 .B Ctrl\-b
 Scroll up one whole page view.
 .TP
-.B Ctrl\-Space
+.B Ctrl\-f
 Scroll down one whole page view.
 .TP
-.B Ctrl\-i
+.\" .B Ctrl\-Space
+.\" Scroll down one whole page view.
+.TP
+.B Ctrl\-Shift\-l
 Scroll horizontally to the right.
 .TP
-.B Ctrl\-u
+.B Ctrl\-Shift\-h
 Scroll horizontally to the left.
 .TP
 .B Ctrl\-Shift\-k or Ctrl\-+
@@ -173,7 +176,7 @@ Zooms page out.
 .B Ctrl\-Shift\-q
 Resets Zoom.
 .TP
-.B Ctrl\-f and Ctrl\-/
+.B Ctrl\-/
 Opens the search-bar.
 .TP
 .B Ctrl\-n
@@ -182,8 +185,20 @@ Go to next search result.
 .B Ctrl\-Shift\-n
 Go to previous search result.
 .TP
-.B Ctrl\-g
-Opens the URL-bar (requires dmenu installed).
+.B Ctrl\-o
+Opens the URL-bar use Shift\-Return to force URL (requires dmenu installed).
+.TP
+.B Ctrl\-e
+Open passmenu (requires dmenu installed).
+.TP
+.B Ctrl\-i
+Open link/current page with linkhandeler (requires linkhandler installed).
+.TP
+.B Ctrl\-Return
+Open link with dmenuhandler (requires dmenu & dmenuhandler installed).
+.TP
+.B Ctrl\-m
+marks the current website in ~/.surf/bookmarks
 .TP
 .B Ctrl\-p
 Loads URI from primary selection.
@@ -200,8 +215,10 @@ Reloads the website without using the cache.
 .B Ctrl\-y
 Copies current URI to primary selection.
 .TP
+.\" .B Ctrl\-t
+.\" Display the current TLS certificate in a popup window.
 .B Ctrl\-t
-Display the current TLS certificate in a popup window.
+Spawns a new window
 .TP
 .B Ctrl\-Shift\-a
 Toggle through the the
@@ -210,8 +227,9 @@ This will not reload the page.
 .TP
 .B Ctrl\-Shift\-b
 Toggle scrollbars. This will reload the page.
+
 .TP
-.B Ctrl\-Shift\-c
+.B Ctrl\-v
 Toggle caret browsing. This will reload the page.
 .TP
 .B Ctrl\-Shift\-i
