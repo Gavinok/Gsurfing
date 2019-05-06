@@ -187,10 +187,10 @@ static Key keys[] = {
     { MODKEY,                GDK_KEY_k,     scrollv,            { .i = -10 } },
     { MODKEY,                GDK_KEY_u,     scrollv,            { .i = -50 } },
     { MODKEY,                GDK_KEY_d,     scrollv,            { .i = +50 } },
-    { MODKEY,                GDK_KEY_g,     scrolltop,          { .i = +1 } },
-    /* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,     scrollbottom,       { .i = -1 } }, */
     { MODKEY,                GDK_KEY_b,     scrollv,            { .i = -100 } },
     { MODKEY,                GDK_KEY_f,     scrollv,            { .i = +100 } },
+    { MODKEY,                GDK_KEY_g,     scrolltolim,        { .i = -1 } },
+    { MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,     scrolltolim,        { .i = +1 } },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_h,     scrollh,            { .i = -10 } },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_l,     scrollh,            { .i = +10 } },
 
