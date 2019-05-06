@@ -7,7 +7,7 @@ Dependancies:
 - gcr
 
 ### recommended
-- ca   ( certificates )
+- ca-certificates
 - curl ( default download handler )
 - st   ( default terminal for curl )
 - mpv  ( default video player )
@@ -24,6 +24,21 @@ Notes Form Gavin
 - hopefully I can remove the dependency on passmenu
 - runs into issues when focuse is taken away from surf
 - to simply copy the password to clipboard remove the --type arg in PASS()
+
+## Patches
+### [suckless.org](suckless.org)
+- [Bookmarks](https://surf.suckless.org/patches/bookmarking/surf-bookmarks-20170722-723ff26.diff)
+### Personal
+- open a web page with linkhandler script
+- open a web page with dmenuhandler script
+- open middle clicked link with linkhandler
+- open control-middle clicked link with dmenuhandler
+- scrolling no longer relies on depreciated code
+- scroll directly to top and bottom of screen with ctrl-g and ctrl-shift-g respectively
+- if the URL is not a full link is used it is searched with duckduckgo 
+    - this allows you to use !Bang searching in dmenu
+- removed togglestats, and pagestats from title to look better with dwm
+
 	
 p.s. For more help checkout [Surf Demystified](http://troubleshooters.com/linux/surf.htm)
 
