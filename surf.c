@@ -232,8 +232,7 @@ static void print(Client *c, const Arg *a);
 static void showcert(Client *c, const Arg *a);
 static void clipboard(Client *c, const Arg *a);
 static void zoom(Client *c, const Arg *a);
-static void scrolltop(Client *c, const Arg *a);
-static void scrollbottom(Client *c, const Arg *a);
+static void scrolltolim(Client *c, const Arg *a);
 static void scrollv(Client *c, const Arg *a);
 static void scrollh(Client *c, const Arg *a);
 static void navigate(Client *c, const Arg *a);
@@ -1955,26 +1954,29 @@ msgext(Client *c, char type, const Arg *a)
 }
 
 void
-scrolltop(Client *c, const Arg *a)
+scrolltolim(Client *c, const Arg *a)
 {
-	msgext(c, 'g', a);
+	if(a->i == +1){
+	    evalscript(c, "window.scrollTo(0, document.body.scrollHeight)");
+	    return;
+	}
+	evalscript(c, "window.scrollTo(0,0);");
 }
-// not currently working properly
-/* void */
-/* scrollbottom(Client *c, const Arg *a) */
-/* { */
-/* 	msgext(c, 'G', a); */
-/* } */
+
 void
 scrollv(Client *c, const Arg *a)
 {
-	msgext(c, 'v', a);
+	/* msgext(c, 'v', a); */
+	//removes reliance on Deprecated code
+	evalscript(c, "window.scrollBy(0,%d);", (a->i * 10));
 }
 
 void
 scrollh(Client *c, const Arg *a)
 {
-	msgext(c, 'h', a);
+	/* msgext(c, 'h', a); */
+	//removes reliance on Deprecated code
+	evalscript(c, "window.scrollBy(%d,0);", (a->i * 10));
 }
 
 void

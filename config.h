@@ -212,7 +212,7 @@ static Key keys[] = {
     { 0,                     GDK_KEY_F11,   togglefullscreen,   { 0 } },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,     toggleinspector,    { 0 } },
 
-    { MODKEY,                GDK_KEY_v,     toggle,             { .i = CaretBrowsing } },
+    // { MODKEY,                GDK_KEY_v,     toggle,             { .i = CaretBrowsing } },
     { 0,		     GDK_KEY_grave, navigate,		{ .i = -1 } },
     /* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } }, */
     // { MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,      toggle,     { .i = Geolocation } },
