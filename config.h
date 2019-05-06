@@ -80,7 +80,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 
 #define PASS(p) { \
         .v = (const char *[]){ "/bin/sh", "-c", \
-             "passmenu --type -b -l 10 -p \"$1\" -w \"$0\"", \
+             "mypassmenu --type -b -l 10 -p \"$1\" -w \"$0\"", \
               winid, p, NULL \
         } \
 }
