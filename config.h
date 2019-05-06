@@ -114,6 +114,15 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
              winid, r, NULL \
         } \
 }
+
+/* BM_EDIT() */
+#define BM_EDIT() {\
+        .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
+             "$EDITOR ~/.surf/bookmarks", \
+              NULL \
+        } \
+}
+
 /* PLUMB(URI) */
 /* This called when some URI which does not begin with "about:",
  * "http://" or "https://" should be opened.
