@@ -224,7 +224,8 @@ static void destroywin(GtkWidget* w, Client *c);
 
 /* Hotkeys */
 static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
-static void openinmpv(Client *c, const Arg *a);
+static void lhandler(Client *c, const Arg *a);
+static void prompt(Client *c, const Arg *a);
 static void dhandler(Client *c, const Arg *a);
 static void reload(Client *c, const Arg *a);
 static void print(Client *c, const Arg *a);
@@ -1842,25 +1843,28 @@ showcert(Client *c, const Arg *a)
 }
 
 void
-openinmpv(Client *c, const Arg *a)
+prompt(Client *c, const Arg *a)
 {
-	Arg arg;
-	const char *url = (c->targeturi ? c->targeturi : geturi(c));
+	evalscript(c, "window.scrollBy(0,-100)");
+}
+
+void
+lhandler(Client *c, const Arg *a)
+{
+    Arg arg;
+    const char *url = (c->targeturi ? c->targeturi : geturi(c));
+    if(a->i == 0){
 	if (g_str_has_prefix(url, "https://www.you")){
-	    if (a->i == 0) { //for normal playback
-		arg.v = (const char *[]){ "mpv", "-quiet", "--ytdl-format=22", url,  NULL};
-	    }else{ //uses task spooler so videos are played one at a time
-		arg.v = (const char *[]){ "tsp", "mpv", "-quiet", "--ytdl-format=22", url,  NULL};
-	    }
-	    spawn(c, &arg);
-	    arg.v = (const char *[]){ "notify-send", "playing video", NULL};
-	    spawn(c, &arg);
+	    arg.v = (const char *[]){ "mpv", "--really-quiet", "--ytdl-format=22", url,  NULL}; spawn(c, &arg);
+	    arg.v = (const char *[]){ "notify-send", "playing video", NULL}; spawn(c, &arg);
 	}else{
-		arg.v = (const char *[]){ "linkhandler", url, NULL};
-		spawn(c, &arg);
-		arg.v = (const char *[]){ "notify-send", "not a video", NULL};
-		spawn(c, &arg);
+		arg.v = (const char *[]){ linkhandlerpath, url, NULL};	spawn(c, &arg);
+		arg.v = (const char *[]){ "notify-send", "not a video", NULL}; spawn(c, &arg);
 	}
+	return;
+    }
+	arg.v = (const char *[]){ dmenuhandlerpath, url,  NULL};
+	spawn(c, &arg);
 }
 
 
@@ -1878,6 +1882,7 @@ spawnnewclient(Client *c, const Arg *a)
 {
     newclient(c);
 }
+
 void
 dclicker(Client *c, const Arg *a, WebKitHitTestResult *h)
 {
@@ -1892,20 +1897,16 @@ clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h)
 {
 	Arg arg;
 	arg.v = webkit_hit_test_result_get_link_uri(h);
-	// if you want native access to playing youtube videos in mpv 
-	//uncomment this if/else 
-	
-	/* if (g_str_has_prefix(arg.v, "https://www.you")){ */
-	/* 	arg.v = (const char *[]){ "mpv", "-quiet", "--ytdl-format=18", arg.v,  NULL}; */
-	/* 	spawn(c, &arg); */
-	/* 	arg.v = (const char *[]){ "notify-send", "playing video", NULL}; */
-	/* 	spawn(c, &arg); */
-	/* }else{ */
-		arg.v = (const char *[]){ "/home/gavinok/.scripts/linkhandler", arg.v,  NULL};
+	// set a->i to 0 if you want native access to playing 
+	if ( (g_str_has_prefix(arg.v, "https://www.you")) && (a->i == 0) ){
+		arg.v = (const char *[]){ "mpv", "--really-quiet", "--ytdl-format=18", arg.v,  NULL};
 		spawn(c, &arg);
-		/* arg.v = (const char *[]){ "notify-send", "opening link", NULL}; */
-		/* spawn(c, &arg); */
-	/* } */
+		arg.v = (const char *[]){ "notify-send", "playing video", NULL};
+		spawn(c, &arg);
+		return;
+	}
+	arg.v = (const char *[]){ linkhandlerpath, arg.v,  NULL};
+	spawn(c, &arg);
 }
 void
 clipboard(Client *c, const Arg *a)

@@ -177,6 +177,9 @@ static Key keys[] = {
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,     openinmpv,          { .i = 0 } },
     { MODKEY,		     GDK_KEY_Return,dhandler,           { .i = 0 } },
     { MODKEY|MODKEY,         GDK_KEY_r,     reload,             { .i = 1 } },
+    { MODKEY,                GDK_KEY_i,     lhandler,		{ .i = 0 } },
+    { MODKEY,		     GDK_KEY_Return,lhandler,           { .i = 1 } },
+    { MODKEY|GDK_SHIFT_MASK, GDK_KEY_r,     reload,             { .i = 1 } },
     { MODKEY,                GDK_KEY_r,     reload,             { .i = 0 } },
 
     { MODKEY,                GDK_KEY_l,     navigate,           { .i = +1 } },
