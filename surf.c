@@ -1953,6 +1953,7 @@ msgext(Client *c, char type, const Arg *a)
 		fprintf(stderr, "surf: error sending: %.*s\n", ret-2, msg+2);
 }
 
+//Requires javascript to be enabled
 void
 scrolltolim(Client *c, const Arg *a)
 {
@@ -1966,17 +1967,19 @@ scrolltolim(Client *c, const Arg *a)
 void
 scrollv(Client *c, const Arg *a)
 {
-	/* msgext(c, 'v', a); */
-	//removes reliance on Deprecated code
+	//if javascript is enabled
 	evalscript(c, "window.scrollBy(0,%d);", (a->i * 10));
+	//else
+	/* msgext(c, 'v', a); */
 }
 
 void
 scrollh(Client *c, const Arg *a)
 {
-	/* msgext(c, 'h', a); */
-	//removes reliance on Deprecated code
+	//if javascript is enabled
 	evalscript(c, "window.scrollBy(%d,0);", (a->i * 10));
+	//else
+	/* msgext(c, 'h', a); */
 }
 
 void
