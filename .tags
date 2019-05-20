@@ -19,10 +19,11 @@ AcceleratedCanvas	surf.c	/^	AcceleratedCanvas,$/;"	e	enum:__anon1ca5b3760303	fil
 AccessMicrophone	surf.c	/^	AccessMicrophone,$/;"	e	enum:__anon1ca5b3760303	file:
 AccessWebcam	surf.c	/^	AccessWebcam,$/;"	e	enum:__anon1ca5b3760303	file:
 Arg	surf.c	/^} Arg;$/;"	t	typeref:union:__anon1ca5b376040a	file:
-AtomFind	surf.c	/^enum { AtomFind, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
-AtomGo	surf.c	/^enum { AtomFind, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
-AtomLast	surf.c	/^enum { AtomFind, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
-AtomUri	surf.c	/^enum { AtomFind, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
+AtomFind	surf.c	/^enum { AtomFind, AtomSearch, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
+AtomGo	surf.c	/^enum { AtomFind, AtomSearch, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
+AtomLast	surf.c	/^enum { AtomFind, AtomSearch, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
+AtomSearch	surf.c	/^enum { AtomFind, AtomSearch, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
+AtomUri	surf.c	/^enum { AtomFind, AtomSearch, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
 BM_ADD	config.h	/^#define BM_ADD(/;"	d
 BM_EDIT	config.h	/^#define BM_EDIT(/;"	d
 BUGS	surf.1	/^.SH BUGS$/;"	s	title:SURF
@@ -107,6 +108,7 @@ Requirements	README.md	/^Requirements$/;"	s
 RunInFullscreen	surf.c	/^	RunInFullscreen,$/;"	e	enum:__anon1ca5b3760303	file:
 Running surf	README.md	/^Running surf$/;"	s
 Running surf in tabbed	README.md	/^Running surf in tabbed$/;"	s
+SEARCH	config.h	/^#define SEARCH(/;"	d
 SEE	surf.1	/^.SH SEE ALSO$/;"	s	title:SURF
 SETPROP	config.def.h	/^#define SETPROP(/;"	d
 SETPROP	config.h	/^#define SETPROP(/;"	d
@@ -142,7 +144,7 @@ X11INC	config.mk	/^X11INC = `pkg-config --cflags x11`$/;"	m
 X11LIB	config.mk	/^X11LIB = `pkg-config --libs x11`$/;"	m
 ZoomLevel	surf.c	/^	ZoomLevel,$/;"	e	enum:__anon1ca5b3760303	file:
 [suckless.org](suckless.org)	README.md	/^### [suckless.org](suckless.org)$/;"	S
-__anon1ca5b3760103	surf.c	/^enum { AtomFind, AtomGo, AtomUri, AtomLast };$/;"	g	file:
+__anon1ca5b3760103	surf.c	/^enum { AtomFind, AtomSearch, AtomGo, AtomUri, AtomLast };$/;"	g	file:
 __anon1ca5b3760203	surf.c	/^enum {$/;"	g	file:
 __anon1ca5b3760303	surf.c	/^typedef enum {$/;"	g	file:
 __anon1ca5b376040a	surf.c	/^typedef union {$/;"	u	file:
@@ -309,6 +311,8 @@ scriptfile	config.h	/^static char *scriptfile		= "~\/.surf\/script.js";$/;"	v	ty
 scrollh	surf.c	/^scrollh(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 scrolltolim	surf.c	/^scrolltolim(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 scrollv	surf.c	/^scrollv(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+search	surf.c	/^search(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+searchurl	config.h	/^static char *searchurl      = "duckduckgo.com\/?q=%s";$/;"	v	typeref:typename:char *
 setatom	surf.c	/^setatom(Client *c, int a, const char *v)$/;"	f	typeref:typename:void
 setcert	surf.c	/^setcert(Client *c, const char *uri)$/;"	f	typeref:typename:void
 setparameter	surf.c	/^setparameter(Client *c, int refresh, ParamName p, const Arg *a)$/;"	f	typeref:typename:void
