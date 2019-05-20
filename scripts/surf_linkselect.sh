@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env dash
 #
 # surf_linkselect.sh:
 #  Usage:
@@ -11,9 +11,9 @@
 #    result is printed to STDOUT.
 #
 #  Dependencies:
-#    xmllint, awk, dmenu
+#    xmllint, awk, dmenu, dash
 
-function dump_links_with_titles() {
+dump_links_with_titles() {
   awk '{
     input = $0;
 
@@ -33,11 +33,11 @@ function dump_links_with_titles() {
   }'
 }
 
-function link_normalize() {
+link_normalize() {
   URI=$1
   # URI=$( echo "$1" | sed 's/^\/\//https:\/\//')
   # notify-send $URI; 
-  awk -v uri=$URI '{
+  awk -v uri="$URI" '{
     if ($0 ~ /^https?:\/\//  || $0 ~ /^\/\/.+$/) {
       print $0;
     } else if ($0 ~/^#/) {
@@ -58,7 +58,7 @@ function link_normalize() {
   }'
 }
 
-function link_select() {
+link_select() {
   SURF_WINDOW=$1
   DMENU_PROMPT=$2
   tr -d '\n\r' |
@@ -66,10 +66,10 @@ function link_select() {
     dump_links_with_titles |
     sort |
     uniq |
-    dmenu -p "$DMENU_PROMPT" -l 10 -i -w $SURF_WINDOW |
+    dmenu -p "$DMENU_PROMPT" -l 10 -i -w "$SURF_WINDOW" |
     awk -F' ' '{print $NF}' | 
     sed 's/^\/\//https:\/\//' |
-    link_normalize $(xprop -id $SURF_WINDOW _SURF_URI | cut -d '"' -f 2)
+    link_normalize "$(xprop -id "$SURF_WINDOW" _SURF_URI | cut -d '"' -f 2)"
 }
 
 link_select "$1" "$2"
