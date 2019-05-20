@@ -170,6 +170,7 @@ static char *editscreen[] = { "/bin/sh", "-c", "~/.config/Gsurfing/scripts/edit_
  */
 static SiteSpecific styles[] = {
     /* regexp               file in $styledir */
+    { ".*.suckless.org.*",    "suckless.css" },
     { ".*",                 "default.css" },
 };
 
