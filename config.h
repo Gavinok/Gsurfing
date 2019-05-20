@@ -43,11 +43,11 @@ static Parameter defconfig[ParameterLast] = {
     [ShowIndicators]      =       { { .i = 1 },     },
     [SiteQuirks]          =       { { .i = 1 },     },
     [SmoothScrolling]     =       { { .i = 1 },     },
-    [SpellChecking]       =       { { .i = 0 },     },
+    [SpellChecking]       =       { { .i = 1 },     },
     [SpellLanguages]      =       { { .v = ((char *[]){ "en_US", NULL }) }, },
     [StrictTLS]           =       { { .i = 1 },     },
     [Style]               =       { { .i = 1 },     },
-    [WebGL]               =       { { .i = 0 },     },
+    [WebGL]               =       { { .i = 1 },     },
     [ZoomLevel]           =       { { .f = 1.0 },   },
 };
 
@@ -80,7 +80,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 
 #define PASS(p) { \
         .v = (const char *[]){ "/bin/sh", "-c", \
-             "mypassmenu --type -b -l 10 -p \"$1\" -w \"$0\"", \
+             "mypassmenu --type -l 10 -p \"$1\" -w \"$0\"", \
               winid, p, NULL \
         } \
 }
@@ -141,6 +141,17 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
+static char *linkselect_curwin [] = { "/bin/sh", "-c",
+	"~/.config/Gsurfing/scripts/surf_linkselect.sh $0 'Link' | xargs -r xprop -id $0 -f _SURF_GO 8s -set _SURF_GO",
+	winid, NULL
+};
+static char *linkselect_newwin [] = { "/bin/sh", "-c",
+	"~/.config/Gsurfing/scripts/surf_linkselect.sh $0 'Link (new window)' | xargs -r surf",
+	winid, NULL
+};
+
+static char *editscreen[] = { "/bin/sh", "-c", "~/.config/Gsurfing/scripts/edit_screen.sh", NULL };
+
 /* styles */
 /*
  * The iteration will stop at the first match, beginning at the beginning of
@@ -169,8 +180,11 @@ static SiteSpecific certs[] = {
  */
 static Key keys[] = {
     /* modifier              keyval          function    arg */
+    { MODKEY,                GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_curwin } },
+    { GDK_SHIFT_MASK|MODKEY, GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_newwin } },
+    { MODKEY,		     GDK_KEY_e,		externalpipe,	{ .v = editscreen } },
     { MODKEY,                GDK_KEY_o,     spawn,              SETPROP("_SURF_URI",        "_SURF_GO",   PROMPT_GO) },
-    { MODKEY,                GDK_KEY_e,     spawn,              PASS("Select_Password") },
+    { MODKEY,                GDK_KEY_w,     spawn,              PASS("Select_Password") },
     { MODKEY,                GDK_KEY_slash, spawn,              SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
     { MODKEY,                GDK_KEY_m,     spawn,              BM_ADD("_SURF_URI") },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_m,     spawn,              BM_EDIT() },

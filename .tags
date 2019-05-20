@@ -1,0 +1,370 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/45968eff/
+$(COBJ)	Makefile	/^$(COBJ): config.h common.h config.mk$/;"	t
+$(OBJ)	Makefile	/^$(OBJ): config.h common.h config.mk$/;"	t
+$(WEBEXTOBJ)	Makefile	/^$(WEBEXTOBJ): $(WEBEXTSRC)$/;"	t
+$(WEBEXTOBJ)	Makefile	/^$(WEBEXTOBJ): config.h common.h config.mk$/;"	t
+.c.o	Makefile	/^.c.o:$/;"	t
+ARGBEGIN	arg.h	/^#define ARGBEGIN	/;"	d
+ARGC	arg.h	/^#define ARGC(/;"	d
+ARGEND	arg.h	/^#define ARGEND	/;"	d
+ARGF	arg.h	/^#define ARGF(/;"	d
+ARG_H__	arg.h	/^#define ARG_H__$/;"	d
+AcceleratedCanvas	surf.c	/^	AcceleratedCanvas,$/;"	e	enum:__anon1ca5b3760303	file:
+AccessMicrophone	surf.c	/^	AccessMicrophone,$/;"	e	enum:__anon1ca5b3760303	file:
+AccessWebcam	surf.c	/^	AccessWebcam,$/;"	e	enum:__anon1ca5b3760303	file:
+Arg	surf.c	/^} Arg;$/;"	t	typeref:union:__anon1ca5b376040a	file:
+AtomFind	surf.c	/^enum { AtomFind, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
+AtomGo	surf.c	/^enum { AtomFind, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
+AtomLast	surf.c	/^enum { AtomFind, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
+AtomUri	surf.c	/^enum { AtomFind, AtomGo, AtomUri, AtomLast };$/;"	e	enum:__anon1ca5b3760103	file:
+BM_ADD	config.h	/^#define BM_ADD(/;"	d
+BM_EDIT	config.h	/^#define BM_EDIT(/;"	d
+BUGS	surf.1	/^.SH BUGS$/;"	s	title:SURF
+Button	surf.c	/^} Button;$/;"	t	typeref:struct:__anon1ca5b3760708	file:
+CLEANMASK	surf.c	/^#define CLEANMASK(/;"	d	file:
+COBJ	Makefile	/^COBJ = $(CSRC:.c=.o)$/;"	m
+CPPFLAGS	config.mk	/^CPPFLAGS = -DVERSION=\\"$(VERSION)\\" -DWEBEXTDIR=\\"$(LIBDIR)\\" \\$/;"	m
+CSRC	Makefile	/^CSRC = common.c$/;"	m
+CaretBrowsing	surf.c	/^	CaretBrowsing,$/;"	e	enum:__anon1ca5b3760303	file:
+Certificate	surf.c	/^	Certificate,$/;"	e	enum:__anon1ca5b3760303	file:
+Client	surf.c	/^typedef struct Client {$/;"	s	file:
+Client	surf.c	/^} Client;$/;"	t	typeref:struct:Client	file:
+CookiePolicies	surf.c	/^	CookiePolicies,$/;"	e	enum:__anon1ca5b3760303	file:
+DESCRIPTION	surf.1	/^.SH DESCRIPTION$/;"	s	title:SURF
+DNSPrefetch	surf.c	/^	DNSPrefetch,$/;"	e	enum:__anon1ca5b3760303	file:
+DOWNLOAD	config.def.h	/^#define DOWNLOAD(/;"	d
+DOWNLOAD	config.h	/^#define DOWNLOAD(/;"	d
+DefaultCharset	surf.c	/^	DefaultCharset,$/;"	e	enum:__anon1ca5b3760303	file:
+Dependancies:	README.md	/^Dependancies:$/;"	c
+DiskCache	surf.c	/^	DiskCache,$/;"	e	enum:__anon1ca5b3760303	file:
+EARGF	arg.h	/^#define EARGF(/;"	d
+ENVIRONMENT	surf.1	/^.SH ENVIRONMENT$/;"	s	title:SURF
+FileURLsCrossAccess	surf.c	/^	FileURLsCrossAccess,$/;"	e	enum:__anon1ca5b3760303	file:
+FontSize	surf.c	/^	FontSize,$/;"	e	enum:__anon1ca5b3760303	file:
+FrameFlattening	surf.c	/^	FrameFlattening,$/;"	e	enum:__anon1ca5b3760303	file:
+Frequently Asked Questions	FAQ.md	/^# Frequently Asked Questions$/;"	c
+GTKINC	config.mk	/^GTKINC = `pkg-config --cflags gtk+-3.0 gcr-3 webkit2gtk-4.0`$/;"	m
+GTKLIB	config.mk	/^GTKLIB = `pkg-config --libs gtk+-3.0 gcr-3 webkit2gtk-4.0`$/;"	m
+Geolocation	surf.c	/^	Geolocation,$/;"	e	enum:__anon1ca5b3760303	file:
+HideBackground	surf.c	/^	HideBackground,$/;"	e	enum:__anon1ca5b3760303	file:
+INCS	config.mk	/^INCS = $(X11INC) $(GTKINC)$/;"	m
+INDICATORS	surf.1	/^.SH INDICATORS OF OPERATION$/;"	s	title:SURF
+INDICATORS	surf.1	/^.SH INDICATORS OF WEB PAGE$/;"	s	title:SURF
+Inspector	surf.c	/^	Inspector,$/;"	e	enum:__anon1ca5b3760303	file:
+Installation	README.md	/^Installation$/;"	s
+Java	surf.c	/^	Java,$/;"	e	enum:__anon1ca5b3760303	file:
+JavaScript	surf.c	/^	JavaScript,$/;"	e	enum:__anon1ca5b3760303	file:
+Key	surf.c	/^} Key;$/;"	t	typeref:struct:__anon1ca5b3760608	file:
+KioskMode	surf.c	/^	KioskMode,$/;"	e	enum:__anon1ca5b3760303	file:
+LENGTH	libsurf-webext.c	/^#define LENGTH(/;"	d	file:
+LENGTH	surf.c	/^#define LENGTH(/;"	d	file:
+LIBDIR	config.mk	/^LIBDIR = $(LIBPREFIX)\/surf$/;"	m
+LIBPREFIX	config.mk	/^LIBPREFIX = $(PREFIX)\/lib$/;"	m
+LIBS	config.mk	/^LIBS = $(X11LIB) $(GTKLIB) -lgthread-2.0$/;"	m
+LoadImages	surf.c	/^	LoadImages,$/;"	e	enum:__anon1ca5b3760303	file:
+MANPREFIX	config.mk	/^MANPREFIX = $(PREFIX)\/share\/man$/;"	m
+MODKEY	config.def.h	/^#define MODKEY /;"	d
+MODKEY	config.h	/^#define MODKEY /;"	d
+MSGBUFSZ	common.h	/^#define MSGBUFSZ /;"	d
+MediaManualPlay	surf.c	/^	MediaManualPlay,$/;"	e	enum:__anon1ca5b3760303	file:
+NAME	surf.1	/^.SH NAME$/;"	s	title:SURF
+Notes Form Gavin	README.md	/^Notes Form Gavin$/;"	c
+OBJ	Makefile	/^OBJ = $(SRC:.c=.o)$/;"	m
+OPTIONS	surf.1	/^.SH OPTIONS$/;"	s	title:SURF
+OnAny	surf.c	/^	OnAny   = OnDoc | OnLink | OnImg | OnMedia | OnEdit | OnBar | OnSel,$/;"	e	enum:__anon1ca5b3760203	file:
+OnBar	surf.c	/^	OnBar   = WEBKIT_HIT_TEST_RESULT_CONTEXT_SCROLLBAR,$/;"	e	enum:__anon1ca5b3760203	file:
+OnDoc	surf.c	/^	OnDoc   = WEBKIT_HIT_TEST_RESULT_CONTEXT_DOCUMENT,$/;"	e	enum:__anon1ca5b3760203	file:
+OnEdit	surf.c	/^	OnEdit  = WEBKIT_HIT_TEST_RESULT_CONTEXT_EDITABLE,$/;"	e	enum:__anon1ca5b3760203	file:
+OnImg	surf.c	/^	OnImg   = WEBKIT_HIT_TEST_RESULT_CONTEXT_IMAGE,$/;"	e	enum:__anon1ca5b3760203	file:
+OnLink	surf.c	/^	OnLink  = WEBKIT_HIT_TEST_RESULT_CONTEXT_LINK,$/;"	e	enum:__anon1ca5b3760203	file:
+OnMedia	surf.c	/^	OnMedia = WEBKIT_HIT_TEST_RESULT_CONTEXT_MEDIA,$/;"	e	enum:__anon1ca5b3760203	file:
+OnSel	surf.c	/^	OnSel   = WEBKIT_HIT_TEST_RESULT_CONTEXT_SELECTION,$/;"	e	enum:__anon1ca5b3760203	file:
+PASS	config.h	/^#define PASS(/;"	d
+PLUGINS	surf.1	/^.SH PLUGINS$/;"	s	title:SURF
+PLUMB	config.def.h	/^#define PLUMB(/;"	d
+PLUMB	config.h	/^#define PLUMB(/;"	d
+PREFIX	config.mk	/^PREFIX = \/usr\/local$/;"	m
+PROMPT_FIND	config.def.h	/^#define PROMPT_FIND /;"	d
+PROMPT_FIND	config.h	/^#define PROMPT_FIND /;"	d
+PROMPT_GO	config.def.h	/^#define PROMPT_GO /;"	d
+PROMPT_GO	config.h	/^#define PROMPT_GO /;"	d
+Page	libsurf-webext.c	/^typedef struct Page {$/;"	s	file:
+Page	libsurf-webext.c	/^} Page;$/;"	t	typeref:struct:Page	file:
+ParamName	surf.c	/^} ParamName;$/;"	t	typeref:enum:__anon1ca5b3760303	file:
+Parameter	surf.c	/^} Parameter;$/;"	t	typeref:struct:__anon1ca5b3760508	file:
+ParameterLast	surf.c	/^	ParameterLast$/;"	e	enum:__anon1ca5b3760303	file:
+Patches	README.md	/^## Patches$/;"	s
+Personal	README.md	/^### Personal$/;"	S
+Plugins	surf.c	/^	Plugins,$/;"	e	enum:__anon1ca5b3760303	file:
+PreferredLanguages	surf.c	/^	PreferredLanguages,$/;"	e	enum:__anon1ca5b3760303	file:
+Requirements	README.md	/^Requirements$/;"	s
+RunInFullscreen	surf.c	/^	RunInFullscreen,$/;"	e	enum:__anon1ca5b3760303	file:
+Running surf	README.md	/^Running surf$/;"	s
+Running surf in tabbed	README.md	/^Running surf in tabbed$/;"	s
+SEE	surf.1	/^.SH SEE ALSO$/;"	s	title:SURF
+SETPROP	config.def.h	/^#define SETPROP(/;"	d
+SETPROP	config.h	/^#define SETPROP(/;"	d
+SETSEARCHPROP	config.h	/^#define SETSEARCHPROP(/;"	d
+SIGNALS	surf.1	/^.SH SIGNALS$/;"	s	title:SURF
+SRC	Makefile	/^SRC = surf.c$/;"	m
+SURF	surf.1	/^.TH SURF 1 surf\\-VERSION$/;"	t
+SURFCFLAGS	config.mk	/^SURFCFLAGS = $(INCS) $(CPPFLAGS) -fPIC$/;"	m
+SYNOPSIS	surf.1	/^.SH SYNOPSIS$/;"	s	title:SURF
+ScrollBars	surf.c	/^	ScrollBars,$/;"	e	enum:__anon1ca5b3760303	file:
+ShowIndicators	surf.c	/^	ShowIndicators,$/;"	e	enum:__anon1ca5b3760303	file:
+SiteQuirks	surf.c	/^	SiteQuirks,$/;"	e	enum:__anon1ca5b3760303	file:
+SiteSpecific	surf.c	/^} SiteSpecific;$/;"	t	typeref:struct:__anon1ca5b3760908	file:
+SmoothScrolling	surf.c	/^	SmoothScrolling,$/;"	e	enum:__anon1ca5b3760303	file:
+SpellChecking	surf.c	/^	SpellChecking,$/;"	e	enum:__anon1ca5b3760303	file:
+SpellLanguages	surf.c	/^	SpellLanguages,$/;"	e	enum:__anon1ca5b3760303	file:
+StrictTLS	surf.c	/^	StrictTLS,$/;"	e	enum:__anon1ca5b3760303	file:
+Style	surf.c	/^	Style,$/;"	e	enum:__anon1ca5b3760303	file:
+Surf is starting up slowly. What might be causing this?	FAQ.md	/^## Surf is starting up slowly. What might be causing this?$/;"	s
+TODO	TODO.md	/^# TODO$/;"	c
+USAGE	surf.1	/^.SH USAGE$/;"	s	title:SURF
+UriParameters	surf.c	/^} UriParameters;$/;"	t	typeref:struct:__anon1ca5b3760808	file:
+VERSION	config.mk	/^VERSION = 2.0$/;"	m
+VIDEOPLAY	config.def.h	/^#define VIDEOPLAY(/;"	d
+VIDEOPLAY	config.h	/^#define VIDEOPLAY(/;"	d
+WEBEXTCFLAGS	config.mk	/^WEBEXTCFLAGS = -fPIC $(WEBEXTINC)$/;"	m
+WEBEXTINC	config.mk	/^WEBEXTINC = `pkg-config --cflags webkit2gtk-4.0 webkit2gtk-web-extension-4.0`$/;"	m
+WEBEXTLIBS	config.mk	/^WEBEXTLIBS = `pkg-config --libs webkit2gtk-4.0 webkit2gtk-web-extension-4.0`$/;"	m
+WEBEXTOBJ	Makefile	/^WEBEXTOBJ = $(WEBEXTSRC:.c=.o)$/;"	m
+WEBEXTSRC	Makefile	/^WEBEXTSRC = libsurf-webext.c$/;"	m
+WebGL	surf.c	/^	WebGL,$/;"	e	enum:__anon1ca5b3760303	file:
+X11INC	config.mk	/^X11INC = `pkg-config --cflags x11`$/;"	m
+X11LIB	config.mk	/^X11LIB = `pkg-config --libs x11`$/;"	m
+ZoomLevel	surf.c	/^	ZoomLevel,$/;"	e	enum:__anon1ca5b3760303	file:
+[suckless.org](suckless.org)	README.md	/^### [suckless.org](suckless.org)$/;"	S
+__anon1ca5b3760103	surf.c	/^enum { AtomFind, AtomGo, AtomUri, AtomLast };$/;"	g	file:
+__anon1ca5b3760203	surf.c	/^enum {$/;"	g	file:
+__anon1ca5b3760303	surf.c	/^typedef enum {$/;"	g	file:
+__anon1ca5b376040a	surf.c	/^typedef union {$/;"	u	file:
+__anon1ca5b3760508	surf.c	/^typedef struct {$/;"	s	file:
+__anon1ca5b3760608	surf.c	/^typedef struct {$/;"	s	file:
+__anon1ca5b3760708	surf.c	/^typedef struct {$/;"	s	file:
+__anon1ca5b3760808	surf.c	/^typedef struct {$/;"	s	file:
+__anon1ca5b3760908	surf.c	/^typedef struct {$/;"	s	file:
+all	Makefile	/^all: options libsurf-webext.so surf$/;"	t
+arg	surf.c	/^	const Arg arg;$/;"	m	struct:__anon1ca5b3760608	typeref:typename:const Arg	file:
+arg	surf.c	/^	const Arg arg;$/;"	m	struct:__anon1ca5b3760708	typeref:typename:const Arg	file:
+argv0	surf.c	/^char *argv0;$/;"	v	typeref:typename:char *
+atoms	surf.c	/^static Atom atoms[AtomLast];$/;"	v	typeref:typename:Atom[]	file:
+buildfile	surf.c	/^buildfile(const char *path)$/;"	f	typeref:typename:char *
+buildpath	surf.c	/^buildpath(const char *path)$/;"	f	typeref:typename:char *
+button	surf.c	/^	guint button;$/;"	m	struct:__anon1ca5b3760708	typeref:typename:guint	file:
+buttonreleased	surf.c	/^buttonreleased(GtkWidget *w, GdkEvent *e, Client *c)$/;"	f	typeref:typename:gboolean
+buttons	config.def.h	/^static Button buttons[] = {$/;"	v	typeref:typename:Button[]
+buttons	config.h	/^static Button buttons[] = {$/;"	v	typeref:typename:Button[]
+cachedir	config.def.h	/^static char *cachedir       = "~\/.surf\/cache\/";$/;"	v	typeref:typename:char *
+cachedir	config.h	/^static char *cachedir		= "~\/.surf\/cache\/";$/;"	v	typeref:typename:char *
+cert	surf.c	/^	GTlsCertificate *cert, *failedcert;$/;"	m	struct:Client	typeref:typename:GTlsCertificate *	file:
+certdir	config.def.h	/^static char *certdir        = "~\/.surf\/certificates\/";$/;"	v	typeref:typename:char *
+certdir	config.h	/^static char *certdir		= "~\/.surf\/certificates\/";$/;"	v	typeref:typename:char *
+certs	config.def.h	/^static SiteSpecific certs[] = {$/;"	v	typeref:typename:SiteSpecific[]
+certs	config.h	/^static SiteSpecific certs[] = {$/;"	v	typeref:typename:SiteSpecific[]
+clean	Makefile	/^clean:$/;"	t
+cleanup	surf.c	/^cleanup(void)$/;"	f	typeref:typename:void
+clickexternplayer	surf.c	/^clickexternplayer(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
+clicknavigate	surf.c	/^clicknavigate(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
+clicknewwindow	surf.c	/^clicknewwindow(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
+clickspecial	surf.c	/^clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
+clients	surf.c	/^static Client *clients;$/;"	v	typeref:typename:Client *	file:
+clipboard	surf.c	/^clipboard(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+closeview	surf.c	/^closeview(WebKitWebView *v, Client *c)$/;"	f	typeref:typename:void
+config	surf.c	/^	Parameter config[ParameterLast];$/;"	m	struct:__anon1ca5b3760808	typeref:typename:Parameter[]	file:
+config.h	Makefile	/^config.h:$/;"	t
+cookiefile	config.def.h	/^static char *cookiefile     = "~\/.surf\/cookies.txt";$/;"	v	typeref:typename:char *
+cookiefile	config.h	/^static char *cookiefile		= "~\/.surf\/cookies.txt";$/;"	v	typeref:typename:char *
+cookiepolicy	surf.c	/^static int cookiepolicy;$/;"	v	typeref:typename:int	file:
+cookiepolicy_get	surf.c	/^cookiepolicy_get(void)$/;"	f	typeref:typename:WebKitCookieAcceptPolicy
+cookiepolicy_set	surf.c	/^cookiepolicy_set(const WebKitCookieAcceptPolicy p)$/;"	f	typeref:typename:char
+createview	surf.c	/^createview(WebKitWebView *v, WebKitNavigationAction *a, Client *c)$/;"	f	typeref:typename:GtkWidget *
+createwindow	surf.c	/^createwindow(Client *c)$/;"	f	typeref:typename:GtkWidget *
+curconfig	surf.c	/^static Parameter *curconfig;$/;"	v	typeref:typename:Parameter *	file:
+dclicker	surf.c	/^dclicker(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
+decidenavigation	surf.c	/^decidenavigation(WebKitPolicyDecision *d, Client *c)$/;"	f	typeref:typename:void
+decidenewwindow	surf.c	/^decidenewwindow(WebKitPolicyDecision *d, Client *c)$/;"	f	typeref:typename:void
+decidepolicy	surf.c	/^decidepolicy(WebKitWebView *v, WebKitPolicyDecision *d,$/;"	f	typeref:typename:gboolean
+decideresource	surf.c	/^decideresource(WebKitPolicyDecision *d, Client *c)$/;"	f	typeref:typename:void
+defconfig	config.def.h	/^static Parameter defconfig[ParameterLast] = {$/;"	v	typeref:typename:Parameter[]
+defconfig	config.h	/^static Parameter defconfig[ParameterLast] = {$/;"	v	typeref:typename:Parameter[]
+destroyclient	surf.c	/^destroyclient(Client *c)$/;"	f	typeref:typename:void
+destroywin	surf.c	/^destroywin(GtkWidget* w, Client *c)$/;"	f	typeref:typename:void
+dhandler	surf.c	/^dhandler(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+die	common.c	/^die(const char *errstr, ...)$/;"	f	typeref:typename:void
+dist	Makefile	/^dist: distclean$/;"	t
+distclean	Makefile	/^distclean: clean$/;"	t
+dmenuhandlerpath	config.h	/^static char *dmenuhandlerpath	= "\/home\/gavinok\/.scripts\/dmenu\/dmenuhandler";$/;"	v	typeref:typename:char *
+download	surf.c	/^download(Client *c, WebKitURIResponse *r)$/;"	f	typeref:typename:void
+downloadstarted	surf.c	/^downloadstarted(WebKitWebContext *wc, WebKitDownload *d, Client *c)$/;"	f	typeref:typename:void
+dpy	surf.c	/^static Display *dpy;$/;"	v	typeref:typename:Display *	file:
+dump_links_with_titles	scripts/surf_linkselect.sh	/^function dump_links_with_titles() {$/;"	f
+editscreen	config.h	/^static char *editscreen[] = { "\/bin\/sh", "-c", "~\/.config\/Gsurfing\/scripts\/edit_screen.sh"/;"	v	typeref:typename:char * []
+embed	surf.c	/^static Window embed;$/;"	v	typeref:typename:Window	file:
+errorpage	surf.c	/^	int progress, fullscreen, https, insecure, errorpage;$/;"	m	struct:Client	typeref:typename:int	file:
+evalscript	surf.c	/^evalscript(Client *c, const char *jsstr, ...)$/;"	f	typeref:typename:void
+externalpipe	surf.c	/^externalpipe(Client *c, const Arg *arg)$/;"	f	typeref:typename:void
+externalpipe_execute	surf.c	/^externalpipe_execute(char* buffer, Arg *arg) $/;"	f	typeref:typename:void	file:
+externalpipe_js_done	surf.c	/^externalpipe_js_done(WebKitWebView *wv, GAsyncResult *s, Arg *arg)$/;"	f	typeref:typename:void	file:
+externalpipe_resource_done	surf.c	/^externalpipe_resource_done(WebKitWebResource *r, GAsyncResult *s, Arg *arg)$/;"	f	typeref:typename:void	file:
+f	surf.c	/^	float f;$/;"	m	union:__anon1ca5b376040a	typeref:typename:float	file:
+failedcert	surf.c	/^	GTlsCertificate *cert, *failedcert;$/;"	m	struct:Client	typeref:typename:GTlsCertificate **	file:
+file	surf.c	/^	char *file;$/;"	m	struct:__anon1ca5b3760908	typeref:typename:char *	file:
+find	surf.c	/^find(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+finder	surf.c	/^	WebKitFindController *finder;$/;"	m	struct:Client	typeref:typename:WebKitFindController *	file:
+findopts	config.def.h	/^static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |$/;"	v	typeref:typename:WebKitFindOptions
+findopts	config.h	/^static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |$/;"	v	typeref:typename:WebKitFindOptions
+fullscreen	surf.c	/^	int progress, fullscreen, https, insecure, errorpage;$/;"	m	struct:Client	typeref:typename:int	file:
+fulluseragent	config.def.h	/^static char *fulluseragent  = ""; \/* Or override the whole user agent string *\/$/;"	v	typeref:typename:char *
+fulluseragent	config.h	/^static char *fulluseragent	= ""; \/* Or override the whole user agent string *\/$/;"	v	typeref:typename:char *
+func	surf.c	/^	void (*func)(Client *c, const Arg *a);$/;"	m	struct:__anon1ca5b3760608	typeref:typename:void (*)(Client * c,const Arg * a)	file:
+func	surf.c	/^	void (*func)(Client *c, const Arg *a, WebKitHitTestResult *h);$/;"	m	struct:__anon1ca5b3760708	typeref:typename:void (*)(Client * c,const Arg * a,WebKitHitTestResult * h)	file:
+gdkkb	surf.c	/^static GdkDevice *gdkkb;$/;"	v	typeref:typename:GdkDevice *	file:
+getatom	surf.c	/^getatom(Client *c, int a)$/;"	f	typeref:typename:const char *
+getcert	surf.c	/^getcert(const char *uri)$/;"	f	typeref:typename:const char *
+getcurrentuserhomedir	surf.c	/^getcurrentuserhomedir(void)$/;"	f	typeref:typename:const char *	file:
+getpagestats	surf.c	/^getpagestats(Client *c)$/;"	f	typeref:typename:void
+getstyle	surf.c	/^getstyle(const char *uri)$/;"	f	typeref:typename:const char *
+gettogglestats	surf.c	/^gettogglestats(Client *c)$/;"	f	typeref:typename:void
+geturi	surf.c	/^geturi(Client *c)$/;"	f	typeref:typename:const char *
+getuserhomedir	surf.c	/^getuserhomedir(const char *user)$/;"	f	typeref:typename:const char *	file:
+handleplumb	surf.c	/^handleplumb(Client *c, const char *uri)$/;"	f	typeref:typename:void
+https	surf.c	/^	int progress, fullscreen, https, insecure, errorpage;$/;"	m	struct:Client	typeref:typename:int	file:
+i	surf.c	/^	int i;$/;"	m	union:__anon1ca5b376040a	typeref:typename:int	file:
+id	libsurf-webext.c	/^	guint64 id;$/;"	m	struct:Page	typeref:typename:guint64	file:
+initwebextensions	surf.c	/^initwebextensions(WebKitWebContext *wc, Client *c)$/;"	f	typeref:typename:void
+insecure	surf.c	/^	int progress, fullscreen, https, insecure, errorpage;$/;"	m	struct:Client	typeref:typename:int	file:
+insecurecontent	surf.c	/^insecurecontent(WebKitWebView *v, WebKitInsecureContentEvent e, Client *c)$/;"	f	typeref:typename:void
+insert	surf.c	/^insert(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+insertmode	surf.c	/^static int insertmode = 0;$/;"	v	typeref:typename:int	file:
+inspector	surf.c	/^	WebKitWebInspector *inspector;$/;"	m	struct:Client	typeref:typename:WebKitWebInspector *	file:
+install	Makefile	/^install: all$/;"	t
+keys	config.def.h	/^static Key keys[] = {$/;"	v	typeref:typename:Key[]
+keys	config.h	/^static Key keys[] = {$/;"	v	typeref:typename:Key[]
+keyval	surf.c	/^	guint keyval;$/;"	m	struct:__anon1ca5b3760608	typeref:typename:guint	file:
+lhandler	surf.c	/^lhandler(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+libsurf-webext.so	Makefile	/^libsurf-webext.so: $(WEBEXTOBJ) $(COBJ)$/;"	t
+link_normalize	scripts/surf_linkselect.sh	/^function link_normalize() {$/;"	f
+link_select	scripts/surf_linkselect.sh	/^function link_select() {$/;"	f
+linkhandlerpath	config.h	/^static char *linkhandlerpath	= "\/home\/gavinok\/.scripts\/linkhandler";$/;"	v	typeref:typename:char *
+linkselect_curwin	config.h	/^static char *linkselect_curwin [] = { "\/bin\/sh", "-c",$/;"	v	typeref:typename:char * []
+linkselect_newwin	config.h	/^static char *linkselect_newwin [] = { "\/bin\/sh", "-c",$/;"	v	typeref:typename:char * []
+loadchanged	surf.c	/^loadchanged(WebKitWebView *v, WebKitLoadEvent e, Client *c)$/;"	f	typeref:typename:void
+loadcommitted	surf.c	/^static ParamName loadcommitted[] = {$/;"	v	typeref:typename:ParamName[]	file:
+loadfailedtls	surf.c	/^loadfailedtls(WebKitWebView *v, gchar *uri, GTlsCertificate *cert,$/;"	f	typeref:typename:gboolean
+loadfinished	surf.c	/^static ParamName loadfinished[] = {$/;"	v	typeref:typename:ParamName[]	file:
+loadtransient	surf.c	/^static ParamName loadtransient[] = {$/;"	v	typeref:typename:ParamName[]	file:
+loaduri	surf.c	/^loaduri(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+main	surf.c	/^main(int argc, char *argv[])$/;"	f	typeref:typename:int
+mask	surf.c	/^	unsigned int mask;$/;"	m	struct:__anon1ca5b3760708	typeref:typename:unsigned int	file:
+mod	surf.c	/^	guint mod;$/;"	m	struct:__anon1ca5b3760608	typeref:typename:guint	file:
+modparams	surf.c	/^static int modparams[ParameterLast];$/;"	v	typeref:typename:int[]	file:
+mousepos	surf.c	/^	WebKitHitTestResult *mousepos;$/;"	m	struct:Client	typeref:typename:WebKitHitTestResult *	file:
+mousetargetchanged	surf.c	/^mousetargetchanged(WebKitWebView *v, WebKitHitTestResult *h, guint modifiers,$/;"	f	typeref:typename:void
+msgext	surf.c	/^msgext(Client *c, char type, const Arg *a)$/;"	f	typeref:typename:void	file:
+msgsurf	libsurf-webext.c	/^msgsurf(Page *p, const char *s)$/;"	f	typeref:typename:void	file:
+navigate	surf.c	/^navigate(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+needle	surf.c	/^	const char *needle;$/;"	m	struct:Client	typeref:typename:const char *	file:
+newclient	surf.c	/^newclient(Client *rc)$/;"	f	typeref:typename:Client *
+newpage	libsurf-webext.c	/^newpage(WebKitWebPage *page)$/;"	f	typeref:typename:Page *
+newview	surf.c	/^newview(Client *c, WebKitWebView *rv)$/;"	f	typeref:typename:WebKitWebView *
+newwindow	surf.c	/^newwindow(Client *c, const Arg *a, int noembed)$/;"	f	typeref:typename:void
+next	libsurf-webext.c	/^	struct Page *next;$/;"	m	struct:Page	typeref:struct:Page *	file:
+next	surf.c	/^	struct Client *next;$/;"	m	struct:Client	typeref:struct:Client *	file:
+options	Makefile	/^options:$/;"	t
+overtitle	surf.c	/^	const char *title, *overtitle, *targeturi;$/;"	m	struct:Client	typeref:typename:const char **	file:
+pageid	surf.c	/^	unsigned long pageid;$/;"	m	struct:Client	typeref:typename:unsigned long	file:
+pages	libsurf-webext.c	/^static Page *pages;$/;"	v	typeref:typename:Page *	file:
+pagestats	surf.c	/^static char pagestats[2];$/;"	v	typeref:typename:char[2]	file:
+pasteuri	surf.c	/^pasteuri(GtkClipboard *clipboard, const char *text, gpointer d)$/;"	f	typeref:typename:void
+permissionrequested	surf.c	/^permissionrequested(WebKitWebView *v, WebKitPermissionRequest *r, Client *c)$/;"	f	typeref:typename:gboolean
+pipein	libsurf-webext.c	/^static int pipein, pipeout;$/;"	v	typeref:typename:int	file:
+pipein	surf.c	/^static int pipein[2], pipeout[2];$/;"	v	typeref:typename:int[2]	file:
+pipeout	libsurf-webext.c	/^static int pipein, pipeout;$/;"	v	typeref:typename:int	file:
+pipeout	surf.c	/^static int pipein[2], pipeout[2];$/;"	v	typeref:typename:int[2][2]	file:
+print	surf.c	/^print(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+prio	surf.c	/^	int prio;$/;"	m	struct:__anon1ca5b3760508	typeref:typename:int	file:
+processx	surf.c	/^processx(GdkXEvent *e, GdkEvent *event, gpointer d)$/;"	f	typeref:typename:GdkFilterReturn
+progress	surf.c	/^	int progress, fullscreen, https, insecure, errorpage;$/;"	m	struct:Client	typeref:typename:int	file:
+progresschanged	surf.c	/^progresschanged(WebKitWebView *v, GParamSpec *ps, Client *c)$/;"	f	typeref:typename:void
+re	surf.c	/^	regex_t re;$/;"	m	struct:__anon1ca5b3760808	typeref:typename:regex_t	file:
+re	surf.c	/^	regex_t re;$/;"	m	struct:__anon1ca5b3760908	typeref:typename:regex_t	file:
+readpipe	libsurf-webext.c	/^readpipe(GIOChannel *s, GIOCondition c, gpointer unused)$/;"	f	typeref:typename:gboolean	file:
+readpipe	surf.c	/^readpipe(GIOChannel *s, GIOCondition ioc, gpointer unused)$/;"	f	typeref:typename:gboolean	file:
+recommended	README.md	/^### recommended$/;"	S
+regex	surf.c	/^	char *regex;$/;"	m	struct:__anon1ca5b3760908	typeref:typename:char *	file:
+reload	surf.c	/^reload(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+responsereceived	surf.c	/^responsereceived(WebKitDownload *d, GParamSpec *ps, Client *c)$/;"	f	typeref:typename:void
+runscript	surf.c	/^runscript(Client *c)$/;"	f	typeref:typename:void
+runtabbed	surf-open.sh	/^runtabbed() {$/;"	f
+scriptfile	config.def.h	/^static char *scriptfile     = "~\/.surf\/script.js";$/;"	v	typeref:typename:char *
+scriptfile	config.h	/^static char *scriptfile		= "~\/.surf\/script.js";$/;"	v	typeref:typename:char *
+scrollh	surf.c	/^scrollh(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+scrolltolim	surf.c	/^scrolltolim(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+scrollv	surf.c	/^scrollv(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+setatom	surf.c	/^setatom(Client *c, int a, const char *v)$/;"	f	typeref:typename:void
+setcert	surf.c	/^setcert(Client *c, const char *uri)$/;"	f	typeref:typename:void
+setparameter	surf.c	/^setparameter(Client *c, int refresh, ParamName p, const Arg *a)$/;"	f	typeref:typename:void
+setstyle	surf.c	/^setstyle(Client *c, const char *file)$/;"	f	typeref:typename:void
+setup	surf.c	/^setup(void)$/;"	f	typeref:typename:void
+seturiparameters	surf.c	/^seturiparameters(Client *c, const char *uri, ParamName *params)$/;"	f	typeref:typename:void
+showcert	surf.c	/^showcert(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+showview	surf.c	/^showview(WebKitWebView *v, Client *c)$/;"	f	typeref:typename:void
+showxid	surf.c	/^static int showxid;$/;"	v	typeref:typename:int	file:
+sigchld	surf.c	/^sigchld(int unused)$/;"	f	typeref:typename:void
+sighup	surf.c	/^sighup(int unused)$/;"	f	typeref:typename:void
+spawn	surf.c	/^spawn(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+spawnnewclient	surf.c	/^spawnnewclient(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+specific to this fork	README.md	/^### specific to this fork$/;"	S
+stop	surf.c	/^stop(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+stopevent	surf.c	/^	unsigned int stopevent;$/;"	m	struct:__anon1ca5b3760708	typeref:typename:unsigned int	file:
+styledir	config.def.h	/^static char *styledir       = "~\/.surf\/styles\/";$/;"	v	typeref:typename:char *
+styledir	config.h	/^static char *styledir		= "~\/.surf\/styles\/";$/;"	v	typeref:typename:char *
+stylefile	surf.c	/^static char *stylefile;$/;"	v	typeref:typename:char *	file:
+styles	config.def.h	/^static SiteSpecific styles[] = {$/;"	v	typeref:typename:SiteSpecific[]
+styles	config.h	/^static SiteSpecific styles[] = {$/;"	v	typeref:typename:SiteSpecific[]
+surf	Makefile	/^surf: $(OBJ) $(COBJ)$/;"	t
+surf	README.md	/^### surf$/;"	S
+surf - simple webkit-based browser	README.md	/^surf - simple webkit-based browser$/;"	c
+surfuseragent	config.def.h	/^static int surfuseragent    = 1;  \/* Append Surf version to default WebKit user agent *\/$/;"	v	typeref:typename:int
+surfuseragent	config.h	/^static int surfuseragent	= 1;  \/* Append Surf version to default WebKit user agent *\/$/;"	v	typeref:typename:int
+target	surf.c	/^	unsigned int target;$/;"	m	struct:__anon1ca5b3760708	typeref:typename:unsigned int	file:
+targeturi	surf.c	/^	const char *title, *overtitle, *targeturi;$/;"	m	struct:Client	typeref:typename:const char ***	file:
+title	surf.c	/^	const char *title, *overtitle, *targeturi;$/;"	m	struct:Client	typeref:typename:const char *	file:
+titlechanged	surf.c	/^titlechanged(WebKitWebView *view, GParamSpec *ps, Client *c)$/;"	f	typeref:typename:void
+tlserr	surf.c	/^	GTlsCertificateFlags tlserr;$/;"	m	struct:Client	typeref:typename:GTlsCertificateFlags	file:
+toggle	surf.c	/^toggle(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+togglecookiepolicy	surf.c	/^togglecookiepolicy(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+togglefullscreen	surf.c	/^togglefullscreen(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+toggleinspector	surf.c	/^toggleinspector(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+togglestats	surf.c	/^static char togglestats[12];$/;"	v	typeref:typename:char[12]	file:
+uninstall	Makefile	/^uninstall:$/;"	t
+untildepath	surf.c	/^untildepath(const char *path)$/;"	f	typeref:typename:char *
+updatetitle	surf.c	/^updatetitle(Client *c)$/;"	f	typeref:typename:void
+updatewinid	surf.c	/^updatewinid(Client *c)$/;"	f	typeref:typename:void
+uri	surf.c	/^	const char *uri;$/;"	m	struct:__anon1ca5b3760808	typeref:typename:const char *	file:
+uriparams	config.def.h	/^static UriParameters uriparams[] = {$/;"	v	typeref:typename:UriParameters[]
+uriparams	config.h	/^static UriParameters uriparams[] = {$/;"	v	typeref:typename:UriParameters[]
+usage	surf.c	/^usage(void)$/;"	f	typeref:typename:void
+useragent	surf.c	/^static const char *useragent;$/;"	v	typeref:typename:const char *	file:
+v	surf.c	/^	const void *v;$/;"	m	union:__anon1ca5b376040a	typeref:typename:const void *	file:
+val	surf.c	/^	Arg val;$/;"	m	struct:__anon1ca5b3760508	typeref:typename:Arg	file:
+view	surf.c	/^	WebKitWebView *view;$/;"	m	struct:Client	typeref:typename:WebKitWebView *	file:
+webkit_web_extension_initialize_with_user_data	libsurf-webext.c	/^webkit_web_extension_initialize_with_user_data(WebKitWebExtension *e, GVariant *gv)$/;"	f	typeref:typename:G_MODULE_EXPORT void
+webpage	libsurf-webext.c	/^	WebKitWebPage *webpage;$/;"	m	struct:Page	typeref:typename:WebKitWebPage *	file:
+webpagecreated	libsurf-webext.c	/^webpagecreated(WebKitWebExtension *e, WebKitWebPage *wp, gpointer unused)$/;"	f	typeref:typename:void	file:
+webprocessterminated	surf.c	/^webprocessterminated(WebKitWebView *v, WebKitWebProcessTerminationReason r,$/;"	f	typeref:typename:void
+win	surf.c	/^	GtkWidget *win;$/;"	m	struct:Client	typeref:typename:GtkWidget *	file:
+winevent	surf.c	/^winevent(GtkWidget *w, GdkEvent *e, Client *c)$/;"	f	typeref:typename:gboolean
+winid	surf.c	/^static char winid[64];$/;"	v	typeref:typename:char[64]	file:
+winsize	config.def.h	/^static int winsize[] = { 800, 600 };$/;"	v	typeref:typename:int[]
+winsize	config.h	/^static int winsize[] = { 800, 600 };$/;"	v	typeref:typename:int[]
+xid	surf.c	/^	Window xid;$/;"	m	struct:Client	typeref:typename:Window	file:
+zoom	surf.c	/^zoom(Client *c, const Arg *a)$/;"	f	typeref:typename:void

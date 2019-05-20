@@ -223,10 +223,12 @@ static void closeview(WebKitWebView *v, Client *c);
 static void destroywin(GtkWidget* w, Client *c);
 
 /* Hotkeys */
+/* Custom functions  */
 static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
 static void lhandler(Client *c, const Arg *a);
-static void prompt(Client *c, const Arg *a);
 static void dhandler(Client *c, const Arg *a);
+static void externalpipe(Client *c, const Arg *a);
+
 static void reload(Client *c, const Arg *a);
 static void print(Client *c, const Arg *a);
 static void showcert(Client *c, const Arg *a);
@@ -1842,12 +1844,6 @@ showcert(Client *c, const Arg *a)
 }
 
 void
-prompt(Client *c, const Arg *a)
-{
-	evalscript(c, "window.scrollBy(0,-100)");
-}
-
-void
 lhandler(Client *c, const Arg *a)
 {
     Arg arg;
@@ -1864,6 +1860,81 @@ lhandler(Client *c, const Arg *a)
     }
 	arg.v = (const char *[]){ dmenuhandlerpath, url,  NULL};
 	spawn(c, &arg);
+}
+
+static void
+externalpipe_execute(char* buffer, Arg *arg) 
+{
+	int to[2];
+	void (*oldsigpipe)(int);
+
+	if (pipe(to) == -1)
+		return;
+
+	switch (fork()) {
+	case -1:
+		close(to[0]);
+		close(to[1]);
+		return;
+	case 0:
+		dup2(to[0], STDIN_FILENO); close(to[0]); close(to[1]);
+		execvp(((char **)arg->v)[0], (char **)arg->v);
+		fprintf(stderr, "st: execvp %s\n", ((char **)arg->v)[0]);
+		perror("failed");
+		exit(0);
+	}
+
+	close(to[0]);
+	oldsigpipe = signal(SIGPIPE, SIG_IGN);
+	write(to[1], buffer, strlen(buffer));
+	close(to[1]);
+	signal(SIGPIPE, oldsigpipe);
+}
+
+static void
+externalpipe_resource_done(WebKitWebResource *r, GAsyncResult *s, Arg *arg)
+{
+	GError *gerr = NULL;
+	guchar *buffer = webkit_web_resource_get_data_finish(r, s, NULL, &gerr);
+	if (gerr == NULL) {
+		externalpipe_execute((char *) buffer, arg);
+	} else {
+		g_error_free(gerr);
+	}
+	g_free(buffer);
+}
+
+static void
+externalpipe_js_done(WebKitWebView *wv, GAsyncResult *s, Arg *arg)
+{
+	WebKitJavascriptResult *j = webkit_web_view_run_javascript_finish(
+		wv, s, NULL);
+	if (!j) {
+		return;
+	}
+	JSCValue *v = webkit_javascript_result_get_js_value(j);
+	if (jsc_value_is_string(v)) {
+		char *buffer = jsc_value_to_string(v);
+		externalpipe_execute(buffer, arg);
+		g_free(buffer);
+	}
+	webkit_javascript_result_unref(j);
+}
+
+void
+externalpipe(Client *c, const Arg *arg)
+{
+	if (curconfig[JavaScript].val.i) {
+		webkit_web_view_run_javascript(
+			c->view, "window.document.body.outerHTML",
+			NULL, externalpipe_js_done, arg);
+	} else {
+		WebKitWebResource *resource = webkit_web_view_get_main_resource(c->view);
+		if (resource != NULL) {
+			webkit_web_resource_get_data(
+				resource, NULL, externalpipe_resource_done, arg);
+		}
+	}
 }
 
 
@@ -1897,13 +1968,13 @@ clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h)
 	Arg arg;
 	arg.v = webkit_hit_test_result_get_link_uri(h);
 	// set a->i to 0 if you want native access to playing 
-	if ( (g_str_has_prefix(arg.v, "https://www.you")) && (a->i == 0) ){
-		arg.v = (const char *[]){ "mpv", "--really-quiet", "--ytdl-format=18", arg.v,  NULL};
-		spawn(c, &arg);
-		arg.v = (const char *[]){ "notify-send", "playing video", NULL};
-		spawn(c, &arg);
-		return;
-	}
+	/* if ( (g_str_has_prefix(arg.v, "https://www.you")) && (a->i == 0) ){ */
+	/* 	arg.v = (const char *[]){ "mpv", "--really-quiet", "--ytdl-format=18", arg.v,  NULL}; */
+	/* 	spawn(c, &arg); */
+	/* 	arg.v = (const char *[]){ "notify-send", "playing video", NULL}; */
+	/* 	spawn(c, &arg); */
+	/* 	return; */
+	/* } */
 	arg.v = (const char *[]){ linkhandlerpath, arg.v,  NULL};
 	spawn(c, &arg);
 }
