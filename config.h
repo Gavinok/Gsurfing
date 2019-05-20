@@ -8,6 +8,7 @@ static char *cachedir		= "~/.surf/cache/";
 static char *cookiefile		= "~/.surf/cookies.txt";
 static char *dmenuhandlerpath	= "/home/gavinok/.scripts/dmenu/dmenuhandler";
 static char *linkhandlerpath	= "/home/gavinok/.scripts/linkhandler";
+static char *searchurl      = "duckduckgo.com/?q=%s";
 /* Webkit default features */
 /* Highest priority value will be used.
  * Default parameters are priority 0
@@ -75,6 +76,16 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
              "| dmenu -l 10 -p \"$4\" -w $1)\" && " \
              "xprop -id $1 -f $3 8s -set $3 \"$prop\"", \
              "surf-setprop", winid, r, s, p, NULL \
+        } \
+}
+
+#define SEARCH() { \
+        .v = (const char *[]){ "/bin/sh", "-c", \
+             "prop=\"$(printf '%b' \"$(xprop -id $1 $2 " \
+             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\" && cat ~/.surf/bookmarks)\" " \
+             "| dmenu -l 10 -p Open: -w $1)\" && " \
+             "xprop -id $1 -f $2 8s -set $2 \"$prop\"", \
+             "surf-search", winid, "_SURF_SEARCH", NULL \
         } \
 }
 
@@ -180,10 +191,12 @@ static SiteSpecific certs[] = {
  */
 static Key keys[] = {
     /* modifier              keyval          function    arg */
+    // { MODKEY,                GDK_KEY_s,      spawn,      SEARCH() },
+    // { MODKEY,                GDK_KEY_o,      spawn,      SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
     { MODKEY,                GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_curwin } },
     { GDK_SHIFT_MASK|MODKEY, GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_newwin } },
     { MODKEY,		     GDK_KEY_e,		externalpipe,	{ .v = editscreen } },
-    { MODKEY,                GDK_KEY_o,     spawn,              SETPROP("_SURF_URI",        "_SURF_GO",   PROMPT_GO) },
+    { MODKEY,                GDK_KEY_o,     spawn,		SEARCH() },
     { MODKEY,                GDK_KEY_w,     spawn,              PASS("Select_Password") },
     { MODKEY,                GDK_KEY_slash, spawn,              SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
     { MODKEY,                GDK_KEY_m,     spawn,              BM_ADD("_SURF_URI") },

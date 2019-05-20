@@ -40,8 +40,9 @@
 #define LENGTH(x)               (sizeof(x) / sizeof(x[0]))
 #define CLEANMASK(mask)         (mask & (MODKEY|GDK_SHIFT_MASK))
 
-enum { AtomFind, AtomGo, AtomUri, AtomLast };
-
+/* enum { AtomFind, AtomGo, AtomUri, AtomLast }; */
+/* for searching */
+enum { AtomFind, AtomSearch, AtomGo, AtomUri, AtomLast };
 enum {
 	OnDoc   = WEBKIT_HIT_TEST_RESULT_CONTEXT_DOCUMENT,
 	OnLink  = WEBKIT_HIT_TEST_RESULT_CONTEXT_LINK,
@@ -342,6 +343,8 @@ setup(void)
 
 	/* atoms */
 	atoms[AtomFind] = XInternAtom(dpy, "_SURF_FIND", False);
+	//for search
+	atoms[AtomSearch] = XInternAtom(dpy, "_SURF_SEARCH", False);
 	atoms[AtomGo] = XInternAtom(dpy, "_SURF_GO", False);
 	atoms[AtomUri] = XInternAtom(dpy, "_SURF_URI", False);
 
@@ -575,7 +578,8 @@ loaduri(Client *c, const Arg *a)
 			url = g_strdup_printf("file://%s", path);
 			free(path);
 		} else {
-			url = g_strdup_printf("https://duckduckgo.com/?q=%s", uri);
+			url = g_strdup_printf("http://%s", uri);
+			/* url = g_strdup_printf("https://duckduckgo.com/?q=%s", uri); */
 		}
 		if (apath != uri)
 			free(apath);
@@ -1337,6 +1341,12 @@ processx(GdkXEvent *e, GdkEvent *event, gpointer d)
 				find(c, NULL);
 
 				return GDK_FILTER_REMOVE;
+			//for search
+			} else if (ev->atom == atoms[AtomSearch]) {
+				a.v = getatom(c, AtomSearch);
+				search(c, &a);
+			//for search
+
 			} else if (ev->atom == atoms[AtomGo]) {
 				a.v = getatom(c, AtomGo);
 				loaduri(c, &a);
@@ -1860,6 +1870,27 @@ lhandler(Client *c, const Arg *a)
     }
 	arg.v = (const char *[]){ dmenuhandlerpath, url,  NULL};
 	spawn(c, &arg);
+}
+
+void
+search(Client *c, const Arg *a)
+{
+	Arg arg;
+	const char *uri = a->v;
+	char *url;
+
+	if (g_str_has_prefix(uri, "http://")  ||
+	    g_str_has_prefix(uri, "https://") ||
+	    g_str_has_prefix(uri, "file://")  ||
+	    g_str_has_prefix(uri, "about:")) {
+		url = g_strdup(uri);
+	} else {
+	    url = g_strdup_printf(searchurl, a->v);
+	}
+	arg.v = url;
+	loaduri(c, &arg);
+
+	g_free(url);
 }
 
 static void
