@@ -8,7 +8,7 @@ static char *cachedir		= "~/.surf/cache/";
 static char *cookiefile		= "~/.surf/cookies.txt";
 static char *dmenuhandlerpath	= "/home/gavinok/.scripts/dmenu/dmenuhandler";
 static char *linkhandlerpath	= "/home/gavinok/.scripts/linkhandler";
-static char *searchurl      = "duckduckgo.com/?q=%s";
+static char *searchurl		= "duckduckgo.com/?q=%s";
 /* Webkit default features */
 /* Highest priority value will be used.
  * Default parameters are priority 0
@@ -106,14 +106,25 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
                                 
+// /* DOWNLOAD(URI, referer) */
+// #define DOWNLOAD(u, r) { \
+//         .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
+//              "cd ~/Downloads; curl -g -L -J -O -A \"$1\" -b \"$2\" -c \"$2\"" \
+//              " -e \"$3\" \"$4\" && notify-send \"Download Completed\" && exit" \
+//              "notify-send \"Download Failed\"", \
+//              "surf-download", useragent, cookiefile, r, u, NULL \
+//         } \
+// }
+
 /* DOWNLOAD(URI, referer) */
-#define DOWNLOAD(u, r) { \
-        .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
-             "cd ~/Downloads; curl -g -L -J -O -A \"$1\" -b \"$2\" -c \"$2\"" \
-             " -e \"$3\" \"$4\" && notify-send \"Download Completed\" && exit" \
-             "notify-send \"Download Failed\"", \
-             "surf-download", useragent, cookiefile, r, u, NULL \
-        } \
+#define DOWNLOAD(d, r) { \
+	.v = (char *[]){ "/bin/sh", "-c", \
+		"cd ~/Telechargements;"\
+		"st -e /bin/sh -c \"aria2c -U -d ~/Downloads '$1'" \
+		" '$0' || notify-send \"Download Failed\"" \
+		" sleep 3;\"", \
+		d, useragent, r, cookiefile, NULL \
+	} \
 }
 
 /* BM_ADD(readprop) */
@@ -193,7 +204,7 @@ static SiteSpecific certs[] = {
 static Key keys[] = {
     /* modifier              keyval          function    arg */
     // { MODKEY,                GDK_KEY_s,      spawn,      SEARCH() },
-    // { MODKEY,                GDK_KEY_o,      spawn,      SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
+    { MODKEY|GDK_SHIFT_MASK, GDK_KEY_o,      spawn,      SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
     { MODKEY,                GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_curwin } },
     { GDK_SHIFT_MASK|MODKEY, GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_newwin } },
     { MODKEY,		     GDK_KEY_e,		externalpipe,	{ .v = editscreen } },

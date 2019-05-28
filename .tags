@@ -312,7 +312,7 @@ scrollh	surf.c	/^scrollh(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 scrolltolim	surf.c	/^scrolltolim(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 scrollv	surf.c	/^scrollv(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 search	surf.c	/^search(Client *c, const Arg *a)$/;"	f	typeref:typename:void
-searchurl	config.h	/^static char *searchurl      = "duckduckgo.com\/?q=%s";$/;"	v	typeref:typename:char *
+searchurl	config.h	/^static char *searchurl		= "duckduckgo.com\/?q=%s";$/;"	v	typeref:typename:char *
 setatom	surf.c	/^setatom(Client *c, int a, const char *v)$/;"	f	typeref:typename:void
 setcert	surf.c	/^setcert(Client *c, const char *uri)$/;"	f	typeref:typename:void
 setparameter	surf.c	/^setparameter(Client *c, int refresh, ParamName p, const Arg *a)$/;"	f	typeref:typename:void
