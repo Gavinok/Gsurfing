@@ -79,13 +79,13 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
-#define SEARCH() { \
+/* SETSEARCHPROP(readprop, setprop, prompt)*/
+#define SETSEARCHPROP(r, s, p) { \
         .v = (const char *[]){ "/bin/sh", "-c", \
              "prop=\"$(printf '%b' \"$(xprop -id $1 $2 " \
-             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\" && cat ~/.surf/bookmarks)\" " \
-             "| dmenu -l 10 -p Open: -w $1)\" && " \
-             "xprop -id $1 -f $2 8s -set $2 \"$prop\"", \
-             "surf-search", winid, "_SURF_SEARCH", NULL \
+             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\")\" " \
+             "| dmenu -p \"$4\" -w $1)\" && xprop -id $1 -f $3 8s -set $3 \"$prop\"", \
+             "surf-setsearchprop", winid, r, s, p, NULL \
         } \
 }
 
@@ -96,16 +96,6 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
-/* SETSEARCHPROP(readprop, setprop, prompt)*/
-#define SETSEARCHPROP(r, s, p) { \
-        .v = (const char *[]){ "/bin/sh", "-c", \
-             "prop=\"$(printf '%b' \"$(xprop -id $1 $2 " \
-             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\")\" " \
-             "| dmenu -p \"$4\" -w $1)\" && xprop -id $1 -f $3 8s -set $3 \"$prop\"", \
-             "surf-setsearchprop", winid, r, s, p, NULL \
-        } \
-}
-                                
 // /* DOWNLOAD(URI, referer) */
 // #define DOWNLOAD(u, r) { \
 //         .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
@@ -120,8 +110,8 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 #define DOWNLOAD(d, r) { \
 	.v = (char *[]){ "/bin/sh", "-c", \
 		"cd ~/Telechargements;"\
-		"st -e /bin/sh -c \"aria2c -U -d ~/Downloads '$1'" \
-		" '$0' || notify-send \"Download Failed\"" \
+		"st -e /bin/sh -c \"aria2c -U '$1' -d ~/Downloads " \
+		" --referer '$2' --load-cookies $3 --save-cookies $3 '$0' || notify-send \"DOWNLOAD Failed\"" \
 		" sleep 3;\"", \
 		d, useragent, r, cookiefile, NULL \
 	} \
@@ -203,12 +193,11 @@ static SiteSpecific certs[] = {
  */
 static Key keys[] = {
     /* modifier              keyval          function    arg */
-    // { MODKEY,                GDK_KEY_s,      spawn,      SEARCH() },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_o,      spawn,      SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
+    { MODKEY,		     GDK_KEY_o,      spawn,      SETPROP("_SURF_SEARCH", "_SURF_SEARCH", PROMPT_GO) },
     { MODKEY,                GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_curwin } },
     { GDK_SHIFT_MASK|MODKEY, GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_newwin } },
     { MODKEY,		     GDK_KEY_e,		externalpipe,	{ .v = editscreen } },
-    { MODKEY,                GDK_KEY_o,     spawn,		SEARCH() },
     { MODKEY,                GDK_KEY_w,     spawn,              PASS("Select_Password") },
     { MODKEY,                GDK_KEY_slash, spawn,              SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
     { MODKEY,                GDK_KEY_m,     spawn,              BM_ADD("_SURF_URI") },
