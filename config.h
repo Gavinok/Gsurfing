@@ -154,11 +154,11 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 }
 
 static char *linkselect_curwin [] = { "/bin/sh", "-c",
-	"~/.config/Gsurfing/scripts/surf_linkselect.sh $0 'Link' | xargs -r xprop -id $0 -f _SURF_GO 8s -set _SURF_GO",
+	"~/.surf/scripts/surf_linkselect.sh $0 'Link' | xargs -r xprop -id $0 -f _SURF_GO 8s -set _SURF_GO",
 	winid, NULL
 };
 static char *linkselect_newwin [] = { "/bin/sh", "-c",
-	"~/.config/Gsurfing/scripts/surf_linkselect.sh $0 'Link (new window)' | xargs -r surf",
+	"~/.surf/scripts/surf_linkselect.sh $0 'Link (new window)' | xargs -r surf",
 	winid, NULL
 };
 

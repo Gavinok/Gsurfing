@@ -108,7 +108,6 @@ Requirements	README.md	/^Requirements$/;"	s
 RunInFullscreen	surf.c	/^	RunInFullscreen,$/;"	e	enum:__anon1ca5b3760303	file:
 Running surf	README.md	/^Running surf$/;"	s
 Running surf in tabbed	README.md	/^Running surf in tabbed$/;"	s
-SEARCH	config.h	/^#define SEARCH(/;"	d
 SEE	surf.1	/^.SH SEE ALSO$/;"	s	title:SURF
 SETPROP	config.def.h	/^#define SETPROP(/;"	d
 SETPROP	config.h	/^#define SETPROP(/;"	d
