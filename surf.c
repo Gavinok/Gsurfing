@@ -2341,6 +2341,5 @@ main(int argc, char *argv[])
 
 	gtk_main();
 	cleanup();
-
 	return 0;
 }

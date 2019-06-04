@@ -31,13 +31,13 @@ static Parameter defconfig[ParameterLast] = {
     [FrameFlattening]     =       { { .i = 0 },     },
     [Geolocation]         =       { { .i = 0 },     },
     [HideBackground]      =       { { .i = 0 },     },
-    [Inspector]           =       { { .i = 0 },     },
-    [Java]                =       { { .i = 1 },     },
+    [Inspector]           =       { { .i = 1 },     },
+    [Java]                =       { { .i = 0 },     },
     [JavaScript]          =       { { .i = 1 },     },
     [KioskMode]           =       { { .i = 0 },     },
     [LoadImages]          =       { { .i = 1 },     },
     [MediaManualPlay]     =       { { .i = 1 },     },
-    [Plugins]             =       { { .i = 1 },     },
+    [Plugins]             =       { { .i = 0 },     },
     [PreferredLanguages]  =       { { .v = (char *[]){ NULL } }, },
     [RunInFullscreen]     =       { { .i = 0 },     },
     [ScrollBars]          =       { { .i = 1 },     },
@@ -55,7 +55,7 @@ static Parameter defconfig[ParameterLast] = {
 static UriParameters uriparams[] = {
     { "(://|\\.)suckless\\.org(/|$)", {
       [JavaScript] = { { .i = 1 }, 1 },
-      [Plugins]    = { { .i = 1 }, 1 },
+      [Plugins]    = { { .i = 0 }, 1 },
     }, },
 };
 
