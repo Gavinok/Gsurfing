@@ -1859,7 +1859,7 @@ lhandler(Client *c, const Arg *a)
     Arg arg;
     const char *url = (c->targeturi ? c->targeturi : geturi(c));
     if(a->i == 0){
-	if (g_str_has_prefix(url, "https://www.you")){
+	if (g_str_has_prefix(url, "https://www.youtube.com/watch")){
 	    arg.v = (const char *[]){ "mpv", "--really-quiet", "--ytdl-format=22", url,  NULL}; spawn(c, &arg);
 	    arg.v = (const char *[]){ "notify-send", "playing video", NULL}; spawn(c, &arg);
 	}else{
@@ -1985,28 +1985,15 @@ spawnnewclient(Client *c, const Arg *a)
 }
 
 void
-dclicker(Client *c, const Arg *a, WebKitHitTestResult *h)
-{
-	Arg arg;
-	arg.v = webkit_hit_test_result_get_link_uri(h);
-	arg.v = (const char *[]){ dmenuhandlerpath, arg.v,  NULL};
-	spawn(c, &arg);
-}
-
-void
 clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h)
 {
 	Arg arg;
 	arg.v = webkit_hit_test_result_get_link_uri(h);
-	// set a->i to 0 if you want native access to playing 
-	/* if ( (g_str_has_prefix(arg.v, "https://www.you")) && (a->i == 0) ){ */
-	/* 	arg.v = (const char *[]){ "mpv", "--really-quiet", "--ytdl-format=18", arg.v,  NULL}; */
-	/* 	spawn(c, &arg); */
-	/* 	arg.v = (const char *[]){ "notify-send", "playing video", NULL}; */
-	/* 	spawn(c, &arg); */
-	/* 	return; */
-	/* } */
-	arg.v = (const char *[]){ linkhandlerpath, arg.v,  NULL};
+	if (a->i == 0) {
+	    arg.v = (const char *[]){ linkhandlerpath, arg.v,  NULL};
+	}else{
+	    arg.v = (const char *[]){ dmenuhandlerpath, arg.v,  NULL};
+	}
 	spawn(c, &arg);
 }
 void
