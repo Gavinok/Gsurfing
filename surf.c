@@ -225,11 +225,11 @@ static void destroywin(GtkWidget* w, Client *c);
 
 /* Hotkeys */
 /* Custom functions  */
-static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
 static void lhandler(Client *c, const Arg *a);
 static void dhandler(Client *c, const Arg *a);
 static void externalpipe(Client *c, const Arg *a);
 
+static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
 static void reload(Client *c, const Arg *a);
 static void print(Client *c, const Arg *a);
 static void showcert(Client *c, const Arg *a);
@@ -1853,24 +1853,6 @@ showcert(Client *c, const Arg *a)
 	gtk_widget_show_all(win);
 }
 
-void
-lhandler(Client *c, const Arg *a)
-{
-    Arg arg;
-    const char *url = (c->targeturi ? c->targeturi : geturi(c));
-    if(a->i == 0){
-	if (g_str_has_prefix(url, "https://www.youtube.com/watch")){
-	    arg.v = (const char *[]){ "mpv", "--really-quiet", "--ytdl-format=22", url,  NULL}; spawn(c, &arg);
-	    arg.v = (const char *[]){ "notify-send", "playing video", NULL}; spawn(c, &arg);
-	}else{
-		arg.v = (const char *[]){ linkhandlerpath, url, NULL};	spawn(c, &arg);
-		arg.v = (const char *[]){ "notify-send", "not a video", NULL}; spawn(c, &arg);
-	}
-	return;
-    }
-	arg.v = (const char *[]){ dmenuhandlerpath, url,  NULL};
-	spawn(c, &arg);
-}
 
 void
 search(Client *c, const Arg *a)
@@ -1974,6 +1956,25 @@ dhandler(Client *c, const Arg *a)
 {
 	const char *url = (c->targeturi ? c->targeturi : geturi(c));
 	Arg arg;
+	arg.v = (const char *[]){ dmenuhandlerpath, url,  NULL};
+	spawn(c, &arg);
+}
+
+void
+lhandler(Client *c, const Arg *a)
+{
+    Arg arg;
+    const char *url = (c->targeturi ? c->targeturi : geturi(c));
+    if(a->i == 0){
+	if (g_str_has_prefix(url, "https://www.youtube.com/watch")){
+	    arg.v = (const char *[]){ "mpv", "--really-quiet", "--ytdl-format=22", url,  NULL}; spawn(c, &arg);
+	    arg.v = (const char *[]){ "notify-send", "playing video", NULL}; spawn(c, &arg);
+	}else{
+		arg.v = (const char *[]){ linkhandlerpath, url, NULL};	spawn(c, &arg);
+		arg.v = (const char *[]){ "notify-send", "not a video", NULL}; spawn(c, &arg);
+	}
+	return;
+    }
 	arg.v = (const char *[]){ dmenuhandlerpath, url,  NULL};
 	spawn(c, &arg);
 }
