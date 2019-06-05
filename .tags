@@ -189,7 +189,6 @@ cookiepolicy_set	surf.c	/^cookiepolicy_set(const WebKitCookieAcceptPolicy p)$/;"
 createview	surf.c	/^createview(WebKitWebView *v, WebKitNavigationAction *a, Client *c)$/;"	f	typeref:typename:GtkWidget *
 createwindow	surf.c	/^createwindow(Client *c)$/;"	f	typeref:typename:GtkWidget *
 curconfig	surf.c	/^static Parameter *curconfig;$/;"	v	typeref:typename:Parameter *	file:
-dclicker	surf.c	/^dclicker(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
 decidenavigation	surf.c	/^decidenavigation(WebKitPolicyDecision *d, Client *c)$/;"	f	typeref:typename:void
 decidenewwindow	surf.c	/^decidenewwindow(WebKitPolicyDecision *d, Client *c)$/;"	f	typeref:typename:void
 decidepolicy	surf.c	/^decidepolicy(WebKitWebView *v, WebKitPolicyDecision *d,$/;"	f	typeref:typename:gboolean
@@ -207,7 +206,7 @@ download	surf.c	/^download(Client *c, WebKitURIResponse *r)$/;"	f	typeref:typena
 downloadstarted	surf.c	/^downloadstarted(WebKitWebContext *wc, WebKitDownload *d, Client *c)$/;"	f	typeref:typename:void
 dpy	surf.c	/^static Display *dpy;$/;"	v	typeref:typename:Display *	file:
 dump_links_with_titles	scripts/surf_linkselect.sh	/^dump_links_with_titles() {$/;"	f
-editscreen	config.h	/^static char *editscreen[] = { "\/bin\/sh", "-c", "~\/.config\/Gsurfing\/scripts\/edit_screen.sh"/;"	v	typeref:typename:char * []
+editscreen	config.h	/^static char *editscreen[] = { "\/bin\/sh", "-c", "~\/.scripts\/surf\/edit_screen.sh", NULL };$/;"	v	typeref:typename:char * []
 embed	surf.c	/^static Window embed;$/;"	v	typeref:typename:Window	file:
 errorpage	surf.c	/^	int progress, fullscreen, https, insecure, errorpage;$/;"	m	struct:Client	typeref:typename:int	file:
 evalscript	surf.c	/^evalscript(Client *c, const char *jsstr, ...)$/;"	f	typeref:typename:void

@@ -31,7 +31,7 @@ static Parameter defconfig[ParameterLast] = {
     [FrameFlattening]     =       { { .i = 0 },     },
     [Geolocation]         =       { { .i = 0 },     },
     [HideBackground]      =       { { .i = 0 },     },
-    [Inspector]           =       { { .i = 1 },     },
+    [Inspector]           =       { { .i = 0 },     },
     [Java]                =       { { .i = 0 },     },
     [JavaScript]          =       { { .i = 1 },     },
     [KioskMode]           =       { { .i = 0 },     },
@@ -72,7 +72,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 #define SETPROP(r, s, p) { \
         .v = (const char *[]){ "/bin/sh", "-c", \
              "prop=\"$(printf '%b' \"$(xprop -id $1 $2 " \
-             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\" && cat ~/.surf/bookmarks)\" " \
+             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\" && cat ~/.config/bookmarks)\" " \
              "| dmenu -l 10 -p \"$4\" -w $1)\" && " \
              "xprop -id $1 -f $3 8s -set $3 \"$prop\"", \
              "surf-setprop", winid, r, s, p, NULL \
@@ -121,9 +121,9 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 #define BM_ADD(r) {\
         .v = (const char *[]){ "/bin/sh", "-c", \
              "(echo $(xprop -id $0 $1) | cut -d '\"' -f2 " \
-             "| sed '' && cat ~/.surf/bookmarks) " \
+             "| sed '' && cat ~/.config/bookmarks) " \
              "| awk '!seen[$0]++' > ~/.surf/bookmarks.tmp && " \
-             "mv ~/.surf/bookmarks.tmp ~/.surf/bookmarks", \
+             "mv ~/.surf/bookmarks.tmp ~/.config/bookmarks", \
              winid, r, NULL \
         } \
 }
@@ -131,7 +131,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 /* BM_EDIT() */
 #define BM_EDIT() {\
         .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
-             "$EDITOR ~/.surf/bookmarks", \
+             "$EDITOR ~/.config/bookmarks", \
               NULL \
         } \
 }
@@ -154,15 +154,15 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 }
 
 static char *linkselect_curwin [] = { "/bin/sh", "-c",
-	"~/.surf/scripts/surf_linkselect.sh $0 'Link' | xargs -r xprop -id $0 -f _SURF_GO 8s -set _SURF_GO",
+	"~/.scripts/surf/surf_linkselect.sh $0 'Link' | xargs -r xprop -id $0 -f _SURF_GO 8s -set _SURF_GO",
 	winid, NULL
 };
 static char *linkselect_newwin [] = { "/bin/sh", "-c",
-	"~/.surf/scripts/surf_linkselect.sh $0 'Link (new window)' | xargs -r surf",
+	"~/.scripts/surf/surf_linkselect.sh $0 'Link (new window)' | xargs -r surf",
 	winid, NULL
 };
 
-static char *editscreen[] = { "/bin/sh", "-c", "~/.config/Gsurfing/scripts/edit_screen.sh", NULL };
+static char *editscreen[] = { "/bin/sh", "-c", "~/.scripts/surf/edit_screen.sh", NULL };
 
 /* styles */
 /*
@@ -193,8 +193,8 @@ static SiteSpecific certs[] = {
  */
 static Key keys[] = {
     /* modifier              keyval          function    arg */
-    { MODKEY|GDK_SHIFT_MASK, GDK_KEY_o,      spawn,      SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
-    { MODKEY,		     GDK_KEY_o,      spawn,      SETPROP("_SURF_SEARCH", "_SURF_SEARCH", PROMPT_GO) },
+    { MODKEY|GDK_SHIFT_MASK, GDK_KEY_o,      spawn,		SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
+    { MODKEY,		     GDK_KEY_o,      spawn,		SETPROP("_SURF_SEARCH", "_SURF_SEARCH", PROMPT_GO) },
     { MODKEY,                GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_curwin } },
     { GDK_SHIFT_MASK|MODKEY, GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_newwin } },
     { MODKEY,		     GDK_KEY_e,		externalpipe,	{ .v = editscreen } },
@@ -258,7 +258,6 @@ static Button buttons[] = {
     /* target       event mask      button  function        argument        stop event */
     { OnLink,	    0,		    2,	    clickspecial,      	{ .i =  0  },	1 },
     { OnLink,  	    MODKEY,	    2, 	    clickspecial, 	{ .i =  1  },	1 },
-    { OnLink,  	    MODKEY,	    2, 	    clicknewwindow,    	{ .i =  1  },	1 },
     { OnLink,  	    MODKEY,	    1, 	    clicknewwindow,    	{ .i =  1  },	1 },
     { OnAny,   	    0,		    8, 	    clicknavigate,    	{ .i =  -1 },	1 },
     { OnAny,   	    0,		    9, 	    clicknavigate,     	{ .i =  +1 },	1 },

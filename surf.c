@@ -2058,18 +2058,18 @@ void
 scrollv(Client *c, const Arg *a)
 {
 	//if javascript is enabled
-	evalscript(c, "window.scrollBy(0,%d);", (a->i * 10));
+	/* evalscript(c, "window.scrollBy(0,%d);", (a->i * 10)); */
 	//else
-	/* msgext(c, 'v', a); */
+	msgext(c, 'v', a);
 }
 
 void
 scrollh(Client *c, const Arg *a)
 {
 	//if javascript is enabled
-	evalscript(c, "window.scrollBy(%d,0);", (a->i * 10));
+	/* evalscript(c, "window.scrollBy(%d,0);", (a->i * 10)); */
 	//else
-	/* msgext(c, 'h', a); */
+	msgext(c, 'h', a);
 }
 
 void
