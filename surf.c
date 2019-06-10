@@ -236,6 +236,7 @@ static void showcert(Client *c, const Arg *a);
 static void clipboard(Client *c, const Arg *a);
 static void zoom(Client *c, const Arg *a);
 static void scrolltolim(Client *c, const Arg *a);
+static void test(Client *c, const Arg *a);
 static void scrollv(Client *c, const Arg *a);
 static void scrollh(Client *c, const Arg *a);
 static void navigate(Client *c, const Arg *a);
@@ -825,6 +826,7 @@ setparameter(Client *c, int refresh, ParamName p, const Arg *a)
 		return; /* do not update */
 	case JavaScript:
 		webkit_settings_set_enable_javascript(s, a->i);
+		/* webkit_settings_set_enable_write_console_messages_to_stdout(s, a->i); */
 		break;
 	case KioskMode:
 		return; /* do nothing */
@@ -2025,7 +2027,6 @@ zoom(Client *c, const Arg *a)
 
 	curconfig[ZoomLevel].val.f = webkit_web_view_get_zoom_level(c->view);
 }
-/* need to find a better way to scroll to the top and bottom */
 static void
 msgext(Client *c, char type, const Arg *a)
 {
@@ -2052,6 +2053,14 @@ scrolltolim(Client *c, const Arg *a)
 	    return;
 	}
 	evalscript(c, "window.scrollTo(0,0);");
+}
+
+//Requires javascript to be enabled
+void
+test(Client *c, const Arg *a)
+{
+	    evalscript(c, "prompt(\"What is your name?\")");
+	    return;
 }
 
 void

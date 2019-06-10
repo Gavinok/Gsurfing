@@ -104,6 +104,7 @@ Patches	README.md	/^## Patches$/;"	s
 Personal	README.md	/^### Personal$/;"	S
 Plugins	surf.c	/^	Plugins,$/;"	e	enum:__anon1ca5b3760303	file:
 PreferredLanguages	surf.c	/^	PreferredLanguages,$/;"	e	enum:__anon1ca5b3760303	file:
+RCLICK	config.h	/^#define RCLICK(/;"	d
 Requirements	README.md	/^Requirements$/;"	s
 RunInFullscreen	surf.c	/^	RunInFullscreen,$/;"	e	enum:__anon1ca5b3760303	file:
 Running surf	README.md	/^Running surf$/;"	s
@@ -339,6 +340,7 @@ surfuseragent	config.def.h	/^static int surfuseragent    = 1;  \/* Append Surf v
 surfuseragent	config.h	/^static int surfuseragent	= 1;  \/* Append Surf version to default WebKit user agent *\/$/;"	v	typeref:typename:int
 target	surf.c	/^	unsigned int target;$/;"	m	struct:__anon1ca5b3760708	typeref:typename:unsigned int	file:
 targeturi	surf.c	/^	const char *title, *overtitle, *targeturi;$/;"	m	struct:Client	typeref:typename:const char ***	file:
+test	surf.c	/^test(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 title	surf.c	/^	const char *title, *overtitle, *targeturi;$/;"	m	struct:Client	typeref:typename:const char *	file:
 titlechanged	surf.c	/^titlechanged(WebKitWebView *view, GParamSpec *ps, Client *c)$/;"	f	typeref:typename:void
 tlserr	surf.c	/^	GTlsCertificateFlags tlserr;$/;"	m	struct:Client	typeref:typename:GTlsCertificateFlags	file:
