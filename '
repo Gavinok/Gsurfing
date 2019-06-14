@@ -7,7 +7,7 @@ static char *certdir		= "~/.surf/certificates/";
 static char *cachedir		= "~/.surf/cache/";
 static char *cookiefile		= "~/.surf/cookies.txt";
 static char *dmenuhandlerpath	= "/home/gavinok/.scripts/dmenu/dmenuhandler";
-static char *linkhandlerpath	= "/home/gavinok/.scripts/linkhandler";
+static char *linkhandlerpath	= "/home/gavinok/.scripts/tools/linkhandler";
 static char *searchurl		= "duckduckgo.com/?q=%s";
 /* Webkit default features */
 /* Highest priority value will be used.
@@ -89,16 +89,9 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
-// #define PASS(p) { \
-//         .v = (const char *[]){ "/bin/sh", "-c", \
-//              "mypassmenu --type -l 10 -p \"$1\" -w \"$0\"", \
-//               winid, p, NULL \
-//         } \
-// }
-//
 #define PASS(p) { \
         .v = (const char *[]){ "/bin/sh", "-c", \
-             "mypassmenu --type -l 10 -p \"$1\" ", \
+             "mypassmenu --type -l 10 -p \"$1\" -w \"$0\"", \
               winid, p, NULL \
         } \
 }
@@ -139,13 +132,6 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 #define BM_EDIT() {\
         .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
              "$EDITOR ~/.config/bookmarks", \
-              NULL \
-        } \
-}
-
-#define LINKBOX() {\
-        .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
-             "$EDITOR ~/Dropbox/LinkBox.html", \
               NULL \
         } \
 }
@@ -214,8 +200,8 @@ static SiteSpecific certs[] = {
 static Key keys[] = {
     /* modifier              keyval          function    arg */
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_o,      spawn,		SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
+    { MODKEY,		     GDK_KEY_o,      spawn,		SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
     { MODKEY,		     GDK_KEY_o,      spawn,		SETPROP("_SURF_SEARCH", "_SURF_SEARCH", PROMPT_GO) },
-    { MODKEY,		     GDK_KEY_s,      spawn,		LINKBOX() },
     { MODKEY,                GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_curwin } },
     { GDK_SHIFT_MASK|MODKEY, GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_newwin } },
     { MODKEY,		     GDK_KEY_e,		externalpipe,	{ .v = editscreen } },

@@ -4,7 +4,7 @@
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	/45968eff/
+!_TAG_PROGRAM_VERSION	0.0.0	/3fdf28bc/
 $(COBJ)	Makefile	/^$(COBJ): config.h common.h config.mk$/;"	t
 $(OBJ)	Makefile	/^$(OBJ): config.h common.h config.mk$/;"	t
 $(WEBEXTOBJ)	Makefile	/^$(WEBEXTOBJ): $(WEBEXTSRC)$/;"	t
@@ -68,6 +68,7 @@ LENGTH	surf.c	/^#define LENGTH(/;"	d	file:
 LIBDIR	config.mk	/^LIBDIR = $(LIBPREFIX)\/surf$/;"	m
 LIBPREFIX	config.mk	/^LIBPREFIX = $(PREFIX)\/lib$/;"	m
 LIBS	config.mk	/^LIBS = $(X11LIB) $(GTKLIB) -lgthread-2.0$/;"	m
+LINKBOX	config.h	/^#define LINKBOX(/;"	d
 LoadImages	surf.c	/^	LoadImages,$/;"	e	enum:__anon1ca5b3760303	file:
 MANPREFIX	config.mk	/^MANPREFIX = $(PREFIX)\/share\/man$/;"	m
 MODKEY	config.def.h	/^#define MODKEY /;"	d
@@ -254,7 +255,7 @@ lhandler	surf.c	/^lhandler(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 libsurf-webext.so	Makefile	/^libsurf-webext.so: $(WEBEXTOBJ) $(COBJ)$/;"	t
 link_normalize	scripts/surf_linkselect.sh	/^link_normalize() {$/;"	f
 link_select	scripts/surf_linkselect.sh	/^link_select() {$/;"	f
-linkhandlerpath	config.h	/^static char *linkhandlerpath	= "\/home\/gavinok\/.scripts\/linkhandler";$/;"	v	typeref:typename:char *
+linkhandlerpath	config.h	/^static char *linkhandlerpath	= "\/home\/gavinok\/.scripts\/tools\/linkhandler";$/;"	v	typeref:typename:char *
 linkselect_curwin	config.h	/^static char *linkselect_curwin [] = { "\/bin\/sh", "-c",$/;"	v	typeref:typename:char * []
 linkselect_newwin	config.h	/^static char *linkselect_newwin [] = { "\/bin\/sh", "-c",$/;"	v	typeref:typename:char * []
 loadchanged	surf.c	/^loadchanged(WebKitWebView *v, WebKitLoadEvent e, Client *c)$/;"	f	typeref:typename:void

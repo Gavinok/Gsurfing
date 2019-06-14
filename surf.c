@@ -771,6 +771,7 @@ setparameter(Client *c, int refresh, ParamName p, const Arg *a)
 		webkit_settings_set_enable_accelerated_2d_canvas(s, a->i);
 		break;
 	case AccessMicrophone:
+		/* TEST */
 		return; /* do nothing */
 	case AccessWebcam:
 		return; /* do nothing */
