@@ -89,29 +89,12 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
-// #define PASS(p) { \
-//         .v = (const char *[]){ "/bin/sh", "-c", \
-//              "mypassmenu --type -l 10 -p \"$1\" -w \"$0\"", \
-//               winid, p, NULL \
-//         } \
-// }
-//
 #define PASS(p) { \
         .v = (const char *[]){ "/bin/sh", "-c", \
-             "mypassmenu --type -l 10 -p \"$1\" ", \
+             "mypassmenu --type -l 10 -p \"$1\" -w \"$0\"", \
               winid, p, NULL \
         } \
 }
-
-// /* DOWNLOAD(URI, referer) */
-// #define DOWNLOAD(u, r) { \
-//         .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
-//              "cd ~/Downloads; curl -g -L -J -O -A \"$1\" -b \"$2\" -c \"$2\"" \
-//              " -e \"$3\" \"$4\" && notify-send \"Download Completed\" && exit" \
-//              "notify-send \"Download Failed\"", \
-//              "surf-download", useragent, cookiefile, r, u, NULL \
-//         } \
-// }
 
 /* DOWNLOAD(URI, referer) */
 #define DOWNLOAD(d, r) { \
