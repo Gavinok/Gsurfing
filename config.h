@@ -7,7 +7,7 @@ static char *certdir		= "~/.surf/certificates/";
 static char *cachedir		= "~/.surf/cache/";
 static char *cookiefile		= "~/.surf/cookies.txt";
 static char *dmenuhandlerpath	= "/home/gavinok/.scripts/dmenu/dmenuhandler";
-static char *linkhandlerpath	= "/home/gavinok/.scripts/linkhandler";
+static char *linkhandlerpath	= "/home/gavinok/.scripts/tools/linkhandler";
 static char *searchurl		= "duckduckgo.com/?q=%s";
 /* Webkit default features */
 /* Highest priority value will be used.
