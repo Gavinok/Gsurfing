@@ -36,6 +36,7 @@
 
 //adds toggle and page state to the title
 /* #define ENABLEDEBUG */
+#define FORCEURI
 
 #define LENGTH(x)               (sizeof(x) / sizeof(x[0]))
 #define CLEANMASK(mask)         (mask & (MODKEY|GDK_SHIFT_MASK))
@@ -649,7 +650,7 @@ updatetitle(Client *c)
 		gettogglestats(c);
 		getpagestats(c);
 
-#if ENABLEDEBUG
+#ifdef ENABLEDEBUG
 		if (c->progress != 100)
 			title = g_strdup_printf("[%i%%] %s:%s | %s",
 			        c->progress, togglestats, pagestats, name);
@@ -1068,6 +1069,10 @@ newwindow(Client *c, const Arg *a, int noembed)
 void
 spawn(Client *c, const Arg *a)
 {
+    #ifdef FORCEURI
+	char *url = geturi(c);
+	setatom(c, AtomUri, url);
+    #endif
 	if (fork() == 0) {
 		if (dpy)
 			close(ConnectionNumber(dpy));
@@ -1940,6 +1945,10 @@ externalpipe_js_done(WebKitWebView *wv, GAsyncResult *s, Arg *arg)
 void
 externalpipe(Client *c, const Arg *arg)
 {
+    #ifdef FORCEURI
+	char *url = geturi(c);
+	setatom(c, AtomUri, url);
+    #endif
 	if (curconfig[JavaScript].val.i) {
 		webkit_web_view_run_javascript(
 			c->view, "window.document.body.outerHTML",
@@ -1952,7 +1961,6 @@ externalpipe(Client *c, const Arg *arg)
 		}
 	}
 }
-
 
 void
 dhandler(Client *c, const Arg *a)

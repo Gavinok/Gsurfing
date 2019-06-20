@@ -46,6 +46,7 @@ Dependancies:	README.md	/^Dependancies:$/;"	c
 DiskCache	surf.c	/^	DiskCache,$/;"	e	enum:__anon1ca5b3760303	file:
 EARGF	arg.h	/^#define EARGF(/;"	d
 ENVIRONMENT	surf.1	/^.SH ENVIRONMENT$/;"	s	title:SURF
+FORCEURI	surf.c	/^#define FORCEURI$/;"	d	file:
 FileURLsCrossAccess	surf.c	/^	FileURLsCrossAccess,$/;"	e	enum:__anon1ca5b3760303	file:
 FontSize	surf.c	/^	FontSize,$/;"	e	enum:__anon1ca5b3760303	file:
 FrameFlattening	surf.c	/^	FrameFlattening,$/;"	e	enum:__anon1ca5b3760303	file:
@@ -135,6 +136,7 @@ UriParameters	surf.c	/^} UriParameters;$/;"	t	typeref:struct:__anon1ca5b3760808	
 VERSION	config.mk	/^VERSION = 2.0$/;"	m
 VIDEOPLAY	config.def.h	/^#define VIDEOPLAY(/;"	d
 VIDEOPLAY	config.h	/^#define VIDEOPLAY(/;"	d
+VIMANYWHERE	config.h	/^#define VIMANYWHERE(/;"	d
 WEBEXTCFLAGS	config.mk	/^WEBEXTCFLAGS = -fPIC $(WEBEXTINC)$/;"	m
 WEBEXTINC	config.mk	/^WEBEXTINC = `pkg-config --cflags webkit2gtk-4.0 webkit2gtk-web-extension-4.0`$/;"	m
 WEBEXTLIBS	config.mk	/^WEBEXTLIBS = `pkg-config --libs webkit2gtk-4.0 webkit2gtk-web-extension-4.0`$/;"	m
@@ -207,7 +209,6 @@ dmenuhandlerpath	config.h	/^static char *dmenuhandlerpath	= "\/home\/gavinok\/.s
 download	surf.c	/^download(Client *c, WebKitURIResponse *r)$/;"	f	typeref:typename:void
 downloadstarted	surf.c	/^downloadstarted(WebKitWebContext *wc, WebKitDownload *d, Client *c)$/;"	f	typeref:typename:void
 dpy	surf.c	/^static Display *dpy;$/;"	v	typeref:typename:Display *	file:
-dump_links_with_titles	scripts/surf_linkselect.sh	/^dump_links_with_titles() {$/;"	f
 editscreen	config.h	/^static char *editscreen[] = { "\/bin\/sh", "-c", "~\/.scripts\/surf\/edit_screen.sh", NULL };$/;"	v	typeref:typename:char * []
 embed	surf.c	/^static Window embed;$/;"	v	typeref:typename:Window	file:
 errorpage	surf.c	/^	int progress, fullscreen, https, insecure, errorpage;$/;"	m	struct:Client	typeref:typename:int	file:
@@ -253,8 +254,6 @@ keys	config.h	/^static Key keys[] = {$/;"	v	typeref:typename:Key[]
 keyval	surf.c	/^	guint keyval;$/;"	m	struct:__anon1ca5b3760608	typeref:typename:guint	file:
 lhandler	surf.c	/^lhandler(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 libsurf-webext.so	Makefile	/^libsurf-webext.so: $(WEBEXTOBJ) $(COBJ)$/;"	t
-link_normalize	scripts/surf_linkselect.sh	/^link_normalize() {$/;"	f
-link_select	scripts/surf_linkselect.sh	/^link_select() {$/;"	f
 linkhandlerpath	config.h	/^static char *linkhandlerpath	= "\/home\/gavinok\/.scripts\/tools\/linkhandler";$/;"	v	typeref:typename:char *
 linkselect_curwin	config.h	/^static char *linkselect_curwin [] = { "\/bin\/sh", "-c",$/;"	v	typeref:typename:char * []
 linkselect_newwin	config.h	/^static char *linkselect_newwin [] = { "\/bin\/sh", "-c",$/;"	v	typeref:typename:char * []

@@ -133,6 +133,13 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
+#define VIMANYWHERE() {\
+        .v = (const char *[]){ "/bin/sh", "-c",\
+             "~/.scripts/tools/vim-anywhere.sh", \
+              NULL \
+        } \
+}
+
 #define RCLICK() {\
         .v = (const char *[]){ "/bin/sh", "-c",\
              "~/.scripts/9menu/globalrightclick.sh", \
@@ -174,8 +181,7 @@ static char *editscreen[] = { "/bin/sh", "-c", "~/.scripts/surf/edit_screen.sh",
  */
 static SiteSpecific styles[] = {
     /* regexp               file in $styledir */
-    { ".*.suckless.org.*",    "suckless.css" },
-    { ".*",                 "default.css" },
+    { ".*.suckless.org.*",	"suckless.css" },
 };
 
 /* certificates */
@@ -205,7 +211,7 @@ static Key keys[] = {
     { MODKEY,                GDK_KEY_w,     spawn,              PASS("Select_Password") },
     { MODKEY,                GDK_KEY_slash, spawn,              SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
     { MODKEY,                GDK_KEY_m,     spawn,              BM_ADD("_SURF_URI") },
-    { MODKEY,		     GDK_KEY_x,     test,		{ .i = 0 } },
+    { MODKEY,		     GDK_KEY_x,     spawn,		VIMANYWHERE() },
     { MODKEY|GDK_SHIFT_MASK, GDK_KEY_m,     spawn,              BM_EDIT() },
     { MODKEY,                GDK_KEY_i,     lhandler,		{ .i = 0 } },
     { MODKEY,		     GDK_KEY_Return,lhandler,           { .i = 1 } },
@@ -262,6 +268,7 @@ static Key keys[] = {
 static Button buttons[] = {
     /* target       event mask      button  function        argument        stop event */
     { OnLink,	    0,		    2,	    clickspecial,      	{ .i =  0  },	1 },
+    { OnDoc,	    0,		    2,      spawn,		SETPROP("_SURF_SEARCH", "_SURF_SEARCH", PROMPT_GO)},
     { OnLink,  	    MODKEY,	    2, 	    clickspecial, 	{ .i =  1  },	1 },
     { OnSel,  	    0,		    2, 	    spawn,		RCLICK(),	1 },
     { OnLink,  	    MODKEY,	    1, 	    clicknewwindow,    	{ .i =  1  },	1 },
