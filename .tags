@@ -256,7 +256,7 @@ lhandler	surf.c	/^lhandler(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 libsurf-webext.so	Makefile	/^libsurf-webext.so: $(WEBEXTOBJ) $(COBJ)$/;"	t
 linkhandlerpath	config.h	/^static char *linkhandlerpath	= "\/home\/gavinok\/.scripts\/tools\/linkhandler";$/;"	v	typeref:typename:char *
 linkselect_curwin	config.h	/^static char *linkselect_curwin [] = { "\/bin\/sh", "-c",$/;"	v	typeref:typename:char * []
-linkselect_newwin	config.h	/^static char *linkselect_newwin [] = { "\/bin\/sh", "-c",$/;"	v	typeref:typename:char * []
+linkselect_linkhandeler	config.h	/^static char *linkselect_linkhandeler [] = { "\/bin\/sh", "-c",$/;"	v	typeref:typename:char * []
 loadchanged	surf.c	/^loadchanged(WebKitWebView *v, WebKitLoadEvent e, Client *c)$/;"	f	typeref:typename:void
 loadcommitted	surf.c	/^static ParamName loadcommitted[] = {$/;"	v	typeref:typename:ParamName[]	file:
 loadfailedtls	surf.c	/^loadfailedtls(WebKitWebView *v, gchar *uri, GTlsCertificate *cert,$/;"	f	typeref:typename:gboolean
