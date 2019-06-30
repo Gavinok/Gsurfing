@@ -167,10 +167,16 @@ static char *linkselect_curwin [] = { "/bin/sh", "-c",
 	"~/.scripts/surf/surf_linkselect.sh $0 'Link' | xargs -r xprop -id $0 -f _SURF_GO 8s -set _SURF_GO",
 	winid, NULL
 };
-static char *linkselect_newwin [] = { "/bin/sh", "-c",
-	"~/.scripts/surf/surf_linkselect.sh $0 'Link (new window)' | xargs -r surf",
+
+static char *linkselect_linkhandeler [] = { "/bin/sh", "-c",
+	"~/.scripts/surf/surf_linkselect.sh $0 'Link' | sed 's*^*https://*g' | xargs linkhandler",
 	winid, NULL
 };
+
+// static char *linkselect_newwin [] = { "/bin/sh", "-c",
+// 	"~/.scripts/surf/surf_linkselect.sh $0 'Link (new window)' | xargs -r surf",
+// 	winid, NULL
+// };
 
 static char *editscreen[] = { "/bin/sh", "-c", "~/.scripts/surf/edit_screen.sh", NULL };
 
@@ -206,7 +212,8 @@ static Key keys[] = {
     { MODKEY,		     GDK_KEY_o,      spawn,		SETPROP("_SURF_SEARCH", "_SURF_SEARCH", PROMPT_GO) },
     { MODKEY,		     GDK_KEY_s,      spawn,		LINKBOX() },
     { MODKEY,                GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_curwin } },
-    { GDK_SHIFT_MASK|MODKEY, GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_newwin } },
+    { MODKEY,                GDK_KEY_apostrophe,externalpipe,	{ .v = linkselect_linkhandeler } },
+    // { GDK_SHIFT_MASK|MODKEY, GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_newwin } },
     { MODKEY,		     GDK_KEY_e,		externalpipe,	{ .v = editscreen } },
     { MODKEY,                GDK_KEY_w,     spawn,              PASS("Select_Password") },
     { MODKEY,                GDK_KEY_slash, spawn,              SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
