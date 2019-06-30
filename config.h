@@ -100,7 +100,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 #define DOWNLOAD(d, r) { \
 	.v = (char *[]){ "/bin/sh", "-c", \
 		"cd ~/Telechargements;"\
-		"st -e /bin/sh -c \"aria2c -U '$1' -d ~/Downloads " \
+		"st -g \"=40-10+0\" -t float -e /bin/sh -c \"aria2c -x 3 -U '$1' -d ~/Downloads " \
 		" --referer '$2' --load-cookies $3 --save-cookies $3 '$0' || notify-send \"DOWNLOAD Failed\"" \
 		" sleep 3;\"", \
 		d, useragent, r, cookiefile, NULL \
