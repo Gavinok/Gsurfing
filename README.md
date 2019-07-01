@@ -18,6 +18,7 @@ Dependancies:
 - [dmenuhandler](https://github.com/Gavinok/scripts/blob/master/dmenu/dmenuhandler) ( for specific interactions with links )
 - [linkhandler](https://github.com/Gavinok/scripts/blob/master/linkhandler)  ( for automatically interactions with links )
 - pass & passmenu ( convinient embedded password manager )
+- aria2 ( used for downloads )
 
 Notes Form Gavin
 ================
@@ -27,7 +28,9 @@ Notes Form Gavin
 
 ## Patches
 ### [suckless.org](suckless.org)
-- [Bookmarks](https://surf.suckless.org/patches/bookmarking/surf-bookmarks-20170722-723ff26.diff)
+- [Bookmarks](https://surf.suckless.org/patches/bookmarking/)
+- [Modal](http://surf.suckless.org/patches/modal/)
+
 ### Personal
 - open a web page with linkhandler script
 - open a web page with dmenuhandler script

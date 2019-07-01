@@ -659,12 +659,33 @@ updatetitle(Client *c)
 			        togglestats, pagestats, name);
 #else
 		// removed garbage from title
-		if (c->progress != 100)
-			title = g_strdup_printf("[%i%%] %s",
-			        c->progress, name);
-		else
-			title = g_strdup_printf("%s",
-			        name);
+		// added insert INDICATORS
+		/* char[] state = "INSERT"; */
+		/* if (!insertmode) { */
+		/*     state = ""; */
+		/* } */
+		if (!insertmode) {
+		    if (c->progress != 100)
+			    title = g_strdup_printf("[%i%%] %s",
+				    c->progress, name);
+		    else
+			    title = g_strdup_printf("%s",
+				    name);
+		}else{
+		    if (c->progress != 100)
+			    title = g_strdup_printf("-- INSERT -- [%i%%] %s",
+				    c->progress, name);
+		    else
+			    title = g_strdup_printf("-- INSERT -- %s",
+				    name);
+		}
+		// removed garbage from title
+		/* if (c->progress != 100) */
+		/* 	title = g_strdup_printf("[%i%%] %s", */
+		/* 	        c->progress, name); */
+		/* else */
+		/* 	title = g_strdup_printf("%s", */
+		/* 	        name); */
 #endif
 
 		gtk_window_set_title(GTK_WINDOW(c->win), title);
@@ -2170,6 +2191,7 @@ void
 insert(Client *c, const Arg *a)
 {
 		insertmode = (a->i);
+		updatetitle(c);
 }
 
 void
