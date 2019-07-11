@@ -12,6 +12,7 @@ Dependancies:
 - st   ( default terminal for curl )
 - mpv  ( default video player )
 - gdb and gdb-debug ( helps prevent intermittent crashes )
+- gstreamer (for video playback )
 
 ### specific to this fork
 - youtube-dl   ( for playing videos )
