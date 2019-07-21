@@ -37,6 +37,7 @@
 //adds toggle and page state to the title
 /* #define ENABLEDEBUG */
 #define FORCEURI
+#define MODAL
 
 #define LENGTH(x)               (sizeof(x) / sizeof(x[0]))
 #define CLEANMASK(mask)         (mask & (MODKEY|GDK_SHIFT_MASK))
@@ -228,6 +229,7 @@ static void destroywin(GtkWidget* w, Client *c);
 /* Custom functions  */
 static void lhandler(Client *c, const Arg *a);
 static void dhandler(Client *c, const Arg *a);
+static void passwordman(Client *c, const Arg *a);
 static void externalpipe(Client *c, const Arg *a);
 
 static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
@@ -1996,6 +1998,14 @@ lhandler(Client *c, const Arg *a)
     }
 	arg.v = (const char *[]){ dmenuhandlerpath, url,  NULL};
 	spawn(c, &arg);
+}
+
+void
+passwordman(Client *c, const Arg *a)
+{
+    insertmode = 1;
+    updatetitle(c);
+    spawn(c, a);
 }
 
 void
