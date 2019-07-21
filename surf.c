@@ -658,12 +658,6 @@ updatetitle(Client *c)
 			title = g_strdup_printf("%s:%s | %s",
 			        togglestats, pagestats, name);
 #else
-		// removed garbage from title
-		// added insert INDICATORS
-		/* char[] state = "INSERT"; */
-		/* if (!insertmode) { */
-		/*     state = ""; */
-		/* } */
 		if (!insertmode) {
 		    if (c->progress != 100)
 			    title = g_strdup_printf("[%i%%] %s",
@@ -679,13 +673,6 @@ updatetitle(Client *c)
 			    title = g_strdup_printf("-- INSERT -- %s",
 				    name);
 		}
-		// removed garbage from title
-		/* if (c->progress != 100) */
-		/* 	title = g_strdup_printf("[%i%%] %s", */
-		/* 	        c->progress, name); */
-		/* else */
-		/* 	title = g_strdup_printf("%s", */
-		/* 	        name); */
 #endif
 
 		gtk_window_set_title(GTK_WINDOW(c->win), title);

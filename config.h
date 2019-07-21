@@ -169,7 +169,7 @@ static char *linkselect_curwin [] = { "/bin/sh", "-c",
 };
 
 static char *linkselect_linkhandeler [] = { "/bin/sh", "-c",
-	"~/.scripts/surf/surf_linkselect.sh $0 'Link' | sed 's*^*https://*g' | xargs linkhandler",
+	"~/.scripts/surf/surf_linkselect.sh $0 'Link' | sed 's*^*https://*g' | xargs -r linkhandler",
 	winid, NULL
 };
 
@@ -217,7 +217,7 @@ static Key keys[] = {
     { 0,		GDK_KEY_e,	externalpipe,	{ .v = editscreen } },
     { MODKEY,           GDK_KEY_p,	spawn,              PASS("Select_Password") },
     { 0,                GDK_KEY_slash,	spawn,              SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
-    { 0,                GDK_KEY_m,	spawn,              BM_ADD("_SURF_URI") },
+    { MODKEY,                GDK_KEY_m,	spawn,              BM_ADD("_SURF_URI") },
     { 0,		GDK_KEY_x,	spawn,		VIMANYWHERE() },
     { 0|GDK_SHIFT_MASK, GDK_KEY_m,	spawn,              BM_EDIT() },
     // { 0,                GDK_KEY_i,     lhandler,		{ .i = 0 } },
