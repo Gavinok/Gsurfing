@@ -660,6 +660,7 @@ updatetitle(Client *c)
 			title = g_strdup_printf("%s:%s | %s",
 			        togglestats, pagestats, name);
 #else
+#ifdef MODAL
 		if (!insertmode) {
 		    if (c->progress != 100)
 			    title = g_strdup_printf("[%i%%] %s",
@@ -2032,11 +2033,10 @@ clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h)
 	Arg arg;
 	arg.v = webkit_hit_test_result_get_link_uri(h);
 	if (a->i == 0) {
-	    arg.v = (const char *[]){ linkhandlerpath, arg.v,  NULL};
-	}else{
-	    arg.v = (const char *[]){ dmenuhandlerpath, arg.v,  NULL};
+	    arg.v = (const char *[]){ linkhandlerpath, arg.v,  NULL}; spawn(c, &arg);
+	    return;
 	}
-	spawn(c, &arg);
+	arg.v = (const char *[]){ dmenuhandlerpath, arg.v,  NULL}; spawn(c, &arg);
 }
 void
 clipboard(Client *c, const Arg *a)
