@@ -675,6 +675,14 @@ updatetitle(Client *c)
 			    title = g_strdup_printf("-- INSERT -- %s",
 				    name);
 		}
+#else
+		    if (c->progress != 100)
+			    title = g_strdup_printf("[%i%%] %s",
+				    c->progress, name);
+		    else
+			    title = g_strdup_printf("%s",
+				    name);
+#endif //MODAL
 #endif
 
 		gtk_window_set_title(GTK_WINDOW(c->win), title);
@@ -1332,6 +1340,10 @@ buttonreleased(GtkWidget *w, GdkEvent *e, Client *c)
 
 	element = webkit_hit_test_result_get_context(c->mousepos);
 
+	#ifdef MODAL
+	    insertmode = 1;
+	    updatetitle(c);
+	#endif
 	for (i = 0; i < LENGTH(buttons); ++i) {
 		if (element & buttons[i].target &&
 		    e->button.button == buttons[i].button &&
