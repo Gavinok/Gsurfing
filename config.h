@@ -140,10 +140,19 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
-#define RCLICK() {\
-        .v = (const char *[]){ "/bin/sh", "-c",\
-             "~/.scripts/9menu/globalrightclick.sh", \
-              NULL \
+/* LINKHANDLER(URI) */
+// used in clkexporturi
+#define LINKHANDLER(u) {\
+        .v = (const char *[]){ "/bin/sh", "-c", \
+             "linkhandler \"$0\"", u, NULL \
+        } \
+}
+
+/* DMENUHANDELER(URI) */
+// used in exporturi
+#define DMENUHANDELER(u) {\
+        .v = (const char *[]){ "/bin/sh", "-c", \
+             "dmenuhandler \"$0\"", u, NULL \
         } \
 }
 /* PLUMB(URI) */
@@ -162,6 +171,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
              "mpv --really-quiet \"$0\"", u, NULL \
         } \
 }
+
 
 static char *linkselect_curwin [] = { "/bin/sh", "-c",
 	"~/.scripts/surf/surf_linkselect.sh $0 'Link' | xargs -r xprop -id $0 -f _SURF_GO 8s -set _SURF_GO",
@@ -218,18 +228,18 @@ static Key keys[] = {
     // { MODKEY,           GDK_KEY_p,	spawn,              PASS("Select_Password") },
     { MODKEY,           GDK_KEY_p,	passwordman,        PASS("Select_Password") },
     { 0,                GDK_KEY_slash,	spawn,              SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
-    { MODKEY,                GDK_KEY_m,	spawn,              BM_ADD("_SURF_URI") },
+    { MODKEY,           GDK_KEY_m,	spawn,              BM_ADD("_SURF_URI") },
     { 0,		GDK_KEY_x,	spawn,		VIMANYWHERE() },
     { 0|GDK_SHIFT_MASK, GDK_KEY_m,	spawn,              BM_EDIT() },
-    // { 0,                GDK_KEY_i,     lhandler,		{ .i = 0 } },
-    { 0,		GDK_KEY_i,      insert,     { .i = 1 } },
-    { 0,		GDK_KEY_Escape, insert,     { .i = 0 } },
-    { 0,		GDK_KEY_Return, lhandler,           { .i = 1 } },
+    { 0,		GDK_KEY_i,      insert,		    { .i = 1 } },
+    { 0,		GDK_KEY_Escape, insert,     	    { .i = 0 } },
+    { 0,                GDK_KEY_Return, exporturi,	    { 0 } },
     { 0|GDK_SHIFT_MASK, GDK_KEY_r,	reload,             { .i = 1 } },
     { 0,                GDK_KEY_r,	reload,             { .i = 0 } },
 
     { 0,                GDK_KEY_l,	navigate,           { .i = +1 } },
     { 0,                GDK_KEY_h,	navigate,           { .i = -1 } },
+    { MODKEY,           GDK_KEY_h,	sendkeycode,           { .i = 40 } },
 
     /* vertical and horizontal scrolling, in viewport percentage */
     { 0,                GDK_KEY_j,	scrollv,            { .i = +10 } },
@@ -277,11 +287,8 @@ static Key keys[] = {
 /* target can be OnDoc, OnLink, OnImg, OnMedia, OnEdit, OnBar, OnSel, OnAny */
 static Button buttons[] = {
     /* target       event mask      button  function        argument        stop event */
-    { OnLink,	    0,		    2,	    clickspecial,      	{ .i =  0  },	1 },
-    { OnDoc,	    0,		    2,      spawn,		SETPROP("_SURF_SEARCH", "_SURF_SEARCH", PROMPT_GO)},
-    // { OnDoc,	    0,		    1,      insert,		{ .i =  1  },	1 },
-    { OnLink,  	    MODKEY,	    2, 	    clickspecial, 	{ .i =  1  },	1 },
-    { OnSel,  	    0,		    2, 	    spawn,		RCLICK(),	1 },
+    { OnLink,	    0,		    2,	    clkexporturi,      	{ .i =  0  },	1 },
+    // { OnDoc,	    0,		    2,      spawn,		SETPROP("_SURF_SEARCH", "_SURF_SEARCH", PROMPT_GO)},
     { OnLink,  	    MODKEY,	    1, 	    clicknewwindow,    	{ .i =  1  },	1 },
     { OnAny,   	    0,		    8, 	    clicknavigate,    	{ .i =  -1 },	1 },
     { OnAny,   	    0,		    9, 	    clicknavigate,     	{ .i =  +1 },	1 },

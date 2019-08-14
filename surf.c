@@ -231,6 +231,7 @@ static void lhandler(Client *c, const Arg *a);
 static void dhandler(Client *c, const Arg *a);
 static void passwordman(Client *c, const Arg *a);
 static void externalpipe(Client *c, const Arg *a);
+static void exporturi(Client *c, const Arg *a);
 
 static void pasteuri(GtkClipboard *clipboard, const char *text, gpointer d);
 static void reload(Client *c, const Arg *a);
@@ -239,6 +240,7 @@ static void showcert(Client *c, const Arg *a);
 static void clipboard(Client *c, const Arg *a);
 static void zoom(Client *c, const Arg *a);
 static void scrolltolim(Client *c, const Arg *a);
+static void sendkeycode(Client *c, const Arg *a);
 static void test(Client *c, const Arg *a);
 static void scrollv(Client *c, const Arg *a);
 static void scrollh(Client *c, const Arg *a);
@@ -252,8 +254,9 @@ static void find(Client *c, const Arg *a);
 static void insert(Client *c, const Arg *a);
 
 /* Buttons */
-static void clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h);
-static void dclicker(Client *c, const Arg *a, WebKitHitTestResult *h);
+/* static void clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h); */
+static void clkexporturi(Client *c, const Arg *a, WebKitHitTestResult *h);
+/* static void dclicker(Client *c, const Arg *a, WebKitHitTestResult *h); */
 static void clicknavigate(Client *c, const Arg *a, WebKitHitTestResult *h);
 static void clicknewwindow(Client *c, const Arg *a, WebKitHitTestResult *h);
 static void clickexternplayer(Client *c, const Arg *a, WebKitHitTestResult *h);
@@ -1341,10 +1344,10 @@ buttonreleased(GtkWidget *w, GdkEvent *e, Client *c)
 
 	element = webkit_hit_test_result_get_context(c->mousepos);
 
-	#ifdef MODAL
-	    insertmode = 1;
-	    updatetitle(c);
-	#endif
+	/* #ifdef MODAL */
+	/*     insertmode = 1; */
+	/*     updatetitle(c); */
+	/* #endif */
 	for (i = 0; i < LENGTH(buttons); ++i) {
 		if (element & buttons[i].target &&
 		    e->button.button == buttons[i].button &&
@@ -1986,30 +1989,20 @@ externalpipe(Client *c, const Arg *arg)
 }
 
 void
-dhandler(Client *c, const Arg *a)
+exporturi(Client *c, const Arg *a)
 {
-	const char *url = (c->targeturi ? c->targeturi : geturi(c));
 	Arg arg;
-	arg.v = (const char *[]){ dmenuhandlerpath, url,  NULL};
+
+	arg = (Arg)DMENUHANDELER(geturi(c));
 	spawn(c, &arg);
 }
 
 void
-lhandler(Client *c, const Arg *a)
+clkexporturi(Client *c, const Arg *a, WebKitHitTestResult *h)
 {
-    Arg arg;
-    const char *url = (c->targeturi ? c->targeturi : geturi(c));
-    if(a->i == 0){
-	if (g_str_has_prefix(url, "https://www.youtube.com/watch")){
-	    arg.v = (const char *[]){ "mpv", "--really-quiet", "--ytdl-format=22", url,  NULL}; spawn(c, &arg);
-	    arg.v = (const char *[]){ "notify-send", "playing video", NULL}; spawn(c, &arg);
-	}else{
-		arg.v = (const char *[]){ linkhandlerpath, url, NULL};	spawn(c, &arg);
-		arg.v = (const char *[]){ "notify-send", "not a video", NULL}; spawn(c, &arg);
-	}
-	return;
-    }
-	arg.v = (const char *[]){ dmenuhandlerpath, url,  NULL};
+	Arg arg;
+
+	arg = (Arg)LINKHANDLER(webkit_hit_test_result_get_link_uri(h));
 	spawn(c, &arg);
 }
 
@@ -2027,17 +2020,17 @@ spawnnewclient(Client *c, const Arg *a)
     newclient(c);
 }
 
-void
-clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h)
-{
-	Arg arg;
-	arg.v = webkit_hit_test_result_get_link_uri(h);
-	if (a->i == 0) {
-	    arg.v = (const char *[]){ linkhandlerpath, arg.v,  NULL}; spawn(c, &arg);
-	    return;
-	}
-	arg.v = (const char *[]){ dmenuhandlerpath, arg.v,  NULL}; spawn(c, &arg);
-}
+/* void */
+/* clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h) */
+/* { */
+/* 	Arg arg; */
+/* 	arg.v = webkit_hit_test_result_get_link_uri(h); */
+/* 	if (a->i == 0) { */
+/* 	    arg.v = (const char *[]){ linkhandlerpath, arg.v,  NULL}; spawn(c, &arg); */
+/* 	    return; */
+/* 	} */
+/* 	arg.v = (const char *[]){ dmenuhandlerpath, arg.v,  NULL}; spawn(c, &arg); */
+/* } */
 void
 clipboard(Client *c, const Arg *a)
 {
@@ -2092,6 +2085,18 @@ scrolltolim(Client *c, const Arg *a)
 	    return;
 	}
 	evalscript(c, "window.scrollTo(0,0);");
+}
+
+//Requires javascript to be enabled
+void
+sendkeycode(Client *c, const Arg *a)
+{
+	//if javascript is enabled
+	/* evalscript(c, "window.scrollBy(%d,0);", (a->i * 10)); */
+	//else
+	    /* evalscript(c, "var keyboardEvent = document.createEvent(\"KeyboardEvent\"); var initMethod = typeof keyboardEvent.initKeyboardEvent !== 'undefined' ? \"initKeyboardEvent\" : \"initKeyEvent\"; keyboardEvent[initMethod]( \"keydown\", true,      true,      window,    false,     false,     false,     false,     %d,        0          ); document.dispatchEvent(keyboardEvent);", a->i); */
+	    evalscript(c, "var keyboardEvent = document.createEvent(\"KeyboardEvent\"); var initMethod = typeof keyboardEvent.initKeyboardEvent !== 'undefined' ? \"initKeyboardEvent\" : \"initKeyEvent\"; keyboardEvent[initMethod]( \"keydown\", true,      true,      window,    false,     false,     false,     false,     %d,        0          ); document.dispatchEvent(keyboardEvent);", a->i);
+	    return;
 }
 
 //Requires javascript to be enabled

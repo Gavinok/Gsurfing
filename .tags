@@ -38,6 +38,7 @@ Client	surf.c	/^typedef struct Client {$/;"	s	file:
 Client	surf.c	/^} Client;$/;"	t	typeref:struct:Client	file:
 CookiePolicies	surf.c	/^	CookiePolicies,$/;"	e	enum:__anon1ca5b3760303	file:
 DESCRIPTION	surf.1	/^.SH DESCRIPTION$/;"	s	title:SURF
+DMENUHANDELER	config.h	/^#define DMENUHANDELER(/;"	d
 DNSPrefetch	surf.c	/^	DNSPrefetch,$/;"	e	enum:__anon1ca5b3760303	file:
 DOWNLOAD	config.def.h	/^#define DOWNLOAD(/;"	d
 DOWNLOAD	config.h	/^#define DOWNLOAD(/;"	d
@@ -70,8 +71,10 @@ LIBDIR	config.mk	/^LIBDIR = $(LIBPREFIX)\/surf$/;"	m
 LIBPREFIX	config.mk	/^LIBPREFIX = $(PREFIX)\/lib$/;"	m
 LIBS	config.mk	/^LIBS = $(X11LIB) $(GTKLIB) -lgthread-2.0$/;"	m
 LINKBOX	config.h	/^#define LINKBOX(/;"	d
+LINKHANDLER	config.h	/^#define LINKHANDLER(/;"	d
 LoadImages	surf.c	/^	LoadImages,$/;"	e	enum:__anon1ca5b3760303	file:
 MANPREFIX	config.mk	/^MANPREFIX = $(PREFIX)\/share\/man$/;"	m
+MODAL	surf.c	/^#define MODAL$/;"	d	file:
 MODKEY	config.def.h	/^#define MODKEY /;"	d
 MODKEY	config.h	/^#define MODKEY /;"	d
 MSGBUFSZ	common.h	/^#define MSGBUFSZ /;"	d
@@ -106,7 +109,6 @@ Patches	README.md	/^## Patches$/;"	s
 Personal	README.md	/^### Personal$/;"	S
 Plugins	surf.c	/^	Plugins,$/;"	e	enum:__anon1ca5b3760303	file:
 PreferredLanguages	surf.c	/^	PreferredLanguages,$/;"	e	enum:__anon1ca5b3760303	file:
-RCLICK	config.h	/^#define RCLICK(/;"	d
 Requirements	README.md	/^Requirements$/;"	s
 RunInFullscreen	surf.c	/^	RunInFullscreen,$/;"	e	enum:__anon1ca5b3760303	file:
 Running surf	README.md	/^Running surf$/;"	s
@@ -179,9 +181,9 @@ cleanup	surf.c	/^cleanup(void)$/;"	f	typeref:typename:void
 clickexternplayer	surf.c	/^clickexternplayer(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
 clicknavigate	surf.c	/^clicknavigate(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
 clicknewwindow	surf.c	/^clicknewwindow(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
-clickspecial	surf.c	/^clickspecial(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
 clients	surf.c	/^static Client *clients;$/;"	v	typeref:typename:Client *	file:
 clipboard	surf.c	/^clipboard(Client *c, const Arg *a)$/;"	f	typeref:typename:void
+clkexporturi	surf.c	/^clkexporturi(Client *c, const Arg *a, WebKitHitTestResult *h)$/;"	f	typeref:typename:void
 closeview	surf.c	/^closeview(WebKitWebView *v, Client *c)$/;"	f	typeref:typename:void
 config	surf.c	/^	Parameter config[ParameterLast];$/;"	m	struct:__anon1ca5b3760808	typeref:typename:Parameter[]	file:
 config.h	Makefile	/^config.h:$/;"	t
@@ -201,7 +203,6 @@ defconfig	config.def.h	/^static Parameter defconfig[ParameterLast] = {$/;"	v	typ
 defconfig	config.h	/^static Parameter defconfig[ParameterLast] = {$/;"	v	typeref:typename:Parameter[]
 destroyclient	surf.c	/^destroyclient(Client *c)$/;"	f	typeref:typename:void
 destroywin	surf.c	/^destroywin(GtkWidget* w, Client *c)$/;"	f	typeref:typename:void
-dhandler	surf.c	/^dhandler(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 die	common.c	/^die(const char *errstr, ...)$/;"	f	typeref:typename:void
 dist	Makefile	/^dist: distclean$/;"	t
 distclean	Makefile	/^distclean: clean$/;"	t
@@ -213,6 +214,7 @@ editscreen	config.h	/^static char *editscreen[] = { "\/bin\/sh", "-c", "~\/.scri
 embed	surf.c	/^static Window embed;$/;"	v	typeref:typename:Window	file:
 errorpage	surf.c	/^	int progress, fullscreen, https, insecure, errorpage;$/;"	m	struct:Client	typeref:typename:int	file:
 evalscript	surf.c	/^evalscript(Client *c, const char *jsstr, ...)$/;"	f	typeref:typename:void
+exporturi	surf.c	/^exporturi(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 externalpipe	surf.c	/^externalpipe(Client *c, const Arg *arg)$/;"	f	typeref:typename:void
 externalpipe_execute	surf.c	/^externalpipe_execute(char* buffer, Arg *arg) $/;"	f	typeref:typename:void	file:
 externalpipe_js_done	surf.c	/^externalpipe_js_done(WebKitWebView *wv, GAsyncResult *s, Arg *arg)$/;"	f	typeref:typename:void	file:
@@ -252,7 +254,6 @@ install	Makefile	/^install: all$/;"	t
 keys	config.def.h	/^static Key keys[] = {$/;"	v	typeref:typename:Key[]
 keys	config.h	/^static Key keys[] = {$/;"	v	typeref:typename:Key[]
 keyval	surf.c	/^	guint keyval;$/;"	m	struct:__anon1ca5b3760608	typeref:typename:guint	file:
-lhandler	surf.c	/^lhandler(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 libsurf-webext.so	Makefile	/^libsurf-webext.so: $(WEBEXTOBJ) $(COBJ)$/;"	t
 linkhandlerpath	config.h	/^static char *linkhandlerpath	= "\/home\/gavinok\/.scripts\/tools\/linkhandler";$/;"	v	typeref:typename:char *
 linkselect_curwin	config.h	/^static char *linkselect_curwin [] = { "\/bin\/sh", "-c",$/;"	v	typeref:typename:char * []
@@ -284,6 +285,7 @@ overtitle	surf.c	/^	const char *title, *overtitle, *targeturi;$/;"	m	struct:Clie
 pageid	surf.c	/^	unsigned long pageid;$/;"	m	struct:Client	typeref:typename:unsigned long	file:
 pages	libsurf-webext.c	/^static Page *pages;$/;"	v	typeref:typename:Page *	file:
 pagestats	surf.c	/^static char pagestats[2];$/;"	v	typeref:typename:char[2]	file:
+passwordman	surf.c	/^passwordman(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 pasteuri	surf.c	/^pasteuri(GtkClipboard *clipboard, const char *text, gpointer d)$/;"	f	typeref:typename:void
 permissionrequested	surf.c	/^permissionrequested(WebKitWebView *v, WebKitPermissionRequest *r, Client *c)$/;"	f	typeref:typename:gboolean
 pipein	libsurf-webext.c	/^static int pipein, pipeout;$/;"	v	typeref:typename:int	file:
@@ -312,6 +314,7 @@ scrolltolim	surf.c	/^scrolltolim(Client *c, const Arg *a)$/;"	f	typeref:typename
 scrollv	surf.c	/^scrollv(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 search	surf.c	/^search(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 searchurl	config.h	/^static char *searchurl		= "duckduckgo.com\/?q=%s";$/;"	v	typeref:typename:char *
+sendkeycode	surf.c	/^sendkeycode(Client *c, const Arg *a)$/;"	f	typeref:typename:void
 setatom	surf.c	/^setatom(Client *c, int a, const char *v)$/;"	f	typeref:typename:void
 setcert	surf.c	/^setcert(Client *c, const char *uri)$/;"	f	typeref:typename:void
 setparameter	surf.c	/^setparameter(Client *c, int refresh, ParamName p, const Arg *a)$/;"	f	typeref:typename:void
