@@ -8,7 +8,9 @@ static char *cachedir		= "~/.surf/cache/";
 static char *cookiefile		= "~/.surf/cookies.txt";
 static char *dmenuhandlerpath	= "/home/gavinok/.scripts/dmenu/dmenuhandler";
 static char *linkhandlerpath	= "/home/gavinok/.scripts/tools/linkhandler";
-static char *searchurl		= "duckduckgo.com/?q=%s";
+
+#include "../colorschemes/surf/current.h"
+
 /* Webkit default features */
 /* Highest priority value will be used.
  * Default parameters are priority 0
@@ -100,7 +102,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 #define DOWNLOAD(d, r) { \
 	.v = (char *[]){ "/bin/sh", "-c", \
 		"cd ~/Telechargements;"\
-		"st -g \"=40-10+0\" -t float -e /bin/sh -c \"aria2c -x 3 -U '$1' -d ~/Downloads " \
+		"st -g \"=40-10+0\" -t float -e /bin/sh -c \"aria2c -x 5 -U '$1' -d ~/Downloads " \
 		" --referer '$2' --load-cookies $3 --save-cookies $3 '$0' || notify-send \"DOWNLOAD Failed\"" \
 		" sleep 3;\"", \
 		d, useragent, r, cookiefile, NULL \
