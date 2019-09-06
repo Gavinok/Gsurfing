@@ -58,6 +58,7 @@ static UriParameters uriparams[] = {
     { "(://|\\.)suckless\\.org(/|$)", {
       [JavaScript] = { { .i = 1 }, 1 },
       [Plugins]    = { { .i = 0 }, 1 },
+      [ZoomLevel]  = { { .f = 1.3 },  1},
     }, },
 };
 
@@ -225,14 +226,11 @@ static Key keys[] = {
     { 0,		GDK_KEY_s,      spawn,		LINKBOX() },
     { 0,		GDK_KEY_f,	externalpipe,	{ .v = linkselect_curwin } },
     { ShiftMask,        GDK_KEY_f,	externalpipe,	{ .v = linkselect_linkhandeler } },
-    // { GDK_SHIFT_MASK|0, GDK_KEY_semicolon, externalpipe,	{ .v = linkselect_newwin } },
-    { 0,		GDK_KEY_e,	externalpipe,	{ .v = editscreen } },
-    // { MODKEY,           GDK_KEY_p,	spawn,              PASS("Select_Password") },
-    { MODKEY,           GDK_KEY_p,	passwordman,        PASS("Select_Password") },
-    { 0,                GDK_KEY_slash,	spawn,              SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
-    { MODKEY,           GDK_KEY_m,	spawn,              BM_ADD("_SURF_URI") },
+    { MODKEY,           GDK_KEY_p,	passwordman,    PASS("Select_Password") },
+    { 0,                GDK_KEY_slash,	spawn,          SETSEARCHPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
+    { MODKEY,           GDK_KEY_m,	spawn,          BM_ADD("_SURF_URI") },
     { 0,		GDK_KEY_x,	spawn,		VIMANYWHERE() },
-    { 0|GDK_SHIFT_MASK, GDK_KEY_m,	spawn,              BM_EDIT() },
+    { 0|GDK_SHIFT_MASK, GDK_KEY_m,	spawn,          BM_EDIT() },
     { 0,		GDK_KEY_i,      insert,		    { .i = 1 } },
     { 0,		GDK_KEY_Escape, insert,     	    { .i = 0 } },
     { 0,                GDK_KEY_Return, exporturi,	    { 0 } },
@@ -258,7 +256,9 @@ static Key keys[] = {
 
     { 0|GDK_SHIFT_MASK, GDK_KEY_j,     	zoom,               { .i = -1 } },
     { 0|GDK_SHIFT_MASK, GDK_KEY_k,     	zoom,               { .i = +1 } },
-    { 0|GDK_SHIFT_MASK, GDK_KEY_q,     	zoom,               { .i = 0  } },
+    { MODKEY,		GDK_KEY_q,     	zoom,               { .i = 0  } },
+    { MODKEY,           GDK_KEY_w, 	zoom,               { .i = -1 } },
+    { MODKEY,           GDK_KEY_e,  	zoom,               { .i = +1 } },
     { 0,                GDK_KEY_minus, 	zoom,               { .i = -1 } },
     { 0,                GDK_KEY_plus,  	zoom,               { .i = +1 } },
 
