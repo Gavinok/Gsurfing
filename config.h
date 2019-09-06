@@ -110,6 +110,14 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 	} \
 }
 
+// /* DOWNLOAD(URI, referer) */
+// #define DOWNLOAD(u, r) { \
+//         .v = (const char *[]){ "st", "-e", "/bin/sh", "-c",\
+//              "curl -g -L -J -O -A \"$1\" -b \"$2\" -c \"$2\"" \
+//              " -e \"$3\" \"$4\"; read", \
+//              "surf-download", useragent, cookiefile, r, u, NULL \
+//         } \
+// }
 /* BM_ADD(readprop) */
 #define BM_ADD(r) {\
         .v = (const char *[]){ "/bin/sh", "-c", \

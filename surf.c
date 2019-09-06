@@ -1898,8 +1898,11 @@ search(Client *c, const Arg *a)
 	if (g_str_has_prefix(uri, "http://")  ||
 	    g_str_has_prefix(uri, "https://") ||
 	    g_str_has_prefix(uri, "file://")  ||
+	    g_str_has_prefix(uri, "https://") ||
 	    g_str_has_prefix(uri, "about:")) {
 		url = g_strdup(uri);
+	}else if ( g_str_has_prefix(uri, "www.")){
+	    url = g_strdup_printf("https://%s", uri); //open www. urls as normal urls
 	} else {
 	    url = g_strdup_printf(searchurl, a->v);
 	}
