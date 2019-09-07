@@ -51,7 +51,7 @@ static Parameter defconfig[ParameterLast] = {
     [StrictTLS]           =       { { .i = 1 },     },
     [Style]               =       { { .i = 1 },     },
     [WebGL]               =       { { .i = 1 },     },
-    [ZoomLevel]           =       { { .f = 1.0 },   },
+    [ZoomLevel]           =       { { .f = 1.1 },   },
 };
 
 static UriParameters uriparams[] = {
